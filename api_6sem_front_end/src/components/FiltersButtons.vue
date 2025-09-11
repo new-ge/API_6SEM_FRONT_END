@@ -14,6 +14,20 @@
             </n-button>
         </div>
     </div>
+    <div class="team-filter">
+        <h3>Equipe</h3>
+        <div class="team-buttons">
+            <n-button color="#502A81" class="analist1">
+            N1
+            </n-button>
+            <n-button color="#502A81" class="analist2">
+            N2
+            </n-button> 
+            <n-button color="#502A81" class="analist3">
+            N3
+            </n-button>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -44,7 +58,7 @@ h3 {
 }
 
 .sla-filter{
-    height: 13%;
+    height: 10%;
     width: 100%;
 }
 
@@ -70,6 +84,39 @@ h3 {
 }
 
 .extended {
+    width: 28%;
+    left: 9%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.team-filter{
+    height: 13%;
+    width: 100%;
+}
+
+.team-buttons {
+    position: absolute;
+    width: 100%;
+    height: 5%;
+    top: 17%;
+}
+
+.analist1 {
+    width: 28%;
+    left: 5%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.analist2 {
+    width: 28%;
+    left: 7%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.analist3 {
     width: 28%;
     left: 9%;
     background-color: #502A81;
