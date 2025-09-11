@@ -1,6 +1,6 @@
 <script setup>
 import FiltersButtons from './components/FiltersButtons.vue';
-import BackgroudMain from './components/BackgroudMain.vue';
+import BackgroundMain from './components/BackgroundMain.vue';
 import naive from 'naive-ui';
 
 </script>

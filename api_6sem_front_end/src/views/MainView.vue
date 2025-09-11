@@ -1,18 +1,18 @@
 <template>
   <div>
-    <BackgroudMain />
+    <BackgroundMain />
     <FiltersButtons />
   </div>
 </template>
 
 <script>
-import BackgroudMain from '@/components/BackgroudMain.vue';
+import BackgroundMain from '@/components/BackgroundMain.vue';
 import FiltersButtons from '@/components/FiltersButtons.vue';
 
 export default {
   name: 'MainView',
   components: {
-    BackgroudMain,
+    BackgroundMain,
     FiltersButtons,
   }
 }
