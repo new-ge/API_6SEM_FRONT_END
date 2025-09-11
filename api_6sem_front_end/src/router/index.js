@@ -1,8 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import MainView from '../views/MainView.vue';
+
+const routes = [
+  {
+    path: '/main',
+    name: 'Main',
+    component: MainView
+  },
+  
+];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [],
-})
+  history: createWebHistory(),
+  routes
+});
 
-export default router
+
+
+export default router;

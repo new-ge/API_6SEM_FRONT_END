@@ -1,11 +1,19 @@
-<script setup></script>
+<script setup>
+import FiltersButtons from './components/FiltersButtons.vue';
+import BackgroudMain from './components/BackgroudMain.vue';
+import naive from 'naive-ui';
+
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  color: #502A81;
+}
+</style>
