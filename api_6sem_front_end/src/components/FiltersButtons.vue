@@ -28,6 +28,26 @@
             </n-button>
         </div>
     </div>
+    <div class="status-filter">
+        <h3>Status</h3>
+        <div class="status-buttons">
+            <n-button color="#502A81" class="open">
+            Aberto
+            </n-button>
+            <n-button color="#502A81" class="inService">
+            Em <br> Atendimento
+            </n-button> 
+            <n-button color="#502A81" class="waiting">
+            Aguardando <br> Cliente
+            </n-button>
+            <n-button color="#502A81" class="resolved">
+            Resolvido
+            </n-button> 
+            <n-button color="#502A81" class="close">
+            Fechado
+            </n-button>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -91,7 +111,7 @@ h3 {
 }
 
 .team-filter{
-    height: 13%;
+    height: 10%;
     width: 100%;
 }
 
@@ -119,6 +139,55 @@ h3 {
 .analist3 {
     width: 28%;
     left: 9%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.status-filter{
+    height: 13%;
+    width: 100%;
+}
+
+.status-buttons {
+    position: absolute;
+    width: 100%;
+    height: 5%;
+    top: 27%;
+}
+
+.open {
+    width: 28%;
+    left: 5%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.inService {
+    width: 28%;
+    left: 7%;
+    top:-21%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.waiting {
+    width: 28%;
+    left: 9%;
+    top:-21%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.resolved {
+    width: 28%;
+    left: 20%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.close {
+    width: 28%;
+    left: 22%;
     background-color: #502A81;
     border: 1px solid #502A81;
 }
