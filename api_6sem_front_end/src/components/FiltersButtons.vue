@@ -15,7 +15,10 @@
         </div>
     </div>
     <div class="team-filter">
-        <h3>Equipe</h3>
+        <div>
+            <h3>Equipe</h3>
+        </div>
+        
         <div class="team-buttons">
             <n-button color="#502A81" class="analist1">
             N1
@@ -48,13 +51,31 @@
             </n-button>
         </div>
     </div>
+    <div class="date-filters">
+        <h3>Período</h3>
+        <div class="inputs">
+        <n-date-picker
+            type="date"
+            placeholder="Data inicial"
+            class="date-input"
+        />
+        <n-date-picker
+            type="date"
+            placeholder="Data final"
+            class="date-input"
+        />
+</div>
+    </div>
   </div>
 </template>
 
 <script>
+import { NDatePicker } from "naive-ui";
+
 export default {
   name: "FiltersButtons",
 };
+
 </script>
 
 <style>
@@ -190,6 +211,46 @@ h3 {
     left: 22%;
     background-color: #502A81;
     border: 1px solid #502A81;
+}
+
+.date-filters {
+    top: 36%;
+    height: 13%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.inputs {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    right: 7%;
+    gap: 4%;
+}
+
+.n-input .n-input-wrapper {
+    overflow: hidden;
+    display: inline-flex;
+    flex-grow: 1;
+    position: relative;
+    padding-left: var(--n-padding-left);
+    padding-right: var(--n-padding-right);
+    background-color: #502A81;
+}
+
+.n-input .n-input__input-el, .n-input .n-input__textarea-el {
+    -webkit-appearance: none;
+    scrollbar-width: none;
+    width: 100%;
+    min-width: 0;
+    text-decoration-color: rgb(246 247 247);
+    color: rgb(255 255 255);
+    caret-color: var(--n-caret-color);
+    background-color: transparent;
 }
 
 </style>
