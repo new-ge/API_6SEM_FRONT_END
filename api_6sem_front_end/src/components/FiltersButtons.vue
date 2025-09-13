@@ -1,89 +1,121 @@
 <template>
   <div class="filter-container">
-    <div class="sla-filter">
-        <h3>SLA</h3>
-        <div class="sla-buttons">
-            <n-button color="#502A81" class="standard">
-            Padrão
-            </n-button>
-            <n-button color="#502A81" class="vip">
-            VIP
-            </n-button> 
-            <n-button color="#502A81" class="extended">
-            Estendido
-            </n-button>
+        <div class="sla-filter">
+            <h3>SLA</h3>
+            <div class="sla-buttons">
+                <n-button color="#502A81" class="standard">
+                Padrão
+                </n-button>
+                <n-button color="#502A81" class="vip">
+                VIP
+                </n-button> 
+                <n-button color="#502A81" class="extended">
+                Estendido
+                </n-button>
+            </div>
         </div>
-    </div>
-    <div class="team-filter">
-        <div>
-            <h3>Equipe</h3>
+        <div class="team-filter">
+            <div>
+                <h3>Equipe</h3>
+            </div>
+            <div class="team-buttons">
+                <n-button color="#502A81" class="analist1">
+                N1
+                </n-button>
+                <n-button color="#502A81" class="analist2">
+                N2
+                </n-button> 
+                <n-button color="#502A81" class="analist3">
+                N3
+                </n-button>
+            </div>
         </div>
-        <div class="team-buttons">
-            <n-button color="#502A81" class="analist1">
-            N1
-            </n-button>
-            <n-button color="#502A81" class="analist2">
-            N2
-            </n-button> 
-            <n-button color="#502A81" class="analist3">
-            N3
-            </n-button>
+        <div class="status-filter">
+            <h3>Status</h3>
+            <div class="status-buttons">
+                <n-button color="#502A81" class="open">
+                Aberto
+                </n-button>
+                <n-button color="#502A81" class="inService">
+                Em <br> Atendimento
+                </n-button> 
+                <n-button color="#502A81" class="waiting">
+                Aguardando <br> Cliente
+                </n-button>
+                <n-button color="#502A81" class="resolved">
+                Resolvido
+                </n-button> 
+                <n-button color="#502A81" class="close">
+                Fechado
+                </n-button>
+            </div>
         </div>
-    </div>
-    <div class="status-filter">
-        <h3>Status</h3>
-        <div class="status-buttons">
-            <n-button color="#502A81" class="open">
-            Aberto
-            </n-button>
-            <n-button color="#502A81" class="inService">
-            Em <br> Atendimento
-            </n-button> 
-            <n-button color="#502A81" class="waiting">
-            Aguardando <br> Cliente
-            </n-button>
-            <n-button color="#502A81" class="resolved">
-            Resolvido
-            </n-button> 
-            <n-button color="#502A81" class="close">
-            Fechado
-            </n-button>
+        <div class="date-filters">
+            <h3>Período</h3>
+            <div class="inputs">
+            <n-date-picker
+                type="date"
+                placeholder="Data inicial"
+                class="date-input"
+            />
+            <n-date-picker
+                type="date"
+                placeholder="Data final"
+                class="date-input"
+            />
+            </div>
         </div>
-    </div>
-    <div class="date-filters">
-        <h3>Período</h3>
-        <div class="inputs">
-        <n-date-picker
-            type="date"
-            placeholder="Data inicial"
-            class="date-input"
-        />
-        <n-date-picker
-            type="date"
-            placeholder="Data final"
-            class="date-input"
-        />
+        <div class="priorities-filter">
+            <div>
+                <h3>Prioridades</h3>
+            </div>
+            <div class="priorities-buttons">
+                <n-button color="#502A81" class="priority-button">
+                Baixa
+                </n-button>
+                <n-button color="#502A81" class="priority-button">
+                Média
+                </n-button> 
+                <n-button color="#502A81" class="priority-button">
+                Alta
+                </n-button>
+                <n-button color="#502A81" class="priority-button">
+                Crítica
+                </n-button>
+            </div>
         </div>
-    </div>
-    <div class="priorities-filter">
-        <div>
-            <h3>Prioridades</h3>
+        <div class="subcategory-filter">
+            <h3>SubCategoria</h3>
+            <div class="subcategory-buttons">
+                <n-button color="#502A81" class="subcategory">
+                Erro de <br> Sistema
+                </n-button>
+                <n-button color="#502A81" class="subcategory">
+                Lentidão
+                </n-button> 
+                <n-button color="#502A81" class="subcategory">
+                Funcionalidade<br> Indisponível
+                </n-button>
+                <n-button color="#502A81" class="subcategory">
+                Problemas<br> de Login
+                </n-button> 
+                <n-button color="#502A81" class="subcategory">
+                Permissões
+                </n-button>
+                <n-button color="#502A81" class="subcategory">
+                Cadastro de<br> Usuários
+                </n-button>
+                <n-button color="#502A81" class="subcategory">
+                Relatórios
+                </n-button>
+                <n-button color="#502A81" class="subcategory">
+                Exportação
+                </n-button>
+                <n-button color="#502A81" class="subcategory">
+                Dados <br> Inconsistentes
+                </n-button>
+            </div>
         </div>
-        <div class="priorities-buttons">
-            <n-button color="#502A81" class="priority-button">
-            Baixa
-            </n-button>
-            <n-button color="#502A81" class="priority-button">
-            Média
-            </n-button> 
-            <n-button color="#502A81" class="priority-button">
-            Alta
-            </n-button>
-            <n-button color="#502A81" class="priority-button">
-            Crítica
-            </n-button>
-        </div>
-    </div>
   </div>
 </template>
 
@@ -117,15 +149,14 @@ h3 {
 }
 
 .sla-filter{
-    height: 10%;
+    height: 9%;
     width: 100%;
 }
 
 .sla-buttons {
     position: absolute;
     width: 100%;
-    height: 5%;
-    top: 7%;
+    top: 6%;
 }
 
 .standard {
@@ -150,7 +181,7 @@ h3 {
 }
 
 .team-filter{
-    height: 10%;
+    height: 9%;
     width: 100%;
 }
 
@@ -158,7 +189,7 @@ h3 {
     position: absolute;
     width: 100%;
     height: 5%;
-    top: 17%;
+    top: 15%;
 }
 
 .analist1 {
@@ -191,7 +222,7 @@ h3 {
     position: absolute;
     width: 100%;
     height: 5%;
-    top: 27%;
+    top: 24%;
 }
 
 .open {
@@ -232,7 +263,7 @@ h3 {
 }
 
 .date-filters {
-    top: 36%;
+    top: 32%;
     height: 13%;
     width: 100%;
     position: absolute;
@@ -244,7 +275,7 @@ h3 {
 .inputs {
     display: flex;
     position: absolute;
-    top: 50%;
+    top: 46%;
     left: 5%;
     right: 7%;
     gap: 4%;
@@ -273,9 +304,9 @@ h3 {
 }
 
 .priorities-filter{
-    height: 40%;
+    height: 35%;
     width: 100%;
-    top: 46%;
+    top: 41%;
     position: absolute;
 }
 
@@ -294,4 +325,28 @@ h3 {
     width: 23%;
 }
 
+.subcategory-filter {
+    height: 26%;
+    width: 100%;
+    top: 50%;
+    position: absolute;
+}
+
+.subcategory-buttons {
+    position: absolute;
+    display: flex;
+    width: 93%;
+    height: 68%;
+    top: 23%;
+    flex-wrap: wrap;
+    gap: 2%;
+    align-items: baseline;
+    right: 5%;
+    flex-direction: column;
+}
+
+.subcategory {
+    height: 28%;
+    width: 33%;
+}
 </style>
