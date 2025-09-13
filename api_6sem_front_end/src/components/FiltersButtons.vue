@@ -18,7 +18,6 @@
         <div>
             <h3>Equipe</h3>
         </div>
-        
         <div class="team-buttons">
             <n-button color="#502A81" class="analist1">
             N1
@@ -64,7 +63,26 @@
             placeholder="Data final"
             class="date-input"
         />
-</div>
+        </div>
+    </div>
+    <div class="priorities-filter">
+        <div>
+            <h3>Prioridades</h3>
+        </div>
+        <div class="priorities-buttons">
+            <n-button color="#502A81" class="priority-button">
+            Baixa
+            </n-button>
+            <n-button color="#502A81" class="priority-button">
+            Média
+            </n-button> 
+            <n-button color="#502A81" class="priority-button">
+            Alta
+            </n-button>
+            <n-button color="#502A81" class="priority-button">
+            Crítica
+            </n-button>
+        </div>
     </div>
   </div>
 </template>
@@ -240,6 +258,7 @@ h3 {
     padding-left: var(--n-padding-left);
     padding-right: var(--n-padding-right);
     background-color: #502A81;
+    border-radius: 4px;
 }
 
 .n-input .n-input__input-el, .n-input .n-input__textarea-el {
@@ -251,6 +270,28 @@ h3 {
     color: rgb(255 255 255);
     caret-color: var(--n-caret-color);
     background-color: transparent;
+}
+
+.priorities-filter{
+    height: 40%;
+    width: 100%;
+    top: 46%;
+    position: absolute;
+}
+
+.priorities-buttons {
+    display: flex;
+    position: absolute;
+    width: 88%;
+    height: 13%;
+    top: 17%;
+    left: 5%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.priority-button {
+    width: 23%;
 }
 
 </style>
