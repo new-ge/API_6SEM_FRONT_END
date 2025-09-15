@@ -181,7 +181,7 @@ export default {
 
 h3 {
     width: 82%;
-    left: 5%;
+    left: 2%;
     position: absolute;
 }
 
@@ -394,7 +394,7 @@ h3 {
     position: absolute;
 }
 
-    .tags-buttons {
+.tags-buttons {
     position: absolute;
     display: flex;
     width: 93%;
@@ -413,7 +413,7 @@ h3 {
 }
 
 .tag-ac {
-    height: 16%;
+    height: 18%;
     width: 36%;
     display: flex;
     position: absolute;

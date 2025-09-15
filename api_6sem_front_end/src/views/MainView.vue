@@ -2,18 +2,21 @@
   <div>
     <BackgroundMain />
     <FiltersButtons />
+    <BigNumberCards />
   </div>
 </template>
 
 <script>
 import BackgroundMain from '@/components/BackgroundMain.vue';
 import FiltersButtons from '@/components/FiltersButtons.vue';
+import BigNumberCards from '@/components/BigNumberCards.vue';
 
 export default {
   name: 'MainView',
   components: {
     BackgroundMain,
     FiltersButtons,
+    BigNumberCards,
   }
 }
 
