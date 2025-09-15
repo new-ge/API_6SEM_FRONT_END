@@ -116,6 +116,43 @@
                 </n-button>
             </div>
         </div>
+        <div class="tags-filter">
+            <h3>TAG</h3>
+            <div class="tags-buttons">
+                <n-button color="#502A81" class="tags">
+                Urgente
+                </n-button>
+                <n-button color="#502A81" class="tags">
+                Revisar
+                </n-button> 
+                <n-button color="#502A81" class="tags">
+                Bug
+                </n-button>
+                <n-button color="#502A81" class="tags">
+                Solicitação
+                </n-button> 
+                <n-button color="#502A81" class="tags">
+                Melhoria
+                </n-button>
+                <n-button color="#502A81" class="tags">
+                Financeiro
+                </n-button>
+                <n-button color="#502A81" class="tags">
+                RH
+                </n-button>
+                <n-button color="#502A81" class="tags">
+                TI
+                </n-button>
+                <n-button color="#502A81" class="tags">
+                Duplicado
+                </n-button>
+            </div>
+            <div>
+                <n-button color="#502A81" class="tag-ac">
+                Acompanhamento
+                </n-button>
+            </div>
+        </div>
   </div>
 </template>
 
@@ -348,5 +385,40 @@ h3 {
 .subcategory {
     height: 28%;
     width: 33%;
+}
+
+.tags-filter {
+    height: 31%;
+    width: 100%;
+    top: 70%;
+    position: absolute;
+}
+
+    .tags-buttons {
+    position: absolute;
+    display: flex;
+    width: 93%;
+    height: 59%;
+    top: 19%;
+    flex-wrap: wrap;
+    gap: 2%;
+    align-items: baseline;
+    right: 5%;
+    flex-direction: column;
+}
+
+.tags {
+    height: 28%;
+    width: 33%;
+}
+
+.tag-ac {
+    height: 16%;
+    width: 36%;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 73%;
+    left: 32%;
 }
 </style>
