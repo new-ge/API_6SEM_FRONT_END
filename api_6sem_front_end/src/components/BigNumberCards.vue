@@ -5,7 +5,10 @@
             <p class="label">Quantidade de chamados</p>
             <h2 class="number">535</h2>
             </div>
-
+            <div class="card">
+            <p class="label">Quantidade de excedidos</p>
+            <h2 class="number">5</h2>
+            </div>
         </div>
     </div>
 </template>
