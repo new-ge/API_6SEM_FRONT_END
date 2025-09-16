@@ -1,7 +1,7 @@
 <template>
   <div class="filter-container">
         <div class="sla-filter">
-            <h3>SLA</h3>
+            <h3>Período</h3>
             <div class="sla-buttons">
                 <n-button color="#502A81" class="standard">
                 Padrão
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="date-filters">
-            <h3>Período</h3>
+            <h3>SLA</h3>
             <div class="inputs">
             <n-date-picker
                 type="date"
@@ -193,7 +193,7 @@ h3 {
 .sla-buttons {
     position: absolute;
     width: 100%;
-    top: 6%;
+    top: 38%;
 }
 
 .standard {
@@ -312,7 +312,7 @@ h3 {
 .inputs {
     display: flex;
     position: absolute;
-    top: 46%;
+    bottom: 261%;
     left: 5%;
     right: 7%;
     gap: 4%;
