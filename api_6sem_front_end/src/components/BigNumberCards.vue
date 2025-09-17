@@ -13,6 +13,10 @@
             <p class="label">Tempo médio para resolução</p>
             <h2 class="number">200 <span class="unit">min</span></h2>
             </div>
+            <div class="card">
+            <p class="label">Quantidade de reincidência</p>
+            <h2 class="number">21</h2>
+            </div>
         </div>
     </div>
 </template>
