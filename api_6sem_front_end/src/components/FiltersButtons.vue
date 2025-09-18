@@ -59,6 +59,7 @@
                 class="date-input"
                 v-model="filtros.created_at_start"
                 @update:value="toggleFilter('created_at_start', $event)"
+                :is-date-disabled="timeToDisable"
             />
             <n-date-picker
                 type="date"
@@ -66,6 +67,7 @@
                 class="date-input"
                 v-model="filtros.created_at_end"
                 @update:value="toggleFilter('created_at_end', $event)"
+                :is-date-disabled="timeToDisable"
             />
             </div>
         </div>
@@ -161,7 +163,6 @@
 </template>
 
 <script>
-import { NDatePicker } from "naive-ui";
 
 export default {
   data() {
@@ -179,6 +180,12 @@ export default {
     }
   },
   methods: {
+    timeToDisable(ts) {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        return ts > today.getTime()
+    },
+
     toggleFilter(tipo, valor) {  
         if (Array.isArray(this.filtros[tipo])) {
             const index = this.filtros[tipo].indexOf(valor);
