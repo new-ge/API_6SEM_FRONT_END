@@ -80,6 +80,7 @@ const chartOptions: ChartOptions<"line"> = reactive({
         size: 18,
         weight: "bold",
       },
+      color: "#502A81"
     },
   },
 });

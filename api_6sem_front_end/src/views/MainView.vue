@@ -4,6 +4,8 @@
     <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth"/>
     <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" />
     <PeriodChart :resultByMonth="resultByMonth"/>
+    <TotalSentimentVolumeChart />
+    <MainTopicsChart />
   </div>
 </template>
 
@@ -13,6 +15,8 @@ import FiltersButtons from '@/components/FiltersButtons.vue';
 import BackgroundMain from '@/components/BackgroundMain.vue';
 import BigNumberCards from '@/components/BigNumberCards.vue';
 import PeriodChart from '@/components/PeriodChart.vue';
+import TotalSentimentVolumeChart from '@/components/TotalSentimentVolumeChart.vue';
+import MainTopicsChart from '@/components/MainTopicsChart.vue';
 
 export default {
   name: 'MainView',
@@ -21,6 +25,8 @@ export default {
     FiltersButtons,
     BigNumberCards,
     PeriodChart,
+    TotalSentimentVolumeChart,
+    MainTopicsChart,
   },
   data() {
     return {
