@@ -3,15 +3,15 @@
         <div class="big-number-cards">
             <div class="card">
             <p class="label">Quantidade de chamados</p>
-            <h2 class="number">535</h2>
+            <h2 class="number">{{ resultOpened?.opened_tickets ?? 0}}</h2>
             </div>
             <div class="card">
             <p class="label">Quantidade de excedidos</p>
-            <h2 class="number">5</h2>
+            <h2 class="number">{{ resultSLAExceeded?.sla_exceeded ?? 0}}</h2>
             </div>
             <div class="card">
             <p class="label">Tempo médio para resolução</p>
-            <h2 class="number">200 <span class="unit">min</span></h2>
+            <h2 class="number">{{ resultAverageTime?.average_duration_minutes ?? 0}} <span class="unit">min</span></h2>
             </div>
             <div class="card">
             <p class="label">Quantidade de reincidência</p>
@@ -22,7 +22,22 @@
 </template>
 
 <script>
-
+export default {
+  props: {
+    resultOpened: {
+      type: Object,
+      default: () => null
+    },
+    resultAverageTime: {
+      type: Object,
+      default: () => null
+    },
+    resultSLAExceeded: {
+      type: Object,
+      default: () => null
+    }
+  }
+}
 </script>
 
 <style>
