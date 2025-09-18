@@ -1,15 +1,16 @@
 <template>
   <div>
     <BackgroundMain />
-    <FiltersButtons />
-    <BigNumberCards />
-    <PeriodChart />
+    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth"/>
+    <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" />
+    <PeriodChart :resultByMonth="resultByMonth"/>
   </div>
 </template>
 
 <script>
-import BackgroundMain from '@/components/BackgroundMain.vue';
+import axios from 'axios';
 import FiltersButtons from '@/components/FiltersButtons.vue';
+import BackgroundMain from '@/components/BackgroundMain.vue';
 import BigNumberCards from '@/components/BigNumberCards.vue';
 import PeriodChart from '@/components/PeriodChart.vue';
 
@@ -20,9 +21,45 @@ export default {
     FiltersButtons,
     BigNumberCards,
     PeriodChart,
+  },
+  data() {
+    return {
+      resultOpened: null,
+      resultAverageTime: null,
+      resultSLAExceeded: null,
+      resultByMonth: null
+    }
+  },
+  methods: {
+    async fetchData(url, targetKey, filtros = {}) {
+      try {
+        const filtroParaEnviar = Object.keys(filtros).length ? filtros : {};
+        const response = await axios.post(url, { filtro: filtroParaEnviar });
+        this[targetKey] = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    handleFilterOpened(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/opened/count", "resultOpened", filtros);
+    },
+    handleFilterAverageTime(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/closed/average-time", "resultAverageTime", filtros);
+    },
+    handleFilterExcedeedSLA(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/closed/exceeded-sla", "resultSLAExceeded", filtros);
+    },
+    handleFilterByMonth(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/by-period", "resultByMonth", filtros);
+    },
+  },
+  mounted() {
+    this.handleFilterOpened();
+    this.handleFilterAverageTime();
+    this.handleFilterExcedeedSLA();
+    this.handleFilterByMonth();
   }
 }
-
 </script>
 
 <style scoped>

@@ -20,7 +20,13 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Line as LineChart } from "vue-chartjs";
-import { reactive } from "vue";
+import { reactive, computed, ComputedRef } from "vue";
+
+interface Props {
+  resultByMonth?: Record<string, number> | null
+}
+
+const props = defineProps<Props>();
 
 ChartJS.register(
   Title,
@@ -37,14 +43,14 @@ const labels = [
   "Jul", "Ago", "Set", "Out", "Nov", "Dez"
 ];
 
-const chartData: ChartData<"line"> = {
+const chartData: ComputedRef<ChartData<"line">> = computed(() => ({
   labels,
   datasets: [
     {
       label: "Volume",
       borderColor: "#5E2B97", 
       backgroundColor: "#5E2B97",
-      data: [250, 300, 200, 150, 160, 250, 180, 140, 280, 50, 320, 400],
+      data: Array.from({ length: 12 }, (_, i) => props.resultByMonth?.[String(i + 1).padStart(2, "0")] ?? 0),
       tension: 0.3,
     },
     {
@@ -55,7 +61,8 @@ const chartData: ChartData<"line"> = {
       tension: 0.3,
     },
   ],
-};
+}));
+
 
 const chartOptions: ChartOptions<"line"> = reactive({
   responsive: true,

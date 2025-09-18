@@ -1,15 +1,11 @@
 <script setup>
-import FiltersButtons from './components/FiltersButtons.vue';
-import BackgroundMain from './components/BackgroundMain.vue';
-import BigNumberCards from './components/BigNumberCards.vue';
-import PeriodChart from './components/PeriodChart.vue';
-import naive from 'naive-ui';
+import MainView from './views/MainView.vue';
 
 </script>
 
 <template>
   <div id="app">
-    <router-view />
+    <MainView />
   </div>
 </template>
 
