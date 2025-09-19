@@ -11,16 +11,14 @@
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import { Doughnut } from "vue-chartjs";
 
-// Registrar elementos do Chart.js
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
-// Dados mocados
 const chartData = {
   labels: ["Negativo 23%", "Positivo 77%"],
   datasets: [
     {
       data: [23, 77],
-      backgroundColor: ["#9a7d0a", "#5b2c6f"], // dourado e roxo
+      backgroundColor: ["#9a7d0a", "#5b2c6f"],
       borderWidth: 0,
     },
   ],
@@ -28,7 +26,7 @@ const chartData = {
 
 const chartOptions = {
   responsive: true,
-  cutout: "60%", // tamanho do buraco central
+  cutout: "60%",
   plugins: {
     legend: {
       position: "top",
@@ -55,12 +53,12 @@ const chartOptions = {
     background: white;
     border: 2px solid #502A81;
     border-radius: 16px;
-    width: 20%;
+    width: 19.9%;
     height: 44.4%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 33.9%;
-    left: 68.2%;
+    left: 68.1%;
     transform: translate(-50%, -50%);
 }
 
@@ -73,7 +71,7 @@ const chartOptions = {
 }
 
 .chart1-title {
-    color: #4a235a;
+    color: #502A81;
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 1rem;
