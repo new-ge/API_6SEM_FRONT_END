@@ -101,13 +101,13 @@ const chartOptions: ChartOptions<"line"> = reactive({
 }
 
 .chart-container {
-    padding: 1rem;
-    height: 88%;
-    width: 97%;
+  padding: 1rem;
+  height: 88%;
+  width: 97%;
 }
 
 .chart {
-    width: 100% !important;
-    height: 100% !important; 
+  width: 100% !important;
+  height: 100% !important; 
 }
 </style>
