@@ -202,6 +202,7 @@ export default {
         this.$emit("average-running-time-filter", this.filtros);
         this.$emit("exceeded-sla-filter", this.filtros);
         this.$emit("by-month", this.filtros);
+        this.$emit("recurring-tickets", this.filtros);
     }
   }
 }
