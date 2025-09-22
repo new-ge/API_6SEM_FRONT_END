@@ -58,6 +58,9 @@ export default {
     handleFilterByMonth(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/by-period", "resultByMonth", filtros);
     },
+    handleFilterByStatus(filtros = {}){
+      return this.fetchData("http://127.0.0.1:8000/tickets/count-by-status", resultByStatus, filtros);
+    },
   },
   mounted() {
     this.handleFilterOpened();
