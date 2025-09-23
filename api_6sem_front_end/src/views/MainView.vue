@@ -1,8 +1,8 @@
 <template>
   <div>
     <BackgroundMain />
-    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth"/>
-    <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" />
+    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets"/>
+    <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets" />
     <PeriodChart :resultByMonth="resultByMonth"/>
     <TotalSentimentVolumeChart />
     <MainTopicsChart />
@@ -33,7 +33,8 @@ export default {
       resultOpened: null,
       resultAverageTime: null,
       resultSLAExceeded: null,
-      resultByMonth: null
+      resultByMonth: null,
+      resultRecurringTickets: null
     }
   },
   methods: {
@@ -58,8 +59,9 @@ export default {
     handleFilterByMonth(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/by-period", "resultByMonth", filtros);
     },
-    handleFilterByStatus(filtros = {}){
-      return this.fetchData("http://127.0.0.1:8000/tickets/count-by-status", resultByStatus, filtros);
+    handleFilterRecurringTickets(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/recurring-tickets", "resultRecurringTickets", filtros);
+
     },
   },
   mounted() {
@@ -67,6 +69,7 @@ export default {
     this.handleFilterAverageTime();
     this.handleFilterExcedeedSLA();
     this.handleFilterByMonth();
+    this.handleFilterRecurringTickets();
   }
 }
 </script>
