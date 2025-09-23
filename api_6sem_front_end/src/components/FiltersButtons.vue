@@ -163,6 +163,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -176,9 +177,15 @@ export default {
         created_at_start: null,
         created_at_end: null
       }
-    };
+    }
   },
   methods: {
+    timeToDisable(ts) {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        return ts > today.getTime()
+    },
+
     toggleFilter(tipo, valor) {  
       if (Array.isArray(this.filtros[tipo])) {
         const index = this.filtros[tipo].indexOf(valor);
