@@ -33,19 +33,19 @@
         <div class="status-filter">
             <h3>Status</h3>
             <div class="status-buttons">
-                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Abertp') }">
+                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Aberto') }" @click="toggleFilter('status', 'Aberto')">
                 Aberto
                 </n-button>
-                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }">
+                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }" @click="toggleFilter('status', 'Em Atendimento')">
                 Em <br> Atendimento
                 </n-button> 
-                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }">
+                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }" @click="toggleFilter('status', 'Aguardando Cliente')">
                 Aguardando <br> Cliente
                 </n-button>
-                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }">
+                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }" @click="toggleFilter('status', 'Resolvido')">
                 Resolvido
                 </n-button> 
-                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }">
+                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }" @click="toggleFilter('status', 'Fechado')">
                 Fechado
                 </n-button>
             </div>
@@ -179,26 +179,7 @@ export default {
       resultado: null
     };
   },
-  props: {
-    resultado: {
-      type: Object,
-      default: () => null
-    }
-  },
   methods: {
-    async handleFiltrar(filtros = {}) {
-      try {
-        const filtroParaEnviar = Object.keys(filtros).length ? filtros : {};
-        const response = await axios.post(
-          "http://127.0.0.1:8080/tickets/opened/count",
-          { filtro: filtroParaEnviar }
-        );
-        this.resultado = response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
     toggleFilter(tipo, valor) {  
       if (Array.isArray(this.filtros[tipo])) {
         const index = this.filtros[tipo].indexOf(valor);
@@ -210,6 +191,7 @@ export default {
       } else {
         this.filtros[tipo] = valor;
       }
+      
         this.$emit("open-tickets-filter", this.filtros);
         this.$emit("average-running-time-filter", this.filtros);
         this.$emit("exceeded-sla-filter", this.filtros);
