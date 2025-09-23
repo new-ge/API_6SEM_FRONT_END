@@ -15,7 +15,7 @@
             </div>
             <div class="card">
             <p class="label">Quantidade de reincidência</p>
-            <h2 class="number">21</h2>
+            <h2 class="number">{{ resultRecurringTickets?.recurring_tickets ?? 0}}</h2>
             </div>
         </div>
     </div>
@@ -33,6 +33,10 @@ export default {
       default: () => null
     },
     resultSLAExceeded: {
+      type: Object,
+      default: () => null
+    },
+    resultRecurringTickets: {
       type: Object,
       default: () => null
     }
