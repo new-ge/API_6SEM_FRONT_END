@@ -190,15 +190,12 @@ export default {
     },
 
     toggleFilter(tipo, valor) {
-        if (Array.isArray(this.filtros[tipo])) {
-            const index = this.filtros[tipo].indexOf(valor);
-            if (index === -1) {
-            this.filtros[tipo].push(valor);
-            } else {
-            this.filtros[tipo].splice(index, 1);
-            }
+      if (Array.isArray(this.filtros[tipo])) {
+        const index = this.filtros[tipo].indexOf(valor);
+        if (index === -1) {
+          this.filtros[tipo].push(valor);
         } else {
-            this.filtros[tipo] = valor;
+          this.filtros[tipo].splice(index, 1);
         }
         const filtrosToEmit = { ...this.filtros };
 
@@ -217,11 +214,12 @@ export default {
         this.$emit("by-month", filtrosToEmit);
         this.$emit("recurring-tickets", this.filtros);
 
-    }
+      }
+   }
   }
 }
-
 </script>
+
 
 <style>
 .filter-container {
