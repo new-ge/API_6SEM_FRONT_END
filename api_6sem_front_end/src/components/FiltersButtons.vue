@@ -175,8 +175,7 @@ export default {
         priority: [],
         created_at_start: null,
         created_at_end: null
-      },
-      resultado: null
+      }
     };
   },
   methods: {
@@ -198,9 +197,6 @@ export default {
         this.$emit("by-month", this.filtros);
         this.$emit("recurring-tickets", this.filtros);
     }
-  },
-  mounted() {
-    this.handleFiltrar();
   }
 };
 </script>
