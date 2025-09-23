@@ -3,13 +3,13 @@
         <div class="sla-filter">
             <h3>Período</h3>
             <div class="sla-buttons">
-                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.includes('SLA Padrão') }" @click="toggleFilter ('sla', 'SLA Padrão')">
+                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Padrão')}" @click="toggleFilter ('sla', { name: 'SLA Padrão', target_minutes: 480 })">
                 Padrão
                 </n-button>
-                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.includes('SLA VIP') }" @click="toggleFilter ('sla', 'SLA VIP')">
+                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA VIP') }" @click="toggleFilter ('sla', { name: 'SLA VIP', target_minutes: 240 })">
                 VIP
                 </n-button>
-                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.includes('SLA Estendido') }" @click="toggleFilter ('sla', 'SLA Estendido')">
+                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Estendido') }" @click="toggleFilter ('sla', { name: 'SLA Estendido', target_minutes: 1440 })">
                 Estendido
                 </n-button>
             </div>
@@ -190,32 +190,21 @@ export default {
     },
 
     toggleFilter(tipo, valor) {
-      if (Array.isArray(this.filtros[tipo])) {
+    if (!Array.isArray(this.filtros[tipo])) return;
+
+    if (tipo === 'sla') {
+        const index = this.filtros.sla.findIndex(s => s.name === valor.name);
+        if (index === -1) this.filtros.sla.push(valor);
+        else this.filtros.sla.splice(index, 1);
+    } else {
         const index = this.filtros[tipo].indexOf(valor);
-        if (index === -1) {
-          this.filtros[tipo].push(valor);
-        } else {
-          this.filtros[tipo].splice(index, 1);
-        }
-        const filtrosToEmit = { ...this.filtros };
+        if (index === -1) this.filtros[tipo].push(valor);
+        else this.filtros[tipo].splice(index, 1);
+    }
 
-        if (filtrosToEmit.sla && filtrosToEmit.sla.length > 0) {
-          filtrosToEmit["sla.name"] = filtrosToEmit.sla;
-        }
-        delete filtrosToEmit.sla;
-
-        this.$emit("open-tickets-filter", this.filtros);
-        this.$emit("average-running-time-filter", this.filtros);
-        this.$emit("exceeded-sla-filter", this.filtros);
-        this.$emit("by-month", this.filtros);
-        this.$emit("open-tickets-filter", filtrosToEmit);
-        this.$emit("average-running-time-filter", filtrosToEmit);
-        this.$emit("exceeded-sla-filter", filtrosToEmit);
-        this.$emit("by-month", filtrosToEmit);
-        this.$emit("recurring-tickets", this.filtros);
-
-      }
-   }
+    const eventos = ['open-tickets-filter', 'average-running-time-filter', 'exceeded-sla-filter', 'by-month', 'recurring-tickets'];
+    eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
+    }
   }
 }
 </script>
