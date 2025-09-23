@@ -10,13 +10,14 @@
 </template>
 
 <script>
-import axios from 'axios';
-import FiltersButtons from '@/components/FiltersButtons.vue';
 import BackgroundMain from '@/components/BackgroundMain.vue';
 import BigNumberCards from '@/components/BigNumberCards.vue';
+import FiltersButtons from '@/components/FiltersButtons.vue';
+import MainTopicsChart from '@/components/MainTopicsChart.vue';
 import PeriodChart from '@/components/PeriodChart.vue';
 import TotalSentimentVolumeChart from '@/components/TotalSentimentVolumeChart.vue';
-import MainTopicsChart from '@/components/MainTopicsChart.vue';
+import axios from 'axios';
+
 
 export default {
   name: 'MainView',

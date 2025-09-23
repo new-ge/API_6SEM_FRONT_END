@@ -10,7 +10,6 @@
 </template>
 
 <script lang="ts">
-import { NButton } from 'naive-ui';
 
 export default {
   name: "GradientComponent",

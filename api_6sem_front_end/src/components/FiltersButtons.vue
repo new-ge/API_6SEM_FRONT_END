@@ -187,17 +187,17 @@ export default {
     },
 
     toggleFilter(tipo, valor) {  
-        if (Array.isArray(this.filtros[tipo])) {
-            const index = this.filtros[tipo].indexOf(valor);
-            if (index === -1) {
-            this.filtros[tipo].push(valor);
-            } else {
-            this.filtros[tipo].splice(index, 1);
-            }
+      if (Array.isArray(this.filtros[tipo])) {
+        const index = this.filtros[tipo].indexOf(valor);
+        if (index === -1) {
+          this.filtros[tipo].push(valor);
         } else {
-            this.filtros[tipo] = valor;
+          this.filtros[tipo].splice(index, 1);
         }
-        this.$emit("by-status-filter", this.filtros);
+      } else {
+        this.filtros[tipo] = valor;
+      }
+      
         this.$emit("open-tickets-filter", this.filtros);
         this.$emit("average-running-time-filter", this.filtros);
         this.$emit("exceeded-sla-filter", this.filtros);
@@ -205,9 +205,9 @@ export default {
         this.$emit("recurring-tickets", this.filtros);
     }
   }
-}
-
+};
 </script>
+
 
 <style>
 .filter-container {
