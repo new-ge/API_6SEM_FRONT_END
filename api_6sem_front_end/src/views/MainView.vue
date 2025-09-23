@@ -61,6 +61,7 @@ export default {
     },
     handleFilterRecurringTickets(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/recurring-tickets", "resultRecurringTickets", filtros);
+
     },
   },
   mounted() {

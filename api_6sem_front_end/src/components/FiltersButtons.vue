@@ -33,19 +33,19 @@
         <div class="status-filter">
             <h3>Status</h3>
             <div class="status-buttons">
-                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Abertp') }">
+                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Aberto') }" @click="toggleFilter('status', 'Aberto')">
                 Aberto
                 </n-button>
-                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }">
+                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }" @click="toggleFilter('status', 'Em Atendimento')">
                 Em <br> Atendimento
                 </n-button> 
-                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }">
+                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }" @click="toggleFilter('status', 'Aguardando Cliente')">
                 Aguardando <br> Cliente
                 </n-button>
-                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }">
+                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }" @click="toggleFilter('status', 'Resolvido')">
                 Resolvido
                 </n-button> 
-                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }">
+                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }" @click="toggleFilter('status', 'Fechado')">
                 Fechado
                 </n-button>
             </div>
@@ -76,16 +76,16 @@
                 <h3>Prioridades</h3>
             </div>
             <div class="priorities-buttons">
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Baixa') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Baixa') }" @click="toggleFilter('priority', 'Baixa')">
                 Baixa
                 </n-button>
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Média') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Média') }" @click="toggleFilter('priority', 'Média')">
                 Média
                 </n-button> 
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Alta') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Alta') }" @click="toggleFilter('priority', 'Alta')">
                 Alta
                 </n-button>
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Crítica') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Crítica') }" @click="toggleFilter('priority', 'Crítica')">
                 Crítica
                 </n-button>
             </div>
@@ -197,7 +197,7 @@ export default {
         } else {
             this.filtros[tipo] = valor;
         }
-
+        this.$emit("by-status-filter", this.filtros);
         this.$emit("open-tickets-filter", this.filtros);
         this.$emit("average-running-time-filter", this.filtros);
         this.$emit("exceeded-sla-filter", this.filtros);
