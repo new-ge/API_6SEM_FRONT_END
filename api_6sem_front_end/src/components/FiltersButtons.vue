@@ -76,16 +76,16 @@
                 <h3>Prioridades</h3>
             </div>
             <div class="priorities-buttons">
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Baixa') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Baixa') }" @click="toggleFilter('priority', 'Baixa')">
                 Baixa
                 </n-button>
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Média') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Média') }" @click="toggleFilter('priority', 'Média')">
                 Média
                 </n-button> 
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Alta') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Alta') }" @click="toggleFilter('priority', 'Alta')">
                 Alta
                 </n-button>
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Crítica') }">
+                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Crítica') }" @click="toggleFilter('priority', 'Crítica')">
                 Crítica
                 </n-button>
             </div>
@@ -163,7 +163,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -176,37 +175,55 @@ export default {
         priority: [],
         created_at_start: null,
         created_at_end: null
-      }
+      },
+      resultado: null
+    };
+  },
+  props: {
+    resultado: {
+      type: Object,
+      default: () => null
     }
   },
   methods: {
-    timeToDisable(ts) {
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
-        return ts > today.getTime()
+    async handleFiltrar(filtros = {}) {
+      try {
+        const filtroParaEnviar = Object.keys(filtros).length ? filtros : {};
+        const response = await axios.post(
+          "http://127.0.0.1:8080/tickets/opened/count",
+          { filtro: filtroParaEnviar }
+        );
+        this.resultado = response.data;
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     toggleFilter(tipo, valor) {  
-        if (Array.isArray(this.filtros[tipo])) {
-            const index = this.filtros[tipo].indexOf(valor);
-            if (index === -1) {
-            this.filtros[tipo].push(valor);
-            } else {
-            this.filtros[tipo].splice(index, 1);
-            }
+      if (Array.isArray(this.filtros[tipo])) {
+        const index = this.filtros[tipo].indexOf(valor);
+        if (index === -1) {
+          this.filtros[tipo].push(valor);
         } else {
-            this.filtros[tipo] = valor;
+          this.filtros[tipo].splice(index, 1);
         }
+      } else {
+        this.filtros[tipo] = valor;
+      }
 
-        this.$emit("open-tickets-filter", this.filtros);
-        this.$emit("average-running-time-filter", this.filtros);
-        this.$emit("exceeded-sla-filter", this.filtros);
-        this.$emit("by-month", this.filtros);
+      // Emitir eventos com os filtros atualizados
+      this.$emit("open-tickets-filter", this.filtros);
+      this.$emit("average-running-time-filter", this.filtros);
+      this.$emit("exceeded-sla-filter", this.filtros);
+      this.$emit("by-month", this.filtros);
     }
+  },
+  mounted() {
+    this.handleFiltrar();
   }
-}
-
+};
 </script>
+
 
 <style>
 .filter-container {
