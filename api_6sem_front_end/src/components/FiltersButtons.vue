@@ -3,13 +3,13 @@
         <div class="sla-filter">
             <h3>Período</h3>
             <div class="sla-buttons">
-                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.includes('SLA Padrão') }" @click="toggleFilter ('sla', 'Sla Padrão')">
+                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.includes('SLA Padrão') }" @click="toggleFilter ('sla', 'SLA Padrão')">
                 Padrão
                 </n-button>
-                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.includes('SLA VIP') }" @click="toggleFilter ('sla', 'Sla VIP')">
+                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.includes('SLA VIP') }" @click="toggleFilter ('sla', 'SLA VIP')">
                 VIP
                 </n-button>
-                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.includes('SLA Estendido') }" @click="toggleFilter ('sla', 'Sla Estendido')">
+                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.includes('SLA Estendido') }" @click="toggleFilter ('sla', 'SLA Estendido')">
                 Estendido
                 </n-button>
             </div>
