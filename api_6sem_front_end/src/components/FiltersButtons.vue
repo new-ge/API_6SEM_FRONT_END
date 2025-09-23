@@ -3,13 +3,13 @@
         <div class="sla-filter">
             <h3>Período</h3>
             <div class="sla-buttons">
-                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.includes('SLA Padrão') }">
+                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Padrão')}" @click="toggleFilter ('sla', { name: 'SLA Padrão', target_minutes: 480 })">
                 Padrão
                 </n-button>
-                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.includes('SLA VIP') }">
+                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA VIP') }" @click="toggleFilter ('sla', { name: 'SLA VIP', target_minutes: 240 })">
                 VIP
-                </n-button> 
-                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.includes('SLA Estendido') }">
+                </n-button>
+                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Estendido') }" @click="toggleFilter ('sla', { name: 'SLA Estendido', target_minutes: 1440 })">
                 Estendido
                 </n-button>
             </div>
@@ -24,7 +24,7 @@
                 </n-button>
                 <n-button color="#502A81" class="analist2" :class="{ 'is-active': filtros.equipe.includes('N2') }">
                 N2
-                </n-button> 
+                </n-button>
                 <n-button color="#502A81" class="analist3" :class="{ 'is-active': filtros.equipe.includes('N3') }">
                 N3
                 </n-button>
@@ -38,13 +38,13 @@
                 </n-button>
                 <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }" @click="toggleFilter('status', 'Em Atendimento')">
                 Em <br> Atendimento
-                </n-button> 
+                </n-button>
                 <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }" @click="toggleFilter('status', 'Aguardando Cliente')">
                 Aguardando <br> Cliente
                 </n-button>
                 <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }" @click="toggleFilter('status', 'Resolvido')">
                 Resolvido
-                </n-button> 
+                </n-button>
                 <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }" @click="toggleFilter('status', 'Fechado')">
                 Fechado
                 </n-button>
@@ -81,7 +81,7 @@
                 </n-button>
                 <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Média') }" @click="toggleFilter('priority', 'Média')">
                 Média
-                </n-button> 
+                </n-button>
                 <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Alta') }" @click="toggleFilter('priority', 'Alta')">
                 Alta
                 </n-button>
@@ -98,14 +98,17 @@
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Lentidão') }" @click="toggleFilter('sub_category', 'Lentidão')">
                 Lentidão
-                </n-button> 
+
+                </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Funcionalidade indisponível') }" @click="toggleFilter('sub_category', 'Funcionalidade indisponível')">
                 Funcionalidade<br> Indisponível
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Problemas de login') }" @click="toggleFilter('sub_category', 'Problemas de login')">
                 Problemas<br> de Login
-                </n-button> 
+
+                </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Permissões') }" @click="toggleFilter('sub_category', 'Permissões')">
+
                 Permissões
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Cadastro de usuários') }" @click="toggleFilter('sub_category', 'Cadastro de usuários')">
@@ -130,13 +133,13 @@
                 </n-button>
                 <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Revisar') }" @click="toggleFilter('tag', 'Revisar')">
                 Revisar
-                </n-button> 
+                </n-button>
                 <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Bug') }" @click="toggleFilter('tag', 'Bug')">
                 Bug
                 </n-button>
                 <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Solicitação') }" @click="toggleFilter('tag', 'Solicitação')">
                 Solicitação
-                </n-button> 
+                </n-button>
                 <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Melhoria') }" @click="toggleFilter('tag', 'Melhoria')">
                 Melhoria
                 </n-button>
@@ -186,26 +189,24 @@ export default {
         return ts > today.getTime()
     },
 
-    toggleFilter(tipo, valor) {  
-      if (Array.isArray(this.filtros[tipo])) {
+    toggleFilter(tipo, valor) {
+    if (!Array.isArray(this.filtros[tipo])) return;
+
+    if (tipo === 'sla') {
+        const index = this.filtros.sla.findIndex(s => s.name === valor.name);
+        if (index === -1) this.filtros.sla.push(valor);
+        else this.filtros.sla.splice(index, 1);
+    } else {
         const index = this.filtros[tipo].indexOf(valor);
-        if (index === -1) {
-          this.filtros[tipo].push(valor);
-        } else {
-          this.filtros[tipo].splice(index, 1);
-        }
-      } else {
-        this.filtros[tipo] = valor;
-      }
-      
-        this.$emit("open-tickets-filter", this.filtros);
-        this.$emit("average-running-time-filter", this.filtros);
-        this.$emit("exceeded-sla-filter", this.filtros);
-        this.$emit("by-month", this.filtros);
-        this.$emit("recurring-tickets", this.filtros);
+        if (index === -1) this.filtros[tipo].push(valor);
+        else this.filtros[tipo].splice(index, 1);
+    }
+
+    const eventos = ['open-tickets-filter', 'average-running-time-filter', 'exceeded-sla-filter', 'by-month', 'recurring-tickets'];
+    eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     }
   }
-};
+}
 </script>
 
 
@@ -220,7 +221,7 @@ export default {
     position: absolute;
     top: 54%;
     right: 62%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
 }
 
 h3 {
