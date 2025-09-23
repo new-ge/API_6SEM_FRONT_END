@@ -93,31 +93,31 @@
         <div class="subcategory-filter">
             <h3>SubCategoria</h3>
             <div class="subcategory-buttons">
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Erro de Sistema') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Erro de sistema') }" @click="toggleFilter('sub_category', 'Erro de sistema')">
                 Erro de <br> Sistema
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Lentidão') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Lentidão') }" @click="toggleFilter('sub_category', 'Lentidão')">
                 Lentidão
                 </n-button> 
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Funcionalidade Indisponível') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Funcionalidade indisponível') }" @click="toggleFilter('sub_category', 'Funcionalidade indisponível')">
                 Funcionalidade<br> Indisponível
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Problemas de Login') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Problemas de login') }" @click="toggleFilter('sub_category', 'Problemas de login')">
                 Problemas<br> de Login
                 </n-button> 
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Permissões') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Permissões') }" @click="toggleFilter('sub_category', 'Permissões')">
                 Permissões
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Cadastro de Usuários') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Cadastro de usuários') }" @click="toggleFilter('sub_category', 'Cadastro de usuários')">
                 Cadastro de<br> Usuários
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Relatórios') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Relatórios') }" @click="toggleFilter('sub_category', 'Relatórios')">
                 Relatórios
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Exportação') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Exportação') }" @click="toggleFilter('sub_category', 'Exportação')">
                 Exportação
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Dados Inconsistentes') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Dados inconsistentes') }" @click="toggleFilter('sub_category', 'Dados inconsistentes')">
                 Dados <br> Inconsistentes
                 </n-button>
             </div>
@@ -210,12 +210,11 @@ export default {
       } else {
         this.filtros[tipo] = valor;
       }
-
-      // Emitir eventos com os filtros atualizados
-      this.$emit("open-tickets-filter", this.filtros);
-      this.$emit("average-running-time-filter", this.filtros);
-      this.$emit("exceeded-sla-filter", this.filtros);
-      this.$emit("by-month", this.filtros);
+        this.$emit("open-tickets-filter", this.filtros);
+        this.$emit("average-running-time-filter", this.filtros);
+        this.$emit("exceeded-sla-filter", this.filtros);
+        this.$emit("by-month", this.filtros);
+        this.$emit("recurring-tickets", this.filtros);
     }
   },
   mounted() {
