@@ -12,7 +12,7 @@ import { Bar } from "vue-chartjs";
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const chartData = {
-  labels: ["Lentidão", "Acesso", "Perfil", "Perfil", "Perfil", "Perfil"],
+  labels: ["Lentidão", "Permissões", "Exportação", "Relatórios", "Cadastros", "Erros"],
   datasets: [
     {
       data: [100, 80, 80, 50, 40, 30],

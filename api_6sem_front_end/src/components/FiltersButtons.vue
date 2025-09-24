@@ -121,6 +121,11 @@
                 Dados <br> Inconsistentes
                 </n-button>
             </div>
+            <div class="clean-filters">
+                <n-button color="#502A81" class="standard" @click="limparFiltros">
+                Limpar Filtros
+                </n-button>
+            </div>
         </div>
         <div class="tags-filter">
             <h3>TAG</h3>
@@ -163,30 +168,29 @@
 </template>
 
 <script>
-
-export default {
-  data() {
-    return {
-      filtros: {
-        sla: [],
-        tag: [],
-        equipe: [],
-        status: [],
-        sub_category: [],
-        priority: [],
-        created_at_start: null,
-        created_at_end: null
-      }
-    }
-  },
-  methods: {
-    timeToDisable(ts) {
+    export default {
+    data() {
+        return {
+        filtros: {
+            sla: [],
+            tag: [],
+            equipe: [],
+            status: [],
+            sub_category: [],
+            priority: [],
+            created_at_start: null,
+            created_at_end: null
+        }
+        }
+    },
+    methods: {
+        timeToDisable(ts) {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
         return ts > today.getTime()
-    },
+        },
 
-    toggleFilter(tipo, valor) {  
+        toggleFilter(tipo, valor) {
         if (Array.isArray(this.filtros[tipo])) {
             const index = this.filtros[tipo].indexOf(valor);
             if (index === -1) {
@@ -198,14 +202,22 @@ export default {
             this.filtros[tipo] = valor;
         }
 
-        this.$emit("open-tickets-filter", this.filtros);
-        this.$emit("average-running-time-filter", this.filtros);
-        this.$emit("exceeded-sla-filter", this.filtros);
-        this.$emit("by-month", this.filtros);
-    }
-  }
-}
+        this.emitirEventos()
+        },
 
+        limparFiltros() {
+        
+        window.location.reload()
+        },
+
+        emitirEventos() {
+        this.$emit("open-tickets-filter", this.filtros)
+        this.$emit("average-running-time-filter", this.filtros)
+        this.$emit("exceeded-sla-filter", this.filtros)
+        this.$emit("by-month", this.filtros)
+        }
+    }
+    }
 </script>
 
 <style>
@@ -479,5 +491,13 @@ h3 {
     flex-direction: column;
     top: 73%;
     left: 32%;
+}
+
+.clean-filters {
+    position: absolute;
+    z-index: 2;
+    width: 117%;
+    bottom: 309%;
+    left: 79%;
 }
 </style>
