@@ -1,8 +1,8 @@
 <template>
   <div>
     <BackgroundMain />
-    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth"/>
-    <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" />
+    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets"/>
+    <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets" />
     <PeriodChart :resultByMonth="resultByMonth"/>
     <TotalSentimentVolumeChart />
     <MainTopicsChart />
@@ -10,13 +10,14 @@
 </template>
 
 <script>
-import axios from 'axios';
-import FiltersButtons from '@/components/FiltersButtons.vue';
 import BackgroundMain from '@/components/BackgroundMain.vue';
 import BigNumberCards from '@/components/BigNumberCards.vue';
+import FiltersButtons from '@/components/FiltersButtons.vue';
+import MainTopicsChart from '@/components/MainTopicsChart.vue';
 import PeriodChart from '@/components/PeriodChart.vue';
 import TotalSentimentVolumeChart from '@/components/TotalSentimentVolumeChart.vue';
-import MainTopicsChart from '@/components/MainTopicsChart.vue';
+import axios from 'axios';
+
 
 export default {
   name: 'MainView',
@@ -33,7 +34,8 @@ export default {
       resultOpened: null,
       resultAverageTime: null,
       resultSLAExceeded: null,
-      resultByMonth: null
+      resultByMonth: null,
+      resultRecurringTickets: null
     }
   },
   methods: {
@@ -58,12 +60,17 @@ export default {
     handleFilterByMonth(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/by-period", "resultByMonth", filtros);
     },
+    handleFilterRecurringTickets(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/recurring-tickets", "resultRecurringTickets", filtros);
+
+    },
   },
   mounted() {
     this.handleFilterOpened();
     this.handleFilterAverageTime();
     this.handleFilterExcedeedSLA();
     this.handleFilterByMonth();
+    this.handleFilterRecurringTickets();
   }
 }
 </script>
