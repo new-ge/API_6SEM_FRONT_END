@@ -50,9 +50,10 @@ export default {
   width: 31%;
   height: 45%;
   position: absolute;
-  top: 34%;
+  top: 33.8%;
   right: 27%;
   transform: translate(-50%, -50%);
+  display: grid;
 }
 
 .big-number-cards {
