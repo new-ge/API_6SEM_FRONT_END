@@ -77,7 +77,7 @@ const chartOptions: ChartOptions<"line"> = reactive({
       display: true,
       text: "Chamados por Período",
       font: {
-        size: 18,
+        size: 22,
         weight: "bold",
       },
       color: "#502A81"
@@ -91,7 +91,7 @@ const chartOptions: ChartOptions<"line"> = reactive({
   background: white;
   border: 2px solid #502A81;
   border-radius: 23px;
-  width: 72%;
+  width: 71.8%;
   height: 39%;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   position: absolute;

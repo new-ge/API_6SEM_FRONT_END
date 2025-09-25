@@ -78,6 +78,7 @@ const chartOptions = {
     left: 9%;
     top: -1%;
     font-size: 160% !important;
+    position: absolute;
 }
 
 .chart1 {

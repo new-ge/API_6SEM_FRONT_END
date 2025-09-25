@@ -47,44 +47,44 @@ export default {
 <style>
 
 .numberCards-container {
-    width: 31%;
-    height: 43%;
-    position: absolute;
-    top: 33%;
-    right: 27%;
-    transform: translate(-50%, -50%);
+  width: 31%;
+  height: 45%;
+  position: absolute;
+  top: 34%;
+  right: 27%;
+  transform: translate(-50%, -50%);
 }
 
 .big-number-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 9px;
 }
 
 .card {
-    background: #fff;
-    border: 2px solid #502A81;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  border: 2px solid #502A81;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .label {
-    font-size: 25px;
-    font-weight: 600;
-    color: #502A81;
-    margin-bottom: 0px;
-    position: relative;
-    top: -5%;
+  font-size: 25px;
+  font-weight: 600;
+  color: #502A81;
+  margin-bottom: 0px;
+  position: relative;
+  top: -5%;
 }
 
 .number {
-    font-size: 40px;
-    font-weight: 800;
-    color: #502A81;
-    margin: 0px;
-    position: relative;
-    top: -7%;
+  font-size: 40px;
+  font-weight: 800;
+  color: #502A81;
+  margin: 0px;
+  position: relative;
+  top: -7%;
 }
 
 .unit {
