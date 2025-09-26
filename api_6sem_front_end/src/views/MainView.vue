@@ -1,11 +1,11 @@
 <template>
   <div>
     <BackgroundMain />
-    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets"/>
+    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @primary-themes="handleFilterPrimaryThemes"/>
     <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets" />
     <PeriodChart :resultByMonth="resultByMonth"/>
     <TotalSentimentVolumeChart />
-    <MainTopicsChart />
+    <MainTopicsChart :resultPrimaryThemes="resultPrimaryThemes" />
   </div>
 </template>
 
@@ -35,7 +35,8 @@ export default {
       resultAverageTime: null,
       resultSLAExceeded: null,
       resultByMonth: null,
-      resultRecurringTickets: null
+      resultRecurringTickets: null,
+      resultPrimaryThemes: null
     }
   },
   methods: {
@@ -62,6 +63,9 @@ export default {
     },
     handleFilterRecurringTickets(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/recurring-tickets", "resultRecurringTickets", filtros);
+    },
+    handleFilterPrimaryThemes(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/primary-themes", "resultPrimaryThemes", filtros);
     }
   },
   mounted() {
@@ -70,6 +74,7 @@ export default {
     this.handleFilterExcedeedSLA();
     this.handleFilterByMonth();
     this.handleFilterRecurringTickets();
+    this.handleFilterPrimaryThemes();
   }
 }
 </script>

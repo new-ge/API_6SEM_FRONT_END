@@ -160,7 +160,7 @@
             </div>
         </div>
         <div class="clean-filters">
-            <n-button color="#502A81" class="standard" @click="limparFiltros">
+            <n-button color="#502A81" class="standard" @click="limparTodosFiltros">
             Limpar Filtros
             </n-button>
         </div> 
@@ -190,12 +190,32 @@ export default {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
         return ts > today.getTime()
-        },
+    },
 
-        limparFiltros() {
-        
-        window.location.reload()
-        },
+    emitirFiltros() {
+        const eventos = [
+            'open-tickets-filter',
+            'average-running-time-filter',
+            'exceeded-sla-filter',
+            'by-month',
+            'recurring-tickets',
+            'primary-themes'
+        ];
+        eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
+    },
+
+    limparTodosFiltros() {
+        this.filtros.sla = [];
+        this.filtros.equipe = [];
+        this.filtros.status = [];
+        this.filtros.created_at_start = null;
+        this.filtros.created_at_end = null;
+        this.filtros.priority = [];
+        this.filtros.sub_category = [];
+        this.filtros.tag = [];
+
+        this.emitirFiltros();
+    },
 
     toggleFilter(tipo, valor) {
     if (!Array.isArray(this.filtros[tipo])) return;
@@ -209,9 +229,7 @@ export default {
         if (index === -1) this.filtros[tipo].push(valor);
         else this.filtros[tipo].splice(index, 1);
     }
-
-    const eventos = ['open-tickets-filter', 'average-running-time-filter', 'exceeded-sla-filter', 'by-month', 'recurring-tickets', 'by-team'];
-    eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
+    this.emitirFiltros();
     }
   }
 }
