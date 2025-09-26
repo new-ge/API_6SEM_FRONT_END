@@ -3,7 +3,7 @@
     <BackgroundMain />
     <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets"/>
     <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets" />
-    <PeriodChart :resultByMonth="resultByMonth"/>
+    <PeriodChart :resultByMonth="resultByMonth" :resultForecast="resultForecast"/>
     <TotalSentimentVolumeChart />
     <MainTopicsChart />
   </div>
@@ -35,34 +35,39 @@ export default {
       resultAverageTime: null,
       resultSLAExceeded: null,
       resultByMonth: null,
-      resultRecurringTickets: null
+      resultRecurringTickets: null,
+      resultForecast: null
     }
   },
   methods: {
-    async fetchData(url, targetKey, filtros = {}) {
+    async fetchData(url, filtros = {}, mapping = {}) {
       try {
         const filtroParaEnviar = Object.keys(filtros).length ? filtros : {};
         const response = await axios.post(url, { filtro: filtroParaEnviar });
-        this[targetKey] = response.data;
+
+        for (const [respKey, varName] of Object.entries(mapping)) {
+          if (response.data[respKey] !== undefined) {
+            this[varName] = response.data[respKey];
+          }
+        }
       } catch (error) {
         console.error(error);
       }
     },
     handleFilterOpened(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/opened/count", "resultOpened", filtros);
+      return this.fetchData("http://localhost:8000/tickets/opened/count", filtros, {opened_tickets: "resultOpened"});
     },
     handleFilterAverageTime(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/closed/average-time", "resultAverageTime", filtros);
+      return this.fetchData("http://localhost:8000/tickets/closed/average-time", filtros, {average_duration_minutes: "resultAverageTime"});
     },
     handleFilterExcedeedSLA(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/closed/exceeded-sla", "resultSLAExceeded", filtros);
+      return this.fetchData("http://localhost:8000/tickets/closed/exceeded-sla", filtros, {sla_exceeded: "resultSLAExceeded"});
     },
     handleFilterByMonth(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/by-period", "resultByMonth", filtros);
+      return this.fetchData("http://localhost:8000/tickets/by-period", filtros, { tickets: "resultByMonth", forecast: "resultForecast" });
     },
     handleFilterRecurringTickets(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/recurring-tickets", "resultRecurringTickets", filtros);
-
+      return this.fetchData("http://localhost:8000/tickets/recurring-tickets", filtros, { recurring_tickets: "resultRecurringTickets" });
     },
   },
   mounted() {

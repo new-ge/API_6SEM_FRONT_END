@@ -24,6 +24,7 @@ import { reactive, computed, ComputedRef } from "vue";
 
 interface Props {
   resultByMonth?: Record<string, number> | null
+  resultForecast?: Record<string, number> | null
 }
 
 const props = defineProps<Props>();
@@ -57,7 +58,7 @@ const chartData: ComputedRef<ChartData<"line">> = computed(() => ({
       label: "Tendência",
       borderColor: "#B59F3B",
       backgroundColor: "#B59F3B",
-      data: [240, 290, 50, 140, 170, 180, 190, 60, 300, 310, 280, 350],
+      data: Array.from({ length: 12 }, (_, i) => props.resultForecast?.[String(i + 1).padStart(2, "0")] ?? 0),
       tension: 0.3,
     },
   ],

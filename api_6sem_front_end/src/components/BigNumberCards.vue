@@ -3,19 +3,19 @@
         <div class="big-number-cards">
             <div class="card">
             <p class="label">Quantidade de chamados</p>
-            <h2 class="number">{{ resultOpened?.opened_tickets ?? 0}}</h2>
+            <h2 class="number">{{ resultOpened ?? 0}}</h2>
             </div>
             <div class="card">
             <p class="label">Quantidade de excedidos</p>
-            <h2 class="number">{{ resultSLAExceeded?.sla_exceeded ?? 0}}</h2>
+            <h2 class="number">{{ resultSLAExceeded ?? 0}}</h2>
             </div>
             <div class="card">
             <p class="label">Tempo médio para resolução</p>
-            <h2 class="number">{{ resultAverageTime?.average_duration_minutes ?? 0}} <span class="unit">min</span></h2>
+            <h2 class="number">{{ resultAverageTime ?? 0}} <span class="unit">min</span></h2>
             </div>
             <div class="card">
             <p class="label">Quantidade de reincidência</p>
-            <h2 class="number">{{ resultRecurringTickets?.recurring_tickets ?? 0}}</h2>
+            <h2 class="number">{{ resultRecurringTickets ?? 0}}</h2>
             </div>
         </div>
     </div>
@@ -25,19 +25,19 @@
 export default {
   props: {
     resultOpened: {
-      type: Object,
+      type: [Object, Number],
       default: () => null
     },
     resultAverageTime: {
-      type: Object,
+      type: [Object, Number],
       default: () => null
     },
     resultSLAExceeded: {
-      type: Object,
+      type: [Object, Number],
       default: () => null
     },
     resultRecurringTickets: {
-      type: Object,
+      type: [Object, Number],
       default: () => null
     }
   }
