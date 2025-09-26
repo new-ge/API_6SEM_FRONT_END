@@ -1,57 +1,7 @@
 <template>
-  <div class="filter-container">
-        <div class="sla-filter">
-            <h3>Período</h3>
-            <div class="sla-buttons">
-                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Padrão')}" @click="toggleFilter ('sla', { name: 'SLA Padrão', target_minutes: 480 })">
-                Padrão
-                </n-button>
-                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA VIP') }" @click="toggleFilter ('sla', { name: 'SLA VIP', target_minutes: 240 })">
-                VIP
-                </n-button>
-                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Estendido') }" @click="toggleFilter ('sla', { name: 'SLA Estendido', target_minutes: 1440 })">
-                Estendido
-                </n-button>
-            </div>
-        </div>
-        <div class="team-filter">
-            <div>
-                <h3>Equipe</h3>
-            </div>
-            <div class="team-buttons">
-                <n-button color="#502A81" class="analist1" :class="{ 'is-active': filtros.access_level.includes('N1') }" @click="toggleFilter('access_level', 'N1')">
-                N1
-                </n-button>
-                <n-button color="#502A81" class="analist2" :class="{ 'is-active': filtros.access_level.includes('N2') }" @click="toggleFilter('access_level', 'N2')">
-                N2
-                </n-button>
-                <n-button color="#502A81" class="analist3" :class="{ 'is-active': filtros.access_level.includes('N3') }" @click="toggleFilter('access_level', 'N3')">
-                N3
-                </n-button>
-            </div>
-        </div>
-        <div class="status-filter">
-            <h3>Status</h3>
-            <div class="status-buttons">
-                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Aberto') }" @click="toggleFilter('status', 'Aberto')">
-                Aberto
-                </n-button>
-                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }" @click="toggleFilter('status', 'Em Atendimento')">
-                Em <br> Atendimento
-                </n-button>
-                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }" @click="toggleFilter('status', 'Aguardando Cliente')">
-                Aguardando <br> Cliente
-                </n-button>
-                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }" @click="toggleFilter('status', 'Resolvido')">
-                Resolvido
-                </n-button>
-                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }" @click="toggleFilter('status', 'Fechado')">
-                Fechado
-                </n-button>
-            </div>
-        </div>
+    <div class="filter-container">
         <div class="date-filters">
-            <h3>SLA</h3>
+            <h3 class="period-title">Período</h3>
             <div class="inputs">
             <n-date-picker
                 type="date"
@@ -71,9 +21,59 @@
             />
             </div>
         </div>
+        <div class="team-filter">
+            <div>
+                <h3 class="team-text">Equipe</h3>
+            </div>
+            <div class="team-buttons">
+                <n-button color="#502A81" class="analist1" :class="{ 'is-active': filtros.access_level.includes('N1') }" @click="toggleFilter('access_level', 'N1')">
+                N1
+                </n-button>
+                <n-button color="#502A81" class="analist2" :class="{ 'is-active': filtros.access_level.includes('N2') }" @click="toggleFilter('access_level', 'N2')">
+                N2
+                </n-button>
+                <n-button color="#502A81" class="analist3" :class="{ 'is-active': filtros.access_level.includes('N3') }" @click="toggleFilter('access_level', 'N3')">
+                N3
+                </n-button>
+            </div>
+        </div>
+        <div class="status-filter">
+            <h3 class="status-text">Status</h3>
+            <div class="status-buttons">
+                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Aberto') }" @click="toggleFilter('status', 'Aberto')">
+                Aberto
+                </n-button>
+                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }" @click="toggleFilter('status', 'Em Atendimento')">
+                Em <br> Atendimento
+                </n-button>
+                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }" @click="toggleFilter('status', 'Aguardando Cliente')">
+                Aguardando <br> Cliente
+                </n-button>
+                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }" @click="toggleFilter('status', 'Resolvido')">
+                Resolvido
+                </n-button>
+                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }" @click="toggleFilter('status', 'Fechado')">
+                Fechado
+                </n-button>
+            </div>
+        </div>
+        <div class="sla-filter">
+            <h3 class="sla-text">SLA</h3>
+            <div class="sla-buttons">
+                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Padrão')}" @click="toggleFilter ('sla', { name: 'SLA Padrão', target_minutes: 480 })">
+                Padrão
+                </n-button>
+                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA VIP') }" @click="toggleFilter ('sla', { name: 'SLA VIP', target_minutes: 240 })">
+                VIP
+                </n-button>
+                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Estendido') }" @click="toggleFilter ('sla', { name: 'SLA Estendido', target_minutes: 1440 })">
+                Estendido
+                </n-button>
+            </div>
+        </div>
         <div class="priorities-filter">
             <div>
-                <h3>Prioridades</h3>
+                <h3 class="priorities-text">Prioridades</h3>
             </div>
             <div class="priorities-buttons">
                 <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Baixa') }" @click="toggleFilter('priority', 'Baixa')">
@@ -91,24 +91,21 @@
             </div>
         </div>
         <div class="subcategory-filter">
-            <h3>SubCategoria</h3>
+            <h3 class="subcategory-text">SubCategoria</h3>
             <div class="subcategory-buttons">
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Erro de sistema') }" @click="toggleFilter('sub_category', 'Erro de sistema')">
                 Erro de <br> Sistema
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Lentidão') }" @click="toggleFilter('sub_category', 'Lentidão')">
                 Lentidão
-
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Funcionalidade indisponível') }" @click="toggleFilter('sub_category', 'Funcionalidade indisponível')">
                 Funcionalidade<br> Indisponível
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Problemas de login') }" @click="toggleFilter('sub_category', 'Problemas de login')">
                 Problemas<br> de Login
-
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Permissões') }" @click="toggleFilter('sub_category', 'Permissões')">
-
                 Permissões
                 </n-button>
                 <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Cadastro de usuários') }" @click="toggleFilter('sub_category', 'Cadastro de usuários')">
@@ -126,7 +123,7 @@
             </div>
         </div>
         <div class="tags-filter">
-            <h3>TAG</h3>
+            <h3 class="tag-text">TAG</h3>
             <div class="tags-buttons">
                 <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Urgente') }" @click="toggleFilter('tag', 'Urgente')">
                 Urgente
@@ -162,7 +159,13 @@
                 </n-button>
             </div>
         </div>
+        <div class="clean-filters">
+            <n-button color="#502A81" class="standard" @click="limparFiltros">
+            Limpar Filtros
+            </n-button>
+        </div> 
   </div>
+    
 </template>
 
 <script>
@@ -187,7 +190,12 @@ export default {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
         return ts > today.getTime()
-    },
+        },
+
+        limparFiltros() {
+        
+        window.location.reload()
+        },
 
     toggleFilter(tipo, valor) {
     if (!Array.isArray(this.filtros[tipo])) return;
@@ -207,10 +215,11 @@ export default {
     }
   }
 }
+
 </script>
 
-
 <style>
+
 .filter-container {
     background: white;
     border: 2px solid #502A81;
@@ -224,63 +233,63 @@ export default {
     transform: translate(-50%, -50%);
 }
 
-h3 {
-    width: 82%;
-    left: 2%;
+.period-title {
     position: absolute;
+    left: 3%;
 }
 
-.sla-filter{
-    height: 9%;
+.date-filters {
+    top: 0%;
+    height: 13%;
     width: 100%;
-}
-
-.sla-buttons {
     position: absolute;
-    z-index: 2;
-    width: 100%;
-    top: 38%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
-.standard {
-    width: 28%;
+.inputs {
+    display: flex;
+    position: absolute;
+    top: 48%;
     left: 5%;
+    right: 7%;
+    gap: 4%;
+}
+
+.n-input .n-input-wrapper {
+    overflow: hidden;
+    display: inline-flex;
+    flex-grow: 1;
+    position: relative;
+    padding-left: var(--n-padding-left);
+    padding-right: var(--n-padding-right);
     background-color: #502A81;
-    border: 1px solid #502A81;
+    border-radius: 4px;
 }
 
-.vip {
-    width: 28%;
-    left: 7%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.n-button--ghost {
-  background-color: #502A81 !important;
-  box-shadow: none !important;
-}
-
-.n-button:active,
-.n-button:focus {
-  background-color: #502A81 !important;
-}
-
-.n-button.is-active {
-  background-color: #6b5b7f !important;
-  border-color: #6b5b7f !important;
-}
-
-.extended {
-    width: 28%;
-    left: 9%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.team-filter{
-    height: 9%;
+.n-input .n-input__input-el, .n-input .n-input__textarea-el {
+    -webkit-appearance: none;
+    scrollbar-width: none;
     width: 100%;
+    min-width: 0;
+    text-decoration-color: rgb(246 247 247);
+    color: rgb(255 255 255);
+    caret-color: var(--n-caret-color);
+    background-color: transparent;
+}
+
+.team-filter {
+    height: 10%;
+    width: 100%;
+    position: absolute;
+    top: 14%;
+}
+
+.team-text {
+    position: absolute;
+    left: 3%;
+    bottom: 62%;
 }
 
 .team-buttons {
@@ -311,15 +320,23 @@ h3 {
     border: 1px solid #502A81;
 }
 
-.status-filter{
-    height: 13%;
+.status-filter {
+    position: absolute;
+    height: 15%;
     width: 100%;
+    top: 21%;
+}
+
+.status-text {
+    position: absolute;
+    left: 3%;
+    bottom: 58%;
 }
 
 .status-buttons {
     position: absolute;
     width: 100%;
-    height: 5%;
+    height: 34%;
     top: 24%;
 }
 
@@ -360,60 +377,89 @@ h3 {
     border: 1px solid #502A81;
 }
 
-.date-filters {
-    top: 32%;
+.n-button .n-button__content {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    min-width: 0;
+    justify-content: center;
+}
+
+.sla-filter {
+    position: absolute;
+    bottom: 55.1%;
+    height: 10%;
+    width: 100%;
+}
+
+.sla-text {
+    position: absolute;
+    left: 3%;
+    bottom: 33%;
+}
+
+.sla-buttons {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    top: 40%;
+}
+
+.standard {
+    width: 28%;
+    left: 5%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.vip {
+    width: 28%;
+    left: 7%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.n-button--ghost {
+  background-color: #502A81 !important;
+  box-shadow: none !important;
+}
+
+.n-button:active,
+.n-button:focus {
+  background-color: #502A81 !important;
+}
+
+.n-button.is-active {
+  background-color: #6b5b7f !important;
+  border-color: #6b5b7f !important;
+}
+
+.extended {
+    width: 28%;
+    left: 9%;
+    background-color: #502A81;
+    border: 1px solid #502A81;
+}
+
+.priorities-filter {
     height: 13%;
     width: 100%;
+    top: 44.2%;
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
 }
 
-.inputs {
-    display: flex;
+.priorities-text {
     position: absolute;
-    bottom: 261%;
-    left: 5%;
-    right: 7%;
-    gap: 4%;
-}
-
-.n-input .n-input-wrapper {
-    overflow: hidden;
-    display: inline-flex;
-    flex-grow: 1;
-    position: relative;
-    padding-left: var(--n-padding-left);
-    padding-right: var(--n-padding-right);
-    background-color: #502A81;
-    border-radius: 4px;
-}
-
-.n-input .n-input__input-el, .n-input .n-input__textarea-el {
-    -webkit-appearance: none;
-    scrollbar-width: none;
-    width: 100%;
-    min-width: 0;
-    text-decoration-color: rgb(246 247 247);
-    color: rgb(255 255 255);
-    caret-color: var(--n-caret-color);
-    background-color: transparent;
-}
-
-.priorities-filter{
-    height: 35%;
-    width: 100%;
-    top: 41%;
-    position: absolute;
+    left: 3%;
+    bottom: 49%;
 }
 
 .priorities-buttons {
     display: flex;
     position: absolute;
     width: 88%;
-    height: 13%;
-    top: 17%;
+    height: 37%;
+    top: 29%;
     left: 5%;
     flex-direction: row;
     justify-content: space-between;
@@ -424,17 +470,23 @@ h3 {
 }
 
 .subcategory-filter {
-    height: 26%;
+    height: 21%;
     width: 100%;
-    top: 50%;
+    top: 53%;
     position: absolute;
+}
+
+.subcategory-text {
+    position: absolute;
+    left: 3%;
+    bottom: 66%;
 }
 
 .subcategory-buttons {
     position: absolute;
     display: flex;
     width: 93%;
-    height: 68%;
+    height: 88%;
     top: 23%;
     flex-wrap: wrap;
     gap: 2%;
@@ -449,18 +501,24 @@ h3 {
 }
 
 .tags-filter {
-    height: 31%;
+    height: 26%;
     width: 100%;
-    top: 70%;
+    top: 74%;
     position: absolute;
+}
+
+.tag-text {
+    position: absolute;
+    left: 3%;
+    bottom: 73%;
 }
 
 .tags-buttons {
     position: absolute;
     display: flex;
     width: 93%;
-    height: 59%;
-    top: 19%;
+    height: 62%;
+    top: 18%;
     flex-wrap: wrap;
     gap: 2%;
     align-items: baseline;
@@ -474,12 +532,20 @@ h3 {
 }
 
 .tag-ac {
-    height: 18%;
+    height: 19%;
     width: 36%;
     display: flex;
     position: absolute;
     flex-direction: column;
-    top: 73%;
+    top: 74%;
     left: 32%;
+}
+
+.clean-filters {
+    position: absolute;
+    z-index: 2;
+    width: 117%;
+    bottom: 104.4%;
+    left: 81%;
 }
 </style>
