@@ -35,7 +35,8 @@ export default {
       resultAverageTime: null,
       resultSLAExceeded: null,
       resultByMonth: null,
-      resultRecurringTickets: null
+      resultRecurringTickets: null,
+      resultByTeam: null
     }
   },
   methods: {
@@ -64,6 +65,9 @@ export default {
       return this.fetchData("http://localhost:8000/tickets/recurring-tickets", "resultRecurringTickets", filtros);
 
     },
+    handleFilterByTeam(filtros = {}){
+      return this.fetchData("http://localhost:8000/tickets/by-team/count", "resultByTeams", filtros);
+    },
   },
   mounted() {
     this.handleFilterOpened();
@@ -71,6 +75,7 @@ export default {
     this.handleFilterExcedeedSLA();
     this.handleFilterByMonth();
     this.handleFilterRecurringTickets();
+    this.handleFilterByTeam();
   }
 }
 </script>
