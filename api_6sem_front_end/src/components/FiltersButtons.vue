@@ -26,13 +26,13 @@
                 <h3 class="team-text">Equipe</h3>
             </div>
             <div class="team-buttons">
-                <n-button color="#502A81" class="analist1" :class="{ 'is-active': filtros.equipe.includes('N1') }">
+                <n-button color="#502A81" class="analist1" :class="{ 'is-active': filtros.access_level.includes('N1') }" @click="toggleFilter('access_level', 'N1')">
                 N1
                 </n-button>
-                <n-button color="#502A81" class="analist2" :class="{ 'is-active': filtros.equipe.includes('N2') }">
+                <n-button color="#502A81" class="analist2" :class="{ 'is-active': filtros.access_level.includes('N2') }" @click="toggleFilter('access_level', 'N2')">
                 N2
                 </n-button>
-                <n-button color="#502A81" class="analist3" :class="{ 'is-active': filtros.equipe.includes('N3') }">
+                <n-button color="#502A81" class="analist3" :class="{ 'is-active': filtros.access_level.includes('N3') }" @click="toggleFilter('access_level', 'N3')">
                 N3
                 </n-button>
             </div>
@@ -169,23 +169,24 @@
 </template>
 
 <script>
-    export default {
-    data() {
-        return {
-        filtros: {
-            sla: [],
-            tag: [],
-            equipe: [],
-            status: [],
-            sub_category: [],
-            priority: [],
-            created_at_start: null,
-            created_at_end: null
-        }
-        }
-    },
-    methods: {
-        timeToDisable(ts) {
+
+export default {
+  data() {
+    return {
+      filtros: {
+        sla: [],
+        tag: [],
+        access_level: [],
+        status: [],
+        sub_category: [],
+        priority: [],
+        created_at_start: null,
+        created_at_end: null
+      }
+    }
+  },
+  methods: {
+    timeToDisable(ts) {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
         return ts > today.getTime()
@@ -209,7 +210,7 @@
         else this.filtros[tipo].splice(index, 1);
     }
 
-    const eventos = ['open-tickets-filter', 'average-running-time-filter', 'exceeded-sla-filter', 'by-month', 'recurring-tickets'];
+    const eventos = ['open-tickets-filter', 'average-running-time-filter', 'exceeded-sla-filter', 'by-month', 'recurring-tickets', 'by-team'];
     eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     }
   }
