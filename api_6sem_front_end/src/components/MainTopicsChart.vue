@@ -7,21 +7,28 @@
 
 <script setup lang="ts">
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
+import { computed } from "vue";
 import { Bar } from "vue-chartjs";
+
+interface Props {
+  resultPrimaryThemes?: Theme[] | null;
+}
+
+const props = defineProps<Props>();
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-const chartData = {
-  labels: ["Lentidão", "Permissões", "Exportação", "Relatórios", "Cadastros", "Erros"],
+const chartData = computed(() => ({
+  labels: props.resultPrimaryThemes?.map(item => item.categoria) || [],
   datasets: [
     {
-      data: [100, 80, 80, 50, 40, 30],
+      data: props.resultPrimaryThemes?.map(item => item.count) || [],
       backgroundColor: "#5b2c6f",
       borderRadius: 8,
       barThickness: 25,
     },
   ],
-};
+}));
 
 const chartOptions = {
   indexAxis: "y",
