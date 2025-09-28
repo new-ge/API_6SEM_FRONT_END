@@ -1,15 +1,15 @@
 <template>
   <div>
     <BackgroundMain />
-    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @primary-themes="handleFilterPrimaryThemes"/>
+    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @primary-themes="handleFilterPrimaryThemes" @sentiment-volume="handleFilterSentimentVolume" @clear-labels="limparLabels"/>
     <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets" />
     <PeriodChart :resultByMonth="resultByMonth" :resultForecast="resultForecast"/>
-    <TotalSentimentVolumeChart />
-    <MainTopicsChart :resultPrimaryThemes="resultPrimaryThemes" />
+    <TotalSentimentVolumeChart :resultPositive="resultPositive" :resultNegative="resultNegative"/>
+    <MainTopicsChart :resultPrimaryThemes="resultPrimaryThemes"/>
   </div>
 </template>
 
-<script>
+<script lang="js">
 import BackgroundMain from '@/components/BackgroundMain.vue';
 import BigNumberCards from '@/components/BigNumberCards.vue';
 import FiltersButtons from '@/components/FiltersButtons.vue';
@@ -17,7 +17,6 @@ import MainTopicsChart from '@/components/MainTopicsChart.vue';
 import PeriodChart from '@/components/PeriodChart.vue';
 import TotalSentimentVolumeChart from '@/components/TotalSentimentVolumeChart.vue';
 import axios from 'axios';
-
 
 export default {
   name: 'MainView',
@@ -37,7 +36,9 @@ export default {
       resultByMonth: null,
       resultRecurringTickets: null,
       resultForecast: null,
-      resultPrimaryThemes: null
+      resultPrimaryThemes: null,
+      resultNegative: null,
+      resultPositive: null
     }
   },
   methods: {
@@ -56,13 +57,13 @@ export default {
       }
     },
     handleFilterOpened(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/opened/count", filtros, {opened_tickets: "resultOpened"});
+      return this.fetchData("http://localhost:8000/tickets/opened/count", filtros, { opened_tickets: "resultOpened" });
     },
     handleFilterAverageTime(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/closed/average-time", filtros, {average_duration_minutes: "resultAverageTime"});
+      return this.fetchData("http://localhost:8000/tickets/closed/average-time", filtros, { average_duration_minutes: "resultAverageTime" });
     },
     handleFilterExcedeedSLA(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/closed/exceeded-sla", filtros, {sla_exceeded: "resultSLAExceeded"});
+      return this.fetchData("http://localhost:8000/tickets/closed/exceeded-sla", filtros, { sla_exceeded: "resultSLAExceeded" });
     },
     handleFilterByMonth(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/by-period", filtros, { tickets: "resultByMonth", forecast: "resultForecast" });
@@ -71,8 +72,11 @@ export default {
       return this.fetchData("http://localhost:8000/tickets/recurring-tickets", filtros, { recurring_tickets: "resultRecurringTickets" });
     },
     handleFilterPrimaryThemes(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/primary-themes", filtros, {primary_themes: "resultPrimaryThemes"});
-    }
+      return this.fetchData("http://localhost:8000/tickets/primary-themes", filtros, { primary_themes: "resultPrimaryThemes"});
+    },
+    handleFilterSentimentVolume(filtros = {}) {
+      return this.fetchData("http://localhost:8000/tickets/sentiment", filtros, { negative: "resultNegative", positive: "resultPositive" });
+    },
   },
   mounted() {
     this.handleFilterOpened();
@@ -81,6 +85,7 @@ export default {
     this.handleFilterByMonth();
     this.handleFilterRecurringTickets();
     this.handleFilterPrimaryThemes();
+    this.handleFilterSentimentVolume();
   }
 }
 </script>

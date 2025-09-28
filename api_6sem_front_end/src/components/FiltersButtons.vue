@@ -199,14 +199,15 @@ export default {
             'exceeded-sla-filter',
             'by-month',
             'recurring-tickets',
-            'primary-themes'
+            'primary-themes',
+            'sentiment-volume'
         ];
         eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     },
 
-    limparTodosFiltros() {
+        limparTodosFiltros() {
         this.filtros.sla = [];
-        this.filtros.equipe = [];
+        this.filtros.access_level = [];
         this.filtros.status = [];
         this.filtros.created_at_start = null;
         this.filtros.created_at_end = null;
@@ -217,19 +218,22 @@ export default {
         this.emitirFiltros();
     },
 
-    toggleFilter(tipo, valor) {
-    if (!Array.isArray(this.filtros[tipo])) return;
 
-    if (tipo === 'sla') {
-        const index = this.filtros.sla.findIndex(s => s.name === valor.name);
-        if (index === -1) this.filtros.sla.push(valor);
-        else this.filtros.sla.splice(index, 1);
-    } else {
-        const index = this.filtros[tipo].indexOf(valor);
-        if (index === -1) this.filtros[tipo].push(valor);
-        else this.filtros[tipo].splice(index, 1);
-    }
-    this.emitirFiltros();
+    toggleFilter(tipo, valor) {
+        if (tipo === "created_at_start" || tipo === "created_at_end") {
+            this.filtros[tipo] = valor;
+        } else if (Array.isArray(this.filtros[tipo])) {
+            if (tipo === 'sla') {
+                const index = this.filtros.sla.findIndex(s => s.name === valor.name);
+                if (index === -1) this.filtros.sla.push(valor);
+                else this.filtros.sla.splice(index, 1);
+            } else {
+                const index = this.filtros[tipo].indexOf(valor);
+                if (index === -1) this.filtros[tipo].push(valor);
+                else this.filtros[tipo].splice(index, 1);
+            }
+        }
+        this.emitirFiltros();
     }
   }
 }
