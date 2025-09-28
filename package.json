@@ -1,0 +1,24 @@
+{
+  "name": "api_6sem_front_end",
+  "version": "1.0.0",
+  "description": "Frontend do projeto do sexto semestre de banco de dados",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/new-ge/API_6SEM_FRONT_END.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/new-ge/API_6SEM_FRONT_END/issues"
+  },
+  "homepage": "https://github.com/new-ge/API_6SEM_FRONT_END#readme",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "vue": "^3.5.21"
+  }
+}
