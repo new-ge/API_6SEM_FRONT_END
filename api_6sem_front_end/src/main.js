@@ -1,16 +1,17 @@
+import naive from 'naive-ui';
 import { createApp } from 'vue';
+import { Line } from 'vue-chartjs';
 import App from './App.vue';
 import router from './router';
-import naive from 'naive-ui';
-import { Line } from 'vue-chartjs';
-import axios from 'axios';
-
-createApp(App)
-  .use(router)
-  .use(naive)
-  .use(axios)
-  .mount('#app');
 
 
-app.component('LineChart', Line)
+const app = createApp(App);
 
+
+app.use(router);
+app.use(naive);
+
+app.component('LineChart', Line);
+
+
+app.mount('#app');

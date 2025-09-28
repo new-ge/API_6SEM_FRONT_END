@@ -8,21 +8,29 @@
 </template>
 
 <script setup lang="ts">
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
+import { ArcElement, Chart as ChartJS, Legend, Title, Tooltip } from "chart.js";
+import { computed } from "vue";
 import { Doughnut } from "vue-chartjs";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
-const chartData = {
-  labels: ["Negativo 23%", "Positivo 77%"],
+interface Props {
+  resultPositive?: Record<string, number> | null
+  resultNegative?: Record<string, number> | null
+}
+
+const props = defineProps<Props>();
+
+const chartData = computed(() => ({
+  labels: ["Positivo", "Negativo"],
   datasets: [
     {
-      data: [23, 77],
+      data: [props.resultPositive, props.resultNegative],
       backgroundColor: ["#9a7d0a", "#5b2c6f"],
       borderWidth: 0,
-    },
+    }
   ],
-};
+}));
 
 const chartOptions = {
   responsive: true,
