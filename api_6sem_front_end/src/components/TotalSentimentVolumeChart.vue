@@ -2,27 +2,29 @@
     <div class="chartTSV-container">
         <div class="chart1-card">
             <h3 class="chart1-title">Análise de Sentimento</h3>
-            <Doughnut :data="chartData" :options="chartOptions" class="chart1"/>
+            <Doughnut :data="chartData" :options="chartOptions" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
+import axios from "axios";
+import { ArcElement, Chart as ChartJS, Legend, Title, Tooltip } from "chart.js";
+import { onMounted, ref } from "vue";
 import { Doughnut } from "vue-chartjs";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
-const chartData = {
-  labels: ["Negativo 23%", "Positivo 77%"],
+const chartData = ref({
+  labels: [],
   datasets: [
     {
-      data: [23, 77],
+      data: [],
       backgroundColor: ["#9a7d0a", "#5b2c6f"],
       borderWidth: 0,
     },
   ],
-};
+});
 
 const chartOptions = {
   responsive: true,
@@ -44,6 +46,55 @@ const chartOptions = {
   },
 };
 
+const fetchSentimentData = async () => {
+  console.log("Iniciando fetch dos dados...");
+  try {
+    const response = await axios.get("http://localhost:8000/tickets/sentiment_counts");
+    const data = response.data;
+
+    const positivo = Number(data.positivo) || 0;
+    const negativo = Number(data.negativo) || 0;
+    const total = positivo + negativo;
+
+    if (total === 0) {
+      console.log("Sem dados disponíveis.");
+      chartData.value = {
+        labels: ["Sem dados"],
+        datasets: [
+          {
+            data: [1],
+            backgroundColor: ["#cccccc"],
+            borderWidth: 0,
+          },
+        ],
+      };
+      return;
+    }
+
+    const positivoPercent = Math.round((positivo / total) * 100);
+    const negativoPercent = Math.round((negativo / total) * 100);
+
+    chartData.value = {
+      labels: [
+        `Negativo ${negativoPercent}%`,
+        `Positivo ${positivoPercent}%`,
+      ],
+      datasets: [
+        {
+          data: [negativo, positivo],
+          backgroundColor: ["#9a7d0a", "#5b2c6f"],
+          borderWidth: 0,
+        },
+      ],
+    };
+
+    console.log("Dados do gráfico atualizados:", chartData.value);
+  } catch (error) {
+    console.error("Erro ao buscar dados de sentimento:", error);
+  }
+};
+
+onMounted(fetchSentimentData);
 </script>
 
 
@@ -65,9 +116,9 @@ const chartOptions = {
 .chart1-card {
     padding: 1rem;
     text-align: center;
-    position: absolute;
-    height: 90%;
-    width: 89%;
+    position: relative;
+    height: 80%;
+    width: 80%;
 }
 
 .chart1-title {
@@ -78,7 +129,7 @@ const chartOptions = {
     left: 9%;
     top: -1%;
     font-size: 160% !important;
-    position: absolute;
+    position: relative
 }
 
 .chart1 {
