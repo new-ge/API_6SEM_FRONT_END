@@ -1,7 +1,7 @@
 <template>
   <div>
     <BackgroundMain />
-    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @primary-themes="handleFilterPrimaryThemes" @sentiment-volume="handleFilterSentimentVolume" @clear-labels="limparLabels"/>
+    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @primary-themes="handleFilterPrimaryThemes" @sentiment-volume="handleFilterSentimentVolume"/>
     <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets" />
     <PeriodChart :resultByMonth="resultByMonth" :resultForecast="resultForecast"/>
     <TotalSentimentVolumeChart :resultPositive="resultPositive" :resultNegative="resultNegative"/>

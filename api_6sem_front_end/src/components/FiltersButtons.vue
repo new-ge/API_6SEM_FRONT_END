@@ -7,7 +7,7 @@
                 type="date"
                 placeholder="Data inicial"
                 class="date-input"
-                v-model="filtros.created_at_start"
+                :value="filtros.created_at_start"
                 @update:value="toggleFilter('created_at_start', $event)"
                 :is-date-disabled="timeToDisable"
             />
@@ -15,7 +15,7 @@
                 type="date"
                 placeholder="Data final"
                 class="date-input"
-                v-model="filtros.created_at_end"
+                :value="filtros.created_at_end"
                 @update:value="toggleFilter('created_at_end', $event)"
                 :is-date-disabled="timeToDisable"
             />
@@ -205,7 +205,7 @@ export default {
         eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     },
 
-        limparTodosFiltros() {
+    limparTodosFiltros() {
         this.filtros.sla = [];
         this.filtros.access_level = [];
         this.filtros.status = [];
