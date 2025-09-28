@@ -33,19 +33,19 @@
         <div class="status-filter">
             <h3>Status</h3>
             <div class="status-buttons">
-                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Abertp') }">
+                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Aberto') }" @click="toggleFilter('status', 'Aberto')">
                 Aberto
                 </n-button>
-                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }">
+                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }" @click="toggleFilter('status', 'Em Atendimento')">
                 Em <br> Atendimento
                 </n-button> 
-                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }">
+                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }" @click="toggleFilter('status', 'Aguardando Cliente')">
                 Aguardando <br> Cliente
                 </n-button>
-                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }">
+                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }" @click="toggleFilter('status', 'Resolvido')">
                 Resolvido
                 </n-button> 
-                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }">
+                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }" @click="toggleFilter('status', 'Fechado')">
                 Fechado
                 </n-button>
             </div>
@@ -93,31 +93,31 @@
         <div class="subcategory-filter">
             <h3>SubCategoria</h3>
             <div class="subcategory-buttons">
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Erro de Sistema') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Erro de sistema') }" @click="toggleFilter('sub_category', 'Erro de sistema')">
                 Erro de <br> Sistema
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Lentidão') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Lentidão') }" @click="toggleFilter('sub_category', 'Lentidão')">
                 Lentidão
                 </n-button> 
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Funcionalidade Indisponível') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Funcionalidade indisponível') }" @click="toggleFilter('sub_category', 'Funcionalidade indisponível')">
                 Funcionalidade<br> Indisponível
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Problemas de Login') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Problemas de login') }" @click="toggleFilter('sub_category', 'Problemas de login')">
                 Problemas<br> de Login
                 </n-button> 
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Permissões') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Permissões') }" @click="toggleFilter('sub_category', 'Permissões')">
                 Permissões
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Cadastro de Usuários') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Cadastro de usuários') }" @click="toggleFilter('sub_category', 'Cadastro de usuários')">
                 Cadastro de<br> Usuários
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Relatórios') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Relatórios') }" @click="toggleFilter('sub_category', 'Relatórios')">
                 Relatórios
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Exportação') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Exportação') }" @click="toggleFilter('sub_category', 'Exportação')">
                 Exportação
                 </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Dados Inconsistentes') }">
+                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Dados inconsistentes') }" @click="toggleFilter('sub_category', 'Dados inconsistentes')">
                 Dados <br> Inconsistentes
                 </n-button>
             </div>
@@ -163,6 +163,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -175,28 +176,14 @@ export default {
         priority: [],
         created_at_start: null,
         created_at_end: null
-      },
-      resultado: null
-    };
-  },
-  props: {
-    resultado: {
-      type: Object,
-      default: () => null
+      }
     }
   },
   methods: {
-    async handleFiltrar(filtros = {}) {
-      try {
-        const filtroParaEnviar = Object.keys(filtros).length ? filtros : {};
-        const response = await axios.post(
-          "http://127.0.0.1:8080/tickets/opened/count",
-          { filtro: filtroParaEnviar }
-        );
-        this.resultado = response.data;
-      } catch (error) {
-        console.error(error);
-      }
+    timeToDisable(ts) {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        return ts > today.getTime()
     },
 
     toggleFilter(tipo, valor) {  
@@ -210,16 +197,13 @@ export default {
       } else {
         this.filtros[tipo] = valor;
       }
-
-      // Emitir eventos com os filtros atualizados
-      this.$emit("open-tickets-filter", this.filtros);
-      this.$emit("average-running-time-filter", this.filtros);
-      this.$emit("exceeded-sla-filter", this.filtros);
-      this.$emit("by-month", this.filtros);
+      
+        this.$emit("open-tickets-filter", this.filtros);
+        this.$emit("average-running-time-filter", this.filtros);
+        this.$emit("exceeded-sla-filter", this.filtros);
+        this.$emit("by-month", this.filtros);
+        this.$emit("recurring-tickets", this.filtros);
     }
-  },
-  mounted() {
-    this.handleFiltrar();
   }
 };
 </script>
