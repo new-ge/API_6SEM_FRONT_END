@@ -1,11 +1,9 @@
 <script setup>
-import MainView from './views/MainView.vue';
-
 </script>
 
 <template>
   <div id="app">
-    <MainView />
+    <router-view />
   </div>
 </template>
 
