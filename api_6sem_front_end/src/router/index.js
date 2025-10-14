@@ -6,10 +6,6 @@ const routes = [
     path: '/main',
     name: 'Main',
     component: MainView
-  },
-  {
-    path: '/',
-    redirect: '/main' // redireciona a raiz para /main
   }
 ];
 

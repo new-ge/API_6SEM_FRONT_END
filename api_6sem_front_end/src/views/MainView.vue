@@ -44,8 +44,19 @@ export default {
   methods: {
     async fetchData(url, filtros = {}, mapping = {}) {
       try {
+        const token = localStorage.getItem("token");
         const filtroParaEnviar = Object.keys(filtros).length ? filtros : {};
-        const response = await axios.post(url, { filtro: filtroParaEnviar });
+
+        const response = await axios.post(
+          url,
+          { filtro: filtroParaEnviar },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         for (const [respKey, varName] of Object.entries(mapping)) {
           if (response.data[respKey] !== undefined) {
@@ -53,9 +64,10 @@ export default {
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao buscar dados:", error);
       }
     },
+
     handleFilterOpened(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/opened/count", filtros, { opened_tickets: "resultOpened" });
     },
@@ -78,7 +90,10 @@ export default {
       return this.fetchData("http://localhost:8000/tickets/sentiment", filtros, { negative: "resultNegative", positive: "resultPositive" });
     },
   },
-  mounted() {
+  async mounted() {
+    const response = await axios.get("http://localhost:8000/");
+    const token = response.data.token;
+    localStorage.setItem("token", token);
     this.handleFilterOpened();
     this.handleFilterAverageTime();
     this.handleFilterExcedeedSLA();
