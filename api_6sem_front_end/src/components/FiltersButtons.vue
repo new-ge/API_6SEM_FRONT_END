@@ -160,7 +160,7 @@
             </div>
         </div>
         <div class="clean-filters">
-            <n-button color="#502A81" class="standard" @click="limparTodosFiltros">
+            <n-button color="#502A81" class="standard" @click="cleanAllFilters">
             Limpar Filtros
             </n-button>
         </div> 
@@ -192,7 +192,7 @@ export default {
         return ts > today.getTime()
     },
 
-    emitirFiltros() {
+    emitFilters() {
         const eventos = [
             'open-tickets-filter',
             'average-running-time-filter',
@@ -205,7 +205,7 @@ export default {
         eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     },
 
-    limparTodosFiltros() {
+    cleanAllFilters() {
         this.filtros.sla = [];
         this.filtros.access_level = [];
         this.filtros.status = [];
@@ -233,7 +233,7 @@ export default {
                 else this.filtros[tipo].splice(index, 1);
             }
         }
-        this.emitirFiltros();
+        this.emitFilters();
     }
   }
 }
