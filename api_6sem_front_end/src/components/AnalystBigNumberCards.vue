@@ -5,6 +5,10 @@
             <p class="label">Quantidade de Chamados</p>
             <h2 class="number">{{ resultOpened ?? 0}}</h2>
             </div>
+            <div class="card">
+            <p class="label">Quantidade de excedidos</p>
+            <h2 class="number">{{ resultSLAExceeded ?? 0}}</h2>
+            </div>
         </div>
     </div>
 </template>
@@ -16,7 +20,10 @@ export default {
       type: [Object, Number],
       default: () => null
     },
-
+    resultSLAExceeded: {
+      type: [Object, Number],
+      default: () => null
+    },  
   }
 }
 </script>
