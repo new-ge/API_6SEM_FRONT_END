@@ -6,8 +6,12 @@
             <h2 class="number">{{ resultOpened ?? 0}}</h2>
             </div>
             <div class="card">
-            <p class="label">Quantidade de excedidos</p>
+            <p class="label">Quantidade de Excedidos</p>
             <h2 class="number">{{ resultSLAExceeded ?? 0}}</h2>
+            </div>
+            <div class="card">
+            <p class="label">Tempo Médio para Resolução</p>
+            <h2 class="number">{{ resultAverageTime ?? 0}} <span class="unit">min</span></h2>
             </div>
         </div>
     </div>
@@ -21,6 +25,10 @@ export default {
       default: () => null
     },
     resultSLAExceeded: {
+      type: [Object, Number],
+      default: () => null
+    },
+    resultAverageTime: {
       type: [Object, Number],
       default: () => null
     },  
