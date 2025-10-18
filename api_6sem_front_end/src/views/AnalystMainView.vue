@@ -3,6 +3,7 @@
         <AnalystBackgroundMain />
         <AnalystFiltersButtons />
         <AnalystBigNumberCards />
+        <AnalystTotalSentimentVolumeChart />
     </div>
 </template>
 
@@ -10,6 +11,7 @@
 import AnalystBackgroundMain from '@/components/AnalystBackgroundMain.vue';
 import AnalystFiltersButtons from '@/components/AnalystFiltersButtons.vue';
 import AnalystBigNumberCards from '@/components/AnalystBigNumberCards.vue';
+import AnalystTotalSentimentVolumeChart from '@/components/AnalystTotalSentimentVolumeChart.vue';
 
 export default {
   name: 'AnalystMainView',
@@ -17,6 +19,7 @@ export default {
     AnalystBackgroundMain,
     AnalystFiltersButtons,
     AnalystBigNumberCards,
+    AnalystTotalSentimentVolumeChart,
   },
 };
 
