@@ -13,6 +13,10 @@
             <p class="label">Tempo Médio para Resolução</p>
             <h2 class="number">{{ resultAverageTime ?? 0}} <span class="unit">min</span></h2>
             </div>
+            <div class="card">
+            <p class="label">Quantidade de Reincidência</p>
+            <h2 class="number">{{ resultRecurringTickets ?? 0}}</h2>
+            </div>
         </div>
     </div>
 </template>
@@ -31,7 +35,11 @@ export default {
     resultAverageTime: {
       type: [Object, Number],
       default: () => null
-    },  
+    },
+    resultRecurringTickets: {
+      type: [Object, Number],
+      default: () => null
+    }  
   }
 }
 </script>
