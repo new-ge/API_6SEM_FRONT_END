@@ -59,6 +59,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 9px;
+  height: 99.2%;
 }
 
 .card {
