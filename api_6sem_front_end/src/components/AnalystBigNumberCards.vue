@@ -58,7 +58,7 @@ export default {
 .big-number-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  height: 99.2%;
 }
 
 .card {
