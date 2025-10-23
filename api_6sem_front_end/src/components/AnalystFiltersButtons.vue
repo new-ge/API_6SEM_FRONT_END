@@ -166,6 +166,7 @@ export default {
     },
 
     toggleFilter(tipo, valor) {
+        console.log(tipo, valor);
         if (tipo === "created_at_start" || tipo === "created_at_end") {
             this.filtros[tipo] = valor;
         } else if (Array.isArray(this.filtros[tipo])) {
