@@ -3,169 +3,104 @@
         <div class="date-filters">
             <h3 class="period-title">Período</h3>
             <div class="inputs">
-            <n-date-picker
-                type="date"
-                placeholder="Data inicial"
-                class="date-input"
-                :value="filtros.created_at_start"
-                @update:value="toggleFilter('created_at_start', $event)"
-                :is-date-disabled="timeToDisable"
-            />
-            <n-date-picker
-                type="date"
-                placeholder="Data final"
-                class="date-input"
-                :value="filtros.created_at_end"
-                @update:value="toggleFilter('created_at_end', $event)"
-                :is-date-disabled="timeToDisable"
-            />
+                <n-date-picker
+                    type="date"
+                    placeholder="Data inicial"
+                    class="date-input"
+                    :value="filtros.created_at_start"
+                    @update:value="toggleFilter('created_at_start', $event)"
+                    :is-date-disabled="timeToDisable"
+                />
+                <n-date-picker
+                    type="date"
+                    placeholder="Data final"
+                    class="date-input"
+                    :value="filtros.created_at_end"
+                    @update:value="toggleFilter('created_at_end', $event)"
+                    :is-date-disabled="timeToDisable"
+                />
             </div>
         </div>
-        <div class="team-filter">
-            <div>
-                <h3 class="team-text">Equipe</h3>
+        <div class="dropdown-filters">
+            <div class="my-select-wrapper" style="position: relative;">
+                <n-select
+                v-model:value="filtros.team"
+                multiple
+                :options="optionsTeam"
+                placeholder="TEAM"
+                :render-tag="null"
+                clearable
+                class="my-select"
+                />  
+                <span class="fake-placeholder">TEAM</span>
             </div>
-            <div class="team-buttons">
-                <n-button color="#502A81" class="analist1" :class="{ 'is-active': filtros.access_level.includes('N1') }" @click="toggleFilter('access_level', 'N1')">
-                N1
-                </n-button>
-                <n-button color="#502A81" class="analist2" :class="{ 'is-active': filtros.access_level.includes('N2') }" @click="toggleFilter('access_level', 'N2')">
-                N2
-                </n-button>
-                <n-button color="#502A81" class="analist3" :class="{ 'is-active': filtros.access_level.includes('N3') }" @click="toggleFilter('access_level', 'N3')">
-                N3
-                </n-button>
+            <div class="my-select-wrapper" style="position: relative;">
+                <n-select
+                v-model:value="filtros.status"
+                multiple
+                :options="optionsStatus"
+                placeholder="STATUS"
+                :render-tag="null"
+                clearable
+                class="my-select"
+                />  
+                <span class="fake-placeholder">STATUS</span>
             </div>
-        </div>
-        <div class="status-filter">
-            <h3 class="status-text">Status</h3>
-            <div class="status-buttons">
-                <n-button color="#502A81" class="open" :class="{ 'is-active': filtros.status.includes('Aberto') }" @click="toggleFilter('status', 'Aberto')">
-                Aberto
-                </n-button>
-                <n-button color="#502A81" class="inService" :class="{ 'is-active': filtros.status.includes('Em Atendimento') }" @click="toggleFilter('status', 'Em Atendimento')">
-                Em <br> Atendimento
-                </n-button>
-                <n-button color="#502A81" class="waiting" :class="{ 'is-active': filtros.status.includes('Aguardando Cliente') }" @click="toggleFilter('status', 'Aguardando Cliente')">
-                Aguardando <br> Cliente
-                </n-button>
-                <n-button color="#502A81" class="resolved" :class="{ 'is-active': filtros.status.includes('Resolvido') }" @click="toggleFilter('status', 'Resolvido')">
-                Resolvido
-                </n-button>
-                <n-button color="#502A81" class="close" :class="{ 'is-active': filtros.status.includes('Fechado') }" @click="toggleFilter('status', 'Fechado')">
-                Fechado
-                </n-button>
+            <div class="my-select-wrapper" style="position: relative;">
+                <n-select
+                v-model:value="filtros.sla"
+                multiple
+                :options="optionsSla"
+                placeholder="SLA"
+                :render-tag="null"
+                clearable
+                class="my-select"
+                />  
+                <span class="fake-placeholder">SLA</span>
             </div>
-        </div>
-        <div class="sla-filter">
-            <h3 class="sla-text">SLA</h3>
-            <div class="sla-buttons">
-                <n-button color="#502A81" class="standard" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Padrão')}" @click="toggleFilter ('sla', { name: 'SLA Padrão', target_minutes: 480 })">
-                Padrão
-                </n-button>
-                <n-button color="#502A81" class="vip" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA VIP') }" @click="toggleFilter ('sla', { name: 'SLA VIP', target_minutes: 240 })">
-                VIP
-                </n-button>
-                <n-button color="#502A81" class="extended" :class="{ 'is-active': filtros.sla.some(s => s.name === 'SLA Estendido') }" @click="toggleFilter ('sla', { name: 'SLA Estendido', target_minutes: 1440 })">
-                Estendido
-                </n-button>
+            <div class="my-select-wrapper" style="position: relative;">
+                <n-select
+                v-model:value="filtros.priority"
+                multiple
+                :options="optionsPriority"
+                placeholder="Prioridade"
+                :render-tag="null"
+                clearable
+                class="my-select"
+                />  
+                <span class="fake-placeholder">PRIORIDADES</span>
             </div>
-        </div>
-        <div class="priorities-filter">
-            <div>
-                <h3 class="priorities-text">Prioridades</h3>
+            <div class="my-select-wrapper" style="position: relative;">
+                <n-select
+                v-model:value="filtros.sub_category"
+                multiple
+                :options="optionsSubCategory"
+                placeholder="Subcategoria"
+                :render-tag="null"
+                clearable
+                class="my-select"
+                />  
+                <span class="fake-placeholder">SUBCATEGORIA</span>
             </div>
-            <div class="priorities-buttons">
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Baixa') }" @click="toggleFilter('priority', 'Baixa')">
-                Baixa
-                </n-button>
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Média') }" @click="toggleFilter('priority', 'Média')">
-                Média
-                </n-button>
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Alta') }" @click="toggleFilter('priority', 'Alta')">
-                Alta
-                </n-button>
-                <n-button color="#502A81" class="priority-button" :class="{ 'is-active': filtros.priority.includes('Crítica') }" @click="toggleFilter('priority', 'Crítica')">
-                Crítica
-                </n-button>
+            <div class="my-select-wrapper" style="position: relative;">
+                <n-select
+                v-model:value="filtros.tag"
+                multiple
+                :options="optionsTag"
+                placeholder="tag"
+                :render-tag="null"
+                clearable
+                class="my-select"
+                />  
+                <span class="fake-placeholder">TAG</span>
             </div>
-        </div>
-        <div class="subcategory-filter">
-            <h3 class="subcategory-text">SubCategoria</h3>
-            <div class="subcategory-buttons">
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Erro de sistema') }" @click="toggleFilter('sub_category', 'Erro de sistema')">
-                Erro de <br> Sistema
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Lentidão') }" @click="toggleFilter('sub_category', 'Lentidão')">
-                Lentidão
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Funcionalidade indisponível') }" @click="toggleFilter('sub_category', 'Funcionalidade indisponível')">
-                Funcionalidade<br> Indisponível
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Problemas de login') }" @click="toggleFilter('sub_category', 'Problemas de login')">
-                Problemas<br> de Login
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Permissões') }" @click="toggleFilter('sub_category', 'Permissões')">
-                Permissões
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Cadastro de usuários') }" @click="toggleFilter('sub_category', 'Cadastro de usuários')">
-                Cadastro de<br> Usuários
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Relatórios') }" @click="toggleFilter('sub_category', 'Relatórios')">
-                Relatórios
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Exportação') }" @click="toggleFilter('sub_category', 'Exportação')">
-                Exportação
-                </n-button>
-                <n-button color="#502A81" class="subcategory" :class="{ 'is-active': filtros.sub_category.includes('Dados inconsistentes') }" @click="toggleFilter('sub_category', 'Dados inconsistentes')">
-                Dados <br> Inconsistentes
-                </n-button>
-            </div>
-        </div>
-        <div class="tags-filter">
-            <h3 class="tag-text">TAG</h3>
-            <div class="tags-buttons">
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Urgente') }" @click="toggleFilter('tag', 'Urgente')">
-                Urgente
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Revisar') }" @click="toggleFilter('tag', 'Revisar')">
-                Revisar
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Bug') }" @click="toggleFilter('tag', 'Bug')">
-                Bug
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Solicitação') }" @click="toggleFilter('tag', 'Solicitação')">
-                Solicitação
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Melhoria') }" @click="toggleFilter('tag', 'Melhoria')">
-                Melhoria
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Financeiro') }" @click="toggleFilter('tag', 'Financeiro')">
-                Financeiro
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('RH') }" @click="toggleFilter('tag', 'RH')">
-                RH
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('TI') }" @click="toggleFilter('tag', 'TI')">
-                TI
-                </n-button>
-                <n-button color="#502A81" class="tags" :class="{ 'is-active': filtros.tag.includes('Duplicado') }" @click="toggleFilter('tag', 'Duplicado')">
-                Duplicado
-                </n-button>
-            </div>
-            <div>
-                <n-button color="#502A81" class="tag-ac" :class="{ 'is-active': filtros.tag.includes('Acompanhamento') }" @click="toggleFilter('tag', 'Acompanhamento')">
-                Acompanhamento
-                </n-button>
-            </div>
-        </div>
-        <div class="clean-filters">
-            <n-button color="#502A81" class="standard" @click="cleanAllFilters">
-            Limpar Filtros
+            <div class="clean-filters">
+            <n-button color="#502A81" class="standard" @click="recarregarPagina">
+                Limpar Filtros
             </n-button>
-        </div> 
-  </div>
-    
+            </div> 
+        </div>
+    </div>
 </template>
 
 <script>
@@ -174,6 +109,7 @@ export default {
   data() {
     return {
       filtros: {
+        team: [],
         sla: [],
         tag: [],
         access_level: [],
@@ -182,9 +118,56 @@ export default {
         priority: [],
         created_at_start: null,
         created_at_end: null
-      }
+      },
+      optionsTeam: [
+        { label: "N1", value: "N1" },
+        { label: "N2", value: "N2" },
+        { label: "N3", value: "N3" },
+      ],
+      optionsStatus: [
+        { label: "Aberto", value: "aberto" },
+        { label: "Em andamento", value: "andamento" },
+        { label: "Aguardando Cliente", value: "aguardando" },
+        { label: "Resolvido", value: "resolvido" },
+        { label: "Fechado", value: "fechado" },
+      ],
+      optionsSla: [
+        { label: "Padrão", value: "padrao" },
+        { label: "VIP", value: "vip" },
+        { label: "Estendido", value: "estendido" },
+      ],
+      optionsPriority: [
+        { label: "Baixa", value: "baixa" },
+        { label: "Média", value: "media" },
+        { label: "Alta", value: "alta" },
+        { label: "Crítica", value: "critica" }
+      ],
+      optionsSubCategory: [
+        { label: "Erro de Sistema", value: "erro" },
+        { label: "Problema de Login", value: "problema" },
+        { label: "Relatórios", value: "relatorios" },
+        { label: "Lentidão", value: "lentidao" },
+        { label: "Permissões", value: "permissoes" },
+        { label: "Exportação", value: "exportacao" },
+        { label: "Funcionalidade Indisponível", value: "funcionalidade" },
+        { label: "Cadastro de Usuário", value: "cadastro" },
+        { label: "Dados Incosistentes", value: "dados" }
+      ],
+      optionsTag: [
+        { label: "Urgente", value: "urgente" },
+        { label: "Revisar", value: "revisar" },
+        { label: "Bug", value: "bug" },
+        { label: "Solicitação", value: "solicitacao" },
+        { label: "Melhoria", value: "melhoria" },
+        { label: "Financeiro", value: "financeiro" },
+        { label: "RH", value: "rh" },
+        { label: "TI", value: "ti" },
+        { label: "Duplicado", value: "duplicado" },
+        { label: "Acompanhamento", value: "acompanhamento" },
+      ]
     }
   },
+
   methods: {
     timeToDisable(ts) {
         const today = new Date()
@@ -205,17 +188,8 @@ export default {
         eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     },
 
-    cleanAllFilters() {
-        this.filtros.sla = [];
-        this.filtros.access_level = [];
-        this.filtros.status = [];
-        this.filtros.created_at_start = null;
-        this.filtros.created_at_end = null;
-        this.filtros.priority = [];
-        this.filtros.sub_category = [];
-        this.filtros.tag = [];
-
-        this.emitirFiltros();
+    recarregarPagina() {
+      window.location.reload()
     },
 
 
@@ -237,11 +211,9 @@ export default {
     }
   }
 }
-
 </script>
 
 <style>
-
 .filter-container {
     background: white;
     border: 2px solid #502A81;
@@ -257,7 +229,7 @@ export default {
 
 .period-title {
     position: absolute;
-    left: 3%;
+    left: 5%;
 }
 
 .date-filters {
@@ -276,7 +248,18 @@ export default {
     top: 48%;
     left: 5%;
     right: 7%;
+    width: 90%;
     gap: 4%;
+}
+
+.dropdown-filters {
+    position: absolute;
+    top: 12%;
+    width: 90%;
+    height: 31%;
+    left: 5%;
+    display: flex;
+    flex-direction: column;
 }
 
 .n-input .n-input-wrapper {
@@ -301,273 +284,109 @@ export default {
     background-color: transparent;
 }
 
-.team-filter {
-    height: 10%;
-    width: 100%;
-    position: absolute;
-    top: 14%;
-}
-
-.team-text {
-    position: absolute;
-    left: 3%;
-    bottom: 62%;
-}
-
-.team-buttons {
-    position: absolute;
-    width: 100%;
-    height: 5%;
-    top: 15%;
-}
-
-.analist1 {
-    width: 28%;
-    left: 5%;
+.n-select {
     background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.analist2 {
-    width: 28%;
-    left: 7%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.analist3 {
-    width: 28%;
-    left: 9%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.status-filter {
-    position: absolute;
-    height: 15%;
-    width: 100%;
-    top: 21%;
-}
-
-.status-text {
-    position: absolute;
-    left: 3%;
-    bottom: 58%;
-}
-
-.status-buttons {
-    position: absolute;
-    width: 100%;
-    height: 34%;
-    top: 24%;
-}
-
-.open {
-    width: 28%;
-    left: 5%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.inService {
-    width: 28%;
-    left: 7%;
-    top:-21%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.waiting {
-    width: 28%;
-    left: 9%;
-    top:-21%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.resolved {
-    width: 28%;
-    left: 20%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.close {
-    width: 28%;
-    left: 22%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.n-button .n-button__content {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    min-width: 0;
-    justify-content: center;
-}
-
-.sla-filter {
-    position: absolute;
-    bottom: 55.1%;
-    height: 10%;
-    width: 100%;
-}
-
-.sla-text {
-    position: absolute;
-    left: 3%;
-    bottom: 33%;
-}
-
-.sla-buttons {
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    top: 40%;
+    border-radius: 8px;
+    color: white;
 }
 
 .standard {
-    width: 28%;
-    left: 5%;
+    width: 50%;
+    top: 3%;
+    left: 25%;
     background-color: #502A81;
     border: 1px solid #502A81;
 }
 
-.vip {
-    width: 28%;
-    left: 7%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
+.Aclean-filters {
+    position: relative;
+    top: 1%;
+    height: 6%;
 }
 
-.n-button--ghost {
-  background-color: #502A81 !important;
-  box-shadow: none !important;
+.name-filters {
+    color: #502A81;
+    font-weight: bold;
+    margin: 0%;
 }
 
-.n-button:active,
-.n-button:focus {
-  background-color: #502A81 !important;
+.n-base-selection .n-base-selection-tags{
+    background-color: #502a81;
+    --n-color: #502a81;
+    --n-color-active: #502a81;
+    --n-color-disabled: #502a81;
 }
 
-.n-button.is-active {
-  background-color: #6b5b7f !important;
-  border-color: #6b5b7f !important;
+.n-base-select-menu .n-base-select-option.n-base-select-option--selected {
+    color: #502a81 !important;
 }
 
-.extended {
-    width: 28%;
-    left: 9%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.priorities-filter {
-    height: 13%;
-    width: 100%;
-    top: 44.2%;
-    position: absolute;
-}
-
-.priorities-text {
-    position: absolute;
-    left: 3%;
-    bottom: 49%;
-}
-
-.priorities-buttons {
-    display: flex;
-    position: absolute;
-    width: 88%;
-    height: 37%;
-    top: 29%;
-    left: 5%;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.priority-button {
-    width: 23%;
-}
-
-.subcategory-filter {
-    height: 21%;
-    width: 100%;
-    top: 53%;
-    position: absolute;
-}
-
-.subcategory-text {
-    position: absolute;
-    left: 3%;
-    bottom: 66%;
-}
-
-.subcategory-buttons {
-    position: absolute;
-    display: flex;
-    width: 93%;
-    height: 88%;
-    top: 23%;
-    flex-wrap: wrap;
-    gap: 2%;
-    align-items: baseline;
-    right: 5%;
-    flex-direction: column;
-}
-
-.subcategory {
-    height: 28%;
-    width: 33%;
-}
-
-.tags-filter {
-    height: 26%;
-    width: 100%;
-    top: 74%;
-    position: absolute;
-}
-
-.tag-text {
-    position: absolute;
-    left: 3%;
-    bottom: 73%;
-}
-
-.tags-buttons {
-    position: absolute;
-    display: flex;
-    width: 93%;
-    height: 62%;
-    top: 18%;
-    flex-wrap: wrap;
-    gap: 2%;
-    align-items: baseline;
-    right: 5%;
-    flex-direction: column;
-}
-
-.tags {
-    height: 28%;
-    width: 33%;
-}
-
-.tag-ac {
-    height: 19%;
-    width: 36%;
-    display: flex;
-    position: absolute;
-    flex-direction: column;
-    top: 74%;
-    left: 32%;
+.n-base-select-menu .n-base-select-option .n-base-select-option__check {
+    color: #502a81;
 }
 
 .clean-filters {
-    position: absolute;
+    position: relative;
     z-index: 2;
-    width: 117%;
-    bottom: 104.4%;
-    left: 81%;
+    width: 100%;
+    top: 2.4%;
 }
+</style>
+
+<style scoped>
+::v-deep(.n-base-selection-overlay) {
+  display: none;
+}
+
+::v-deep(.n-base-selection--active.n-base-selection--focus) {
+  background-color: #502A81 !important;
+  --n-color: #502A81 !important;
+  --n-border-color: #502A81 !important;
+  --n-box-shadow-focus: none !important;
+}
+
+::v-deep(.n-base-selection-tags) {
+  background-color: #502A81 !important;
+  color: #fff !important;
+}
+
+::v-deep(.n-base-selection-input) {
+  display: none;
+}
+
+::v-deep(.n-base-selection-tag-wrapper) {
+  display: none;
+}
+
+::v-deep(.n-base-selection-placeholder) {
+  display: none;
+}
+
+.my-select-wrapper .fake-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #fff;
+  pointer-events: none;
+}
+
+:deep(.search-input .n-input__border) {
+  border: none !important;
+}
+
+:deep(.search-input .n-input__state-border) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+:deep(.search-input .n-input__input-el) {
+  box-shadow: none !important;
+}
+
+:deep(.search-input.n-input--focus .n-input__state-border) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 </style>

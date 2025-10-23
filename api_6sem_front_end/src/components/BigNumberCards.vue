@@ -2,19 +2,19 @@
     <div class="numberCards-container">
         <div class="big-number-cards">
             <div class="card">
-            <p class="label">Quantidade de chamados</p>
+            <p class="label">Quantidade de Chamados</p>
             <h2 class="number">{{ resultOpened ?? 0}}</h2>
             </div>
             <div class="card">
-            <p class="label">Quantidade de excedidos</p>
+            <p class="label">Quantidade de Excedidos</p>
             <h2 class="number">{{ resultSLAExceeded ?? 0}}</h2>
             </div>
             <div class="card">
-            <p class="label">Tempo médio para resolução</p>
+            <p class="label">Tempo Médio para Resolução</p>
             <h2 class="number">{{ resultAverageTime ?? 0}} <span class="unit">min</span></h2>
             </div>
             <div class="card">
-            <p class="label">Quantidade de reincidência</p>
+            <p class="label">Quantidade de Reincidência</p>
             <h2 class="number">{{ resultRecurringTickets ?? 0}}</h2>
             </div>
         </div>
