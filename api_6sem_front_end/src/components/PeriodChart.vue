@@ -49,15 +49,15 @@ const chartData: ComputedRef<ChartData<"line">> = computed(() => ({
   datasets: [
     {
       label: "Volume",
-      borderColor: "#5E2B97", 
-      backgroundColor: "#5E2B97",
+      borderColor: "#502A81", 
+      backgroundColor: "#502A81",
       data: Array.from({ length: 12 }, (_, i) => props.resultByMonth?.[String(i + 1).padStart(2, "0")] ?? 0),
       tension: 0.3,
     },
     {
       label: "Tendência",
-      borderColor: "#B59F3B",
-      backgroundColor: "#B59F3B",
+      borderColor: "#9565D2",
+      backgroundColor: "#9565D2",
       data: Array.from({ length: 12 }, (_, i) => props.resultForecast?.[String(i + 1).padStart(2, "0")] ?? 0),
       tension: 0.3,
     },

@@ -1,7 +1,7 @@
 <template>
     <div>
         <AnalystBackgroundMain />
-        <AnalystFiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @sentiment-volume="handleFilterSentimentVolume"/>
+        <AnalystNoFAQFiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @sentiment-volume="handleFilterSentimentVolume"/>
         <AnalystBigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets"/>
         <AnalystTotalSentimentVolumeChart :resultNegative="resultNegative"/>
         <AnalystPeriodChart :resultByMonth="resultByMonth"/>
@@ -10,7 +10,7 @@
 
 <script lang="js">
 import AnalystBackgroundMain from '@/components/AnalystBackgroundMain.vue';
-import AnalystFiltersButtons from '@/components/AnalystFiltersButtons.vue';
+import AnalystNoFAQFiltersButtons from '@/components/AnalystNoFAQFiltersButtons.vue';
 import AnalystBigNumberCards from '@/components/AnalystBigNumberCards.vue';
 import AnalystTotalSentimentVolumeChart from '@/components/AnalystTotalSentimentVolumeChart.vue';
 import AnalystPeriodChart from '@/components/AnalystPeriodChart.vue';
@@ -20,7 +20,7 @@ export default {
   name: 'AnalystMainView',
   components: {
     AnalystBackgroundMain,
-    AnalystFiltersButtons,
+    AnalystNoFAQFiltersButtons,
     AnalystBigNumberCards,
     AnalystTotalSentimentVolumeChart,
     AnalystPeriodChart,

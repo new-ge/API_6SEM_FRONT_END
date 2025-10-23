@@ -22,18 +22,7 @@
             </div>
         </div>
         <div class="dropdown-filters">
-            <div class="my-select-wrapper" style="position: relative;">
-                <n-select
-                v-model:value="filtros.team"
-                multiple
-                :options="optionsTeam"
-                placeholder="TEAM"
-                :render-tag="null"
-                clearable
-                class="my-select"
-                />  
-                <span class="fake-placeholder">TEAM</span>
-            </div>
+            
             <div class="my-select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.status"
@@ -43,6 +32,9 @@
                 :render-tag="null"
                 clearable
                 class="my-select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('subcategory', val)"
                 />  
                 <span class="fake-placeholder">STATUS</span>
             </div>
@@ -82,19 +74,7 @@
                 />  
                 <span class="fake-placeholder">SUBCATEGORIA</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
-                <n-select
-                v-model:value="filtros.tag"
-                multiple
-                :options="optionsTag"
-                placeholder="tag"
-                :render-tag="null"
-                clearable
-                class="my-select"
-                />  
-                <span class="fake-placeholder">TAG</span>
-            </div>
-            <div class="clean-filters">
+            <div class="Aclean-filters">
             <n-button color="#502A81" class="standard" @click="recarregarPagina">
                 Limpar Filtros
             </n-button>
@@ -109,7 +89,6 @@ export default {
   data() {
     return {
       filtros: {
-        team: [],
         sla: [],
         tag: [],
         access_level: [],
@@ -119,55 +98,37 @@ export default {
         created_at_start: null,
         created_at_end: null
       },
-      optionsTeam: [
-        { label: "N1", value: "N1" },
-        { label: "N2", value: "N2" },
-        { label: "N3", value: "N3" },
-      ],
       optionsStatus: [
-        { label: "Aberto", value: "aberto" },
-        { label: "Em andamento", value: "andamento" },
-        { label: "Aguardando Cliente", value: "aguardando" },
-        { label: "Resolvido", value: "resolvido" },
-        { label: "Fechado", value: "fechado" },
+        { label: "Aberto", value: "Aberto" },
+        { label: "Em Atendimento", value: "Em Atendimento" },
+        { label: "Aguardando Cliente", value: "Aguardando Cliente" },
+        { label: "Resolvido", value: "Resolvido" },
+        { label: "Fechado", value: "Fechado" },
       ],
       optionsSla: [
-        { label: "Padrão", value: "padrao" },
-        { label: "VIP", value: "vip" },
-        { label: "Estendido", value: "estendido" },
+        { label: "Padrão", value: "SLA Padrão" },
+        { label: "VIP", value: "SLA VIP" },
+        { label: "Estendido", value: "SLA Estendido" },
       ],
       optionsPriority: [
-        { label: "Baixa", value: "baixa" },
-        { label: "Média", value: "media" },
-        { label: "Alta", value: "alta" },
-        { label: "Crítica", value: "critica" }
+        { label: "Baixa", value: "Baixa" },
+        { label: "Média", value: "Média" },
+        { label: "Alta", value: "Alta" },
+        { label: "Crítica", value: "Crítica" }
       ],
       optionsSubCategory: [
-        { label: "Erro de Sistema", value: "erro" },
-        { label: "Problema de Login", value: "problema" },
-        { label: "Relatórios", value: "relatorios" },
-        { label: "Lentidão", value: "lentidao" },
-        { label: "Permissões", value: "permissoes" },
-        { label: "Exportação", value: "exportacao" },
-        { label: "Funcionalidade Indisponível", value: "funcionalidade" },
-        { label: "Cadastro de Usuário", value: "cadastro" },
-        { label: "Dados Incosistentes", value: "dados" }
-      ],
-      optionsTag: [
-        { label: "Urgente", value: "urgente" },
-        { label: "Revisar", value: "revisar" },
-        { label: "Bug", value: "bug" },
-        { label: "Solicitação", value: "solicitacao" },
-        { label: "Melhoria", value: "melhoria" },
-        { label: "Financeiro", value: "financeiro" },
-        { label: "RH", value: "rh" },
-        { label: "TI", value: "ti" },
-        { label: "Duplicado", value: "duplicado" },
-        { label: "Acompanhamento", value: "acompanhamento" },
+        { label: "Erro de Sistema", value: "Erro de sistema" },
+        { label: "Problemas de Login", value: "Problemas de login" },
+        { label: "Relatórios", value: "Relatórios" },
+        { label: "Lentidão", value: "Lentidão" },
+        { label: "Permissões", value: "Permissões" },
+        { label: "Exportação", value: "Exportação" },
+        { label: "Funcionalidade Indisponível", value: "Funcionalidade indisponível" },
+        { label: "Cadastro de Usuários", value: "Cadastro de usuários" },
+        { label: "Dados Inconsistentes", value: "Dados inconsistentes" }
       ]
     }
   },
-
   methods: {
     timeToDisable(ts) {
         const today = new Date()
@@ -212,18 +173,20 @@ export default {
 }
 </script>
 
-<style>
-.filter-container {
-    background: white;
-    border: 2px solid #502A81;
-    border-radius: 20px;
-    width: 24%;
-    height: 85%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 54%;
-    right: 62%;
-    transform: translate(-50%, -50%);
+<style scoped>
+.filter-container { 
+  background: white; 
+  border: 2px solid #502A81; 
+  border-radius: 20px; 
+  width: 24%; 
+  min-height: 85%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  position: absolute; 
+  top: 54%; 
+  right: 62%; 
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
 }
 
 .period-title {
@@ -247,39 +210,19 @@ export default {
     top: 48%;
     left: 5%;
     right: 7%;
-    width: 90%;
     gap: 4%;
+    width: 90%;
 }
 
 .dropdown-filters {
     position: absolute;
     top: 12%;
     width: 90%;
-    height: 31%;
+    height: auto;
     left: 5%;
     display: flex;
     flex-direction: column;
-}
-
-.n-input .n-input-wrapper {
-    overflow: hidden;
-    display: inline-flex;
-    flex-grow: 1;
-    position: relative;
-    padding-left: var(--n-padding-left);
-    padding-right: var(--n-padding-right);
-    background-color: #502A81;
-    border-radius: 4px;
-}
-
-.n-input .n-input__input-el, .n-input .n-input__textarea-el {
-    scrollbar-width: none;
-    width: 100%;
-    min-width: 0;
-    text-decoration-color: rgb(246 247 247);
-    color: rgb(255 255 255);
-    caret-color: var(--n-caret-color);
-    background-color: transparent;
+    justify-content: space-between; 
 }
 
 .n-select {
@@ -296,7 +239,7 @@ export default {
     border: 1px solid #502A81;
 }
 
-.clean-filters {
+.Aclean-filters {
   position: relative;
   margin-top: auto;
   display: flex;
@@ -325,15 +268,6 @@ export default {
     color: #502a81;
 }
 
-.clean-filters {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    top: 2.4%;
-}
-</style>
-
-<style scoped>
 ::v-deep(.n-base-selection-overlay) {
   display: none;
 }
@@ -389,4 +323,11 @@ export default {
   box-shadow: none !important;
 }
 
+.n-base-select-menu .n-base-select-option.n-base-select-option--selected.n-base-select-option--active {
+    color: #502a81;
+}
+
+.n-base-select-menu .n-base-select-option .n-base-select-option__check {
+    color: #502a81;
+}
 </style>

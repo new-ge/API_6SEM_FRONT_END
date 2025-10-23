@@ -32,6 +32,9 @@
                 :render-tag="null"
                 clearable
                 class="my-select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('subcategory', val)"
                 />  
                 <span class="fake-placeholder">STATUS</span>
             </div>
@@ -111,33 +114,33 @@ export default {
         created_at_end: null
       },
       optionsStatus: [
-        { label: "Aberto", value: "aberto" },
-        { label: "Em andamento", value: "andamento" },
-        { label: "Aguardando Cliente", value: "aguardando" },
-        { label: "Resolvido", value: "resolvido" },
-        { label: "Fechado", value: "fechado" },
+        { label: "Aberto", value: "Aberto" },
+        { label: "Em Atendimento", value: "Em Atendimento" },
+        { label: "Aguardando Cliente", value: "Aguardando Cliente" },
+        { label: "Resolvido", value: "Resolvido" },
+        { label: "Fechado", value: "Fechado" },
       ],
       optionsSla: [
-        { label: "Padrão", value: "padrao" },
-        { label: "VIP", value: "vip" },
-        { label: "Estendido", value: "estendido" },
+        { label: "Padrão", value: "SLA Padrão" },
+        { label: "VIP", value: "SLA VIP" },
+        { label: "Estendido", value: "SLA Estendido" },
       ],
       optionsPriority: [
-        { label: "Baixa", value: "baixa" },
-        { label: "Média", value: "media" },
-        { label: "Alta", value: "alta" },
-        { label: "Crítica", value: "critica" }
+        { label: "Baixa", value: "Baixa" },
+        { label: "Média", value: "Média" },
+        { label: "Alta", value: "Alta" },
+        { label: "Crítica", value: "Crítica" }
       ],
       optionsSubCategory: [
-        { label: "Erro de Sistema", value: "Erro" },
-        { label: "Problema de Login", value: "problema" },
-        { label: "Relatórios", value: "relatorios" },
-        { label: "Lentidão", value: "lentidao" },
-        { label: "Permissões", value: "permissoes" },
-        { label: "Exportação", value: "exportacao" },
-        { label: "Funcionalidade Indisponível", value: "funcionalidade" },
-        { label: "Cadastro de Usuário", value: "cadastro" },
-        { label: "Dados Incosistentes", value: "dados" }
+        { label: "Erro de Sistema", value: "Erro de sistema" },
+        { label: "Problemas de Login", value: "Problemas de login" },
+        { label: "Relatórios", value: "Relatórios" },
+        { label: "Lentidão", value: "Lentidão" },
+        { label: "Permissões", value: "Permissões" },
+        { label: "Exportação", value: "Exportação" },
+        { label: "Funcionalidade Indisponível", value: "Funcionalidade indisponível" },
+        { label: "Cadastro de Usuários", value: "Cadastro de usuários" },
+        { label: "Dados Inconsistentes", value: "Dados inconsistentes" }
       ]
     }
   },
@@ -166,7 +169,6 @@ export default {
     },
 
     toggleFilter(tipo, valor) {
-        console.log(tipo, valor);
         if (tipo === "created_at_start" || tipo === "created_at_end") {
             this.filtros[tipo] = valor;
         } else if (Array.isArray(this.filtros[tipo])) {
