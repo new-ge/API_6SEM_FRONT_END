@@ -23,7 +23,7 @@
         </div>
         <div class="dropdown-filters">
             
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.status"
                 multiple
@@ -31,14 +31,14 @@
                 placeholder="STATUS"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
                 label-field="label"
                 value-field="value"
-                @update:value="(val) => toggleFilter('subcategory', val)"
+                @update:value="(val) => toggleFilter('status', val)"
                 />  
                 <span class="fake-placeholder">STATUS</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.sla"
                 multiple
@@ -46,11 +46,14 @@
                 placeholder="SLA"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('sla', val)"
                 />  
                 <span class="fake-placeholder">SLA</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.priority"
                 multiple
@@ -58,11 +61,14 @@
                 placeholder="Prioridade"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('priority', val)"
                 />  
                 <span class="fake-placeholder">PRIORIDADES</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.sub_category"
                 multiple
@@ -70,7 +76,10 @@
                 placeholder="Subcategoria"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('sub_category', val)"
                 />  
                 <span class="fake-placeholder">SUBCATEGORIA</span>
             </div>
@@ -90,9 +99,14 @@
 
             </div>
             <div class="Aclean-filters">
-            <n-button color="#502A81" class="standard" @click="recarregarPagina">
-                Limpar Filtros
-            </n-button>
+              <n-button 
+              color="#502A81" 
+              class="standard" 
+              :class="{'is-active' : isActive}" 
+              :focusable="false" 
+              @click="timerCleanFiltersButton">
+                  Limpar Filtros
+              </n-button>
             </div> 
         </div>
     </div>
@@ -103,6 +117,7 @@
 export default {
   data() {
     return {
+      isActive: false,
       filtros: {
         sla: [],
         tag: [],
@@ -118,12 +133,12 @@ export default {
         { label: "Em Atendimento", value: "Em Atendimento" },
         { label: "Aguardando Cliente", value: "Aguardando Cliente" },
         { label: "Resolvido", value: "Resolvido" },
-        { label: "Fechado", value: "Fechado" },
+        { label: "Fechado", value: "Fechado" }
       ],
       optionsSla: [
-        { label: "Padrão", value: "SLA Padrão" },
-        { label: "VIP", value: "SLA VIP" },
-        { label: "Estendido", value: "SLA Estendido" },
+        { label: "SLA Padrão", value: { name: "SLA Padrão", target_minutes: 480 } },
+        { label: "SLA VIP", value: { name: "SLA VIP", target_minutes: 240 } },
+        { label: "SLA Estendido", value: { name: "SLA Estendido", target_minutes: 1440 } }
       ],
       optionsPriority: [
         { label: "Baixa", value: "Baixa" },
@@ -158,32 +173,40 @@ export default {
             'exceeded-sla-filter',
             'by-month',
             'recurring-tickets',
-            'primary-themes',
             'sentiment-volume'
         ];
         eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     },
 
-    recarregarPagina() {
-      window.location.reload()
+    cleanFilters() {
+      this.filtros = {
+        sla: [],
+        tag: [],
+        access_level: [],
+        status: [],
+        sub_category: [],
+        priority: [],
+        created_at_start: null,
+        created_at_end: null
+      };
+      this.searchText = '';
+      this.emitFilters();
+    },
+    
+    toggleFilter(tipo, valor) {
+      this.filtros[tipo] = valor;
+      this.emitFilters();
     },
 
-    toggleFilter(tipo, valor) {
-        if (tipo === "created_at_start" || tipo === "created_at_end") {
-            this.filtros[tipo] = valor;
-        } else if (Array.isArray(this.filtros[tipo])) {
-            if (tipo === 'sla') {
-                const index = this.filtros.sla.findIndex(s => s.name === valor.name);
-                if (index === -1) this.filtros.sla.push(valor);
-                else this.filtros.sla.splice(index, 1);
-            } else {
-                const index = this.filtros[tipo].indexOf(valor);
-                if (index === -1) this.filtros[tipo].push(valor);
-                else this.filtros[tipo].splice(index, 1);
-            }
-        }
-        this.emitFilters();
+    timerCleanFiltersButton() {
+      this.isActive = true
+      this.cleanFilters()
+      
+      setTimeout(() => {
+        this.isActive = false
+      }, 500)
     }
+
   }
 }
 </script>
@@ -209,6 +232,15 @@ export default {
     left: 5%;
 }
 
+.standard:not(.is-active) {
+  width: 50%;
+  top: 3%;
+  left: 25%;
+  background-color: #502A81;
+  border: 1px solid #502A81;
+  box-shadow: none;
+}
+
 .date-filters {
     top: 0%;
     height: 13%;
@@ -217,6 +249,16 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+
+.standard.is-active {
+  width: 50%;
+  top: 3%;
+  left: 25%;
+  background-color: #7a49b5;
+  border-color: #7a49b5;
+  box-shadow: 0 0 10px rgba(122, 73, 181, 0.6);
+  pointer-events: none;
 }
 
 .inputs {
@@ -244,14 +286,6 @@ export default {
     background-color: #502A81;
     border-radius: 8px;
     color: white;
-}
-
-.standard {
-    width: 50%;
-    top: 3%;
-    left: 25%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
 }
 
 .Aclean-filters {
@@ -323,7 +357,7 @@ export default {
   display: none;
 }
 
-.my-select-wrapper .fake-placeholder {
+.select-wrapper .fake-placeholder {
   position: absolute;
   top: 50%;
   left: 12px;

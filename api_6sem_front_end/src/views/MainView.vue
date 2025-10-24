@@ -10,9 +10,10 @@
 </template>
 
 <script lang="js">
+import { useAuthStore } from '@/stores/auth'
 import BackgroundMain from '@/components/BackgroundMain.vue';
 import BigNumberCards from '@/components/BigNumberCards.vue';
-import FiltersButtons from '@/components/FiltersButtons.vue';
+import FiltersButtons from '@/components/FiltersList.vue';
 import MainTopicsChart from '@/components/MainTopicsChart.vue';
 import PeriodChart from '@/components/PeriodChart.vue';
 import TotalSentimentVolumeChart from '@/components/TotalSentimentVolumeChart.vue';
@@ -44,7 +45,9 @@ export default {
   methods: {
     async fetchData(url, filtros = {}, mapping = {}) {
       try {
-        const token = localStorage.getItem("token");
+        const authStore = useAuthStore()
+        const token = authStore.token
+
         const filtroParaEnviar = Object.keys(filtros).length ? filtros : {};
 
         const response = await axios.post(
@@ -91,9 +94,6 @@ export default {
     },
   },
   async mounted() {
-    const response = await axios.get("http://localhost:8000/");
-    const token = response.data.token;
-    localStorage.setItem("token", token);
     this.handleFilterOpened();
     this.handleFilterAverageTime();
     this.handleFilterExcedeedSLA();

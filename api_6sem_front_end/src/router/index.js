@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainView from '../views/MainView.vue';
 import AnalystMainView from '../views/AnalystMainView.vue';
-import AnalystNoFAQMainView from '../views/AnalystNoFAQMainVue.vue';
+import AnalystNoFAQMainView from '../views/AnalystNoFAQMainView.vue';
+import HomeView from '../views/HomeView.vue';
 
 const routes = [
   {
-    path: '/main',
+    path: '/',
     name: 'Main',
+    component: HomeView
+  },
+  {
+    path: '/gestor',
+    name: 'Gestor',
     component: MainView
   },
   {
