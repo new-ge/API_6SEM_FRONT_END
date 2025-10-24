@@ -26,7 +26,7 @@ const chartData = computed(() => ({
   datasets: [
     {
       data: [props.resultPositive, props.resultNegative],
-      backgroundColor: ["#9a7d0a", "#5b2c6f"],
+      backgroundColor: ["#9565D2", "#502A81"],
       borderWidth: 0,
     }
   ],

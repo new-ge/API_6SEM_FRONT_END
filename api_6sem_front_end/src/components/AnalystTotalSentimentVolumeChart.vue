@@ -6,7 +6,6 @@
         </div>
     </div>
 </template>
-
 <script setup lang="ts">
 import { ArcElement, Chart as ChartJS, Legend, Title, Tooltip } from "chart.js";
 import { computed } from "vue";
@@ -15,18 +14,17 @@ import { Doughnut } from "vue-chartjs";
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 interface Props {
-  resultPositive?: Record<string, number> | null
-  resultNegative?: Record<string, number> | null
+  resultNegative?: number | null
 }
 
 const props = defineProps<Props>();
 
 const chartData = computed(() => ({
-  labels: ["Positivo", "Negativo"],
+  labels: ["Negativo"],
   datasets: [
     {
-      data: [props.resultPositive, props.resultNegative],
-      backgroundColor: ["#9a7d0a", "#5b2c6f"],
+      data: [props.resultNegative],
+      backgroundColor: ["#502A81"],
       borderWidth: 0,
     }
   ],

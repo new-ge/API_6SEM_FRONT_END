@@ -1,33 +1,30 @@
 <template>
-  <div>
-    <BackgroundMain />
-    <FiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @primary-themes="handleFilterPrimaryThemes" @sentiment-volume="handleFilterSentimentVolume"/>
-    <BigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets" />
-    <PeriodChart :resultByMonth="resultByMonth" :resultForecast="resultForecast"/>
-    <TotalSentimentVolumeChart :resultPositive="resultPositive" :resultNegative="resultNegative"/>
-    <MainTopicsChart :resultPrimaryThemes="resultPrimaryThemes"/>
-  </div>
+    <div>
+        <AnalystBackgroundMain />
+        <AnalystNoFAQFiltersButtons @open-tickets-filter="handleFilterOpened" @average-running-time-filter="handleFilterAverageTime" @exceeded-sla-filter="handleFilterExcedeedSLA" @by-month="handleFilterByMonth" @recurring-tickets="handleFilterRecurringTickets" @sentiment-volume="handleFilterSentimentVolume"/>
+        <AnalystBigNumberCards :resultOpened="resultOpened" :resultAverageTime="resultAverageTime" :resultSLAExceeded="resultSLAExceeded" :resultRecurringTickets="resultRecurringTickets"/>
+        <AnalystTotalSentimentVolumeChart :resultNegative="resultNegative"/>
+        <AnalystPeriodChart :resultByMonth="resultByMonth"/>
+    </div>
 </template>
 
 <script lang="js">
 import { useAuthStore } from '@/stores/auth'
-import BackgroundMain from '@/components/BackgroundMain.vue';
-import BigNumberCards from '@/components/BigNumberCards.vue';
-import FiltersButtons from '@/components/FiltersList.vue';
-import MainTopicsChart from '@/components/MainTopicsChart.vue';
-import PeriodChart from '@/components/PeriodChart.vue';
-import TotalSentimentVolumeChart from '@/components/TotalSentimentVolumeChart.vue';
+import AnalystBackgroundMain from '@/components/AnalystBackgroundMain.vue';
+import AnalystNoFAQFiltersButtons from '@/components/AnalystNoFAQFiltersList.vue';
+import AnalystBigNumberCards from '@/components/AnalystBigNumberCards.vue';
+import AnalystTotalSentimentVolumeChart from '@/components/AnalystTotalSentimentVolumeChart.vue';
+import AnalystPeriodChart from '@/components/AnalystPeriodChart.vue';
 import axios from 'axios';
 
 export default {
-  name: 'MainView',
+  name: 'AnalystMainView',
   components: {
-    BackgroundMain,
-    FiltersButtons,
-    BigNumberCards,
-    PeriodChart,
-    TotalSentimentVolumeChart,
-    MainTopicsChart,
+    AnalystBackgroundMain,
+    AnalystNoFAQFiltersButtons,
+    AnalystBigNumberCards,
+    AnalystTotalSentimentVolumeChart,
+    AnalystPeriodChart,
   },
   data() {
     return {
@@ -36,10 +33,7 @@ export default {
       resultSLAExceeded: null,
       resultByMonth: null,
       resultRecurringTickets: null,
-      resultForecast: null,
-      resultPrimaryThemes: null,
-      resultNegative: null,
-      resultPositive: null
+      resultNegative: null
     }
   },
   methods: {
@@ -81,16 +75,13 @@ export default {
       return this.fetchData("http://localhost:8000/tickets/closed/exceeded-sla", filtros, { sla_exceeded: "resultSLAExceeded" });
     },
     handleFilterByMonth(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/by-period", filtros, { tickets: "resultByMonth", forecast: "resultForecast" });
+      return this.fetchData("http://localhost:8000/tickets/by-period?include_forecast=False", filtros, { tickets: "resultByMonth"});
     },
     handleFilterRecurringTickets(filtros = {}) {
       return this.fetchData("http://localhost:8000/tickets/recurring-tickets", filtros, { recurring_tickets: "resultRecurringTickets" });
     },
-    handleFilterPrimaryThemes(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/primary-themes", filtros, { primary_themes: "resultPrimaryThemes"});
-    },
     handleFilterSentimentVolume(filtros = {}) {
-      return this.fetchData("http://localhost:8000/tickets/sentiment", filtros, { negative: "resultNegative", positive: "resultPositive" });
+      return this.fetchData("http://localhost:8000/tickets/sentiment?include_positive=False", filtros, { negative: "resultNegative" });
     },
   },
   async mounted() {
@@ -99,16 +90,7 @@ export default {
     this.handleFilterExcedeedSLA();
     this.handleFilterByMonth();
     this.handleFilterRecurringTickets();
-    this.handleFilterPrimaryThemes();
     this.handleFilterSentimentVolume();
   }
-}
+};
 </script>
-
-<style scoped>
-.main-view {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-</style>

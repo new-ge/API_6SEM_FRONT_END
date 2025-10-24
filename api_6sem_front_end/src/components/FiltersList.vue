@@ -22,19 +22,22 @@
             </div>
         </div>
         <div class="dropdown-filters">
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
-                v-model:value="filtros.team"
+                v-model:value="filtros.access_level"
                 multiple
-                :options="optionsTeam"
-                placeholder="TEAM"
+                :options="optionsAccessLevel"
+                placeholder="TIME"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('access_level', val)"
                 />  
-                <span class="fake-placeholder">TEAM</span>
+                <span class="fake-placeholder">TIME</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.status"
                 multiple
@@ -42,11 +45,14 @@
                 placeholder="STATUS"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('status', val)"
                 />  
                 <span class="fake-placeholder">STATUS</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.sla"
                 multiple
@@ -54,11 +60,14 @@
                 placeholder="SLA"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('sla', val)"
                 />  
                 <span class="fake-placeholder">SLA</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.priority"
                 multiple
@@ -66,11 +75,14 @@
                 placeholder="Prioridade"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('priority', val)"
                 />  
                 <span class="fake-placeholder">PRIORIDADES</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.sub_category"
                 multiple
@@ -78,11 +90,14 @@
                 placeholder="Subcategoria"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('sub_category', val)"
                 />  
                 <span class="fake-placeholder">SUBCATEGORIA</span>
             </div>
-            <div class="my-select-wrapper" style="position: relative;">
+            <div class="select-wrapper" style="position: relative;">
                 <n-select
                 v-model:value="filtros.tag"
                 multiple
@@ -90,14 +105,22 @@
                 placeholder="tag"
                 :render-tag="null"
                 clearable
-                class="my-select"
+                class="select"
+                label-field="label"
+                value-field="value"
+                @update:value="(val) => toggleFilter('tag', val)"
                 />  
                 <span class="fake-placeholder">TAG</span>
             </div>
             <div class="clean-filters">
-            <n-button color="#502A81" class="standard" @click="recarregarPagina">
-                Limpar Filtros
-            </n-button>
+              <n-button 
+              color="#502A81" 
+              class="standard" 
+              :class="{'is-active' : isActive}" 
+              :focusable="false" 
+              @click="timerCleanFiltersButton">
+                  Limpar Filtros
+              </n-button>
             </div> 
         </div>
     </div>
@@ -108,8 +131,8 @@
 export default {
   data() {
     return {
+      isActive: false,
       filtros: {
-        team: [],
         sla: [],
         tag: [],
         access_level: [],
@@ -119,51 +142,51 @@ export default {
         created_at_start: null,
         created_at_end: null
       },
-      optionsTeam: [
+      optionsAccessLevel: [
         { label: "N1", value: "N1" },
         { label: "N2", value: "N2" },
         { label: "N3", value: "N3" },
       ],
       optionsStatus: [
-        { label: "Aberto", value: "aberto" },
-        { label: "Em andamento", value: "andamento" },
-        { label: "Aguardando Cliente", value: "aguardando" },
-        { label: "Resolvido", value: "resolvido" },
-        { label: "Fechado", value: "fechado" },
+        { label: "Aberto", value: "Aberto" },
+        { label: "Em Atendimento", value: "Em Atendimento" },
+        { label: "Aguardando Cliente", value: "Aguardando Cliente" },
+        { label: "Resolvido", value: "Resolvido" },
+        { label: "Fechado", value: "Fechado" },
       ],
       optionsSla: [
-        { label: "Padrão", value: "padrao" },
-        { label: "VIP", value: "vip" },
-        { label: "Estendido", value: "estendido" },
+        { label: "SLA Padrão", value: { name: "SLA Padrão", target_minutes: 480 } },
+        { label: "SLA VIP", value: { name: "SLA VIP", target_minutes: 240 } },
+        { label: "SLA Estendido", value: { name: "SLA Estendido", target_minutes: 1440 } }
       ],
       optionsPriority: [
-        { label: "Baixa", value: "baixa" },
-        { label: "Média", value: "media" },
-        { label: "Alta", value: "alta" },
-        { label: "Crítica", value: "critica" }
+        { label: "Baixa", value: "Baixa" },
+        { label: "Média", value: "Média" },
+        { label: "Alta", value: "Alta" },
+        { label: "Crítica", value: "Crítica" }
       ],
       optionsSubCategory: [
-        { label: "Erro de Sistema", value: "erro" },
-        { label: "Problema de Login", value: "problema" },
-        { label: "Relatórios", value: "relatorios" },
-        { label: "Lentidão", value: "lentidao" },
-        { label: "Permissões", value: "permissoes" },
-        { label: "Exportação", value: "exportacao" },
-        { label: "Funcionalidade Indisponível", value: "funcionalidade" },
-        { label: "Cadastro de Usuário", value: "cadastro" },
-        { label: "Dados Incosistentes", value: "dados" }
+        { label: "Erro de Sistema", value: "Erro de sistema" },
+        { label: "Problemas de Login", value: "Problemas de login" },
+        { label: "Relatórios", value: "Relatórios" },
+        { label: "Lentidão", value: "Lentidão" },
+        { label: "Permissões", value: "Permissões" },
+        { label: "Exportação", value: "Exportação" },
+        { label: "Funcionalidade Indisponível", value: "Funcionalidade indisponível" },
+        { label: "Cadastro de Usuários", value: "Cadastro de usuários" },
+        { label: "Dados Inconsistentes", value: "Dados inconsistentes" }
       ],
       optionsTag: [
-        { label: "Urgente", value: "urgente" },
-        { label: "Revisar", value: "revisar" },
-        { label: "Bug", value: "bug" },
-        { label: "Solicitação", value: "solicitacao" },
-        { label: "Melhoria", value: "melhoria" },
-        { label: "Financeiro", value: "financeiro" },
-        { label: "RH", value: "rh" },
-        { label: "TI", value: "ti" },
-        { label: "Duplicado", value: "duplicado" },
-        { label: "Acompanhamento", value: "acompanhamento" },
+        { label: "Urgente", value: "Urgent" },
+        { label: "Revisar", value: "Revisar" },
+        { label: "Bug", value: "Bug" },
+        { label: "Solicitação", value: "Solicitação" },
+        { label: "Melhoria", value: "Melhoria" },
+        { label: "Financeiro", value: "Financeiro" },
+        { label: "RH", value: "RH" },
+        { label: "TI", value: "TI" },
+        { label: "Duplicado", value: "Duplicado" },
+        { label: "Acompanhamento", value: "Acompanhamento" },
       ]
     }
   },
@@ -188,26 +211,33 @@ export default {
         eventos.forEach(evt => this.$emit(evt, { ...this.filtros }));
     },
 
-    recarregarPagina() {
-      window.location.reload()
+    cleanFilters() {
+      this.filtros = {
+        sla: [],
+        tag: [],
+        access_level: [],
+        status: [],
+        sub_category: [],
+        priority: [],
+        created_at_start: null,
+        created_at_end: null
+      };
+      this.searchText = '';
+      this.emitFilters();
+    },
+    
+    toggleFilter(tipo, valor) {
+      this.filtros[tipo] = valor;
+      this.emitFilters();
     },
 
+    timerCleanFiltersButton() {
+      this.isActive = true
+      this.cleanFilters()
 
-    toggleFilter(tipo, valor) {
-        if (tipo === "created_at_start" || tipo === "created_at_end") {
-            this.filtros[tipo] = valor;
-        } else if (Array.isArray(this.filtros[tipo])) {
-            if (tipo === 'sla') {
-                const index = this.filtros.sla.findIndex(s => s.name === valor.name);
-                if (index === -1) this.filtros.sla.push(valor);
-                else this.filtros.sla.splice(index, 1);
-            } else {
-                const index = this.filtros[tipo].indexOf(valor);
-                if (index === -1) this.filtros[tipo].push(valor);
-                else this.filtros[tipo].splice(index, 1);
-            }
-        }
-        this.emitFilters();
+      setTimeout(() => {
+        this.isActive = false
+      }, 500)
     }
   }
 }
@@ -225,6 +255,25 @@ export default {
     top: 54%;
     right: 62%;
     transform: translate(-50%, -50%);
+}
+
+.standard:not(.is-active) {
+  width: 50%;
+  top: 3%;
+  left: 25%;
+  background-color: #502A81;
+  border: 1px solid #502A81;
+  box-shadow: none;
+}
+
+.standard.is-active {
+  width: 50%;
+  top: 3%;
+  left: 25%;
+  background-color: #7a49b5;
+  border-color: #7a49b5;
+  box-shadow: 0 0 10px rgba(122, 73, 181, 0.6);
+  pointer-events: none;
 }
 
 .period-title {
@@ -274,7 +323,6 @@ export default {
 }
 
 .n-input .n-input__input-el, .n-input .n-input__textarea-el {
-    -webkit-appearance: none;
     scrollbar-width: none;
     width: 100%;
     min-width: 0;
@@ -290,18 +338,12 @@ export default {
     color: white;
 }
 
-.standard {
-    width: 50%;
-    top: 3%;
-    left: 25%;
-    background-color: #502A81;
-    border: 1px solid #502A81;
-}
-
-.Aclean-filters {
-    position: relative;
-    top: 1%;
-    height: 6%;
+.clean-filters {
+  position: relative;
+  margin-top: auto;
+  display: flex;
+  width: 100%;     
+  padding-top: 8px;
 }
 
 .name-filters {
@@ -345,6 +387,7 @@ export default {
   --n-box-shadow-focus: none !important;
 }
 
+
 ::v-deep(.n-base-selection-tags) {
   background-color: #502A81 !important;
   color: #fff !important;
@@ -362,7 +405,7 @@ export default {
   display: none;
 }
 
-.my-select-wrapper .fake-placeholder {
+.select-wrapper .fake-placeholder {
   position: absolute;
   top: 50%;
   left: 12px;
