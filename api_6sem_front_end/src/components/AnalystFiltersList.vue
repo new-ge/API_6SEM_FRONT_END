@@ -119,6 +119,7 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth'
 
 export default {
   data() {
@@ -218,8 +219,17 @@ export default {
       if (!this.searchText.trim()) return;
 
       try {
+        const authStore = useAuthStore()
+        const token = authStore.token
+        
         const response = await fetch(
-          `http://localhost:8000/faq/search?question=${encodeURIComponent(this.searchText)}`
+          `http://localhost:8000/faq/search?question=${encodeURIComponent(this.searchText)}`,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json",
+            }
+          }
         );
         const data = await response.json();
 
