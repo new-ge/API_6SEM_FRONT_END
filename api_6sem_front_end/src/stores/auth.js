@@ -15,8 +15,6 @@ export const useAuthStore = defineStore('auth', {
       this.token = token
       const decoded = jwtDecode(token)
       this.role = decoded.role
-      console.log('Token definido:', token)
-      console.log('Role decodificado:', this.role)
     }
   }
 })
