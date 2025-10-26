@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import { jwtDecode } from 'jwt-decode'
+import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({

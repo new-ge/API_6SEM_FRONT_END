@@ -85,17 +85,23 @@
             </div>
             <h3 class="name-filters">FAQ</h3>
             <n-input
-                v-model:value="searchText"
-                placeholder="Insira a palavra chave..."
-                round
-                clearable
-                class="search-input"
-                >
-                <template #suffix>
+              v-model:value="searchText"
+              placeholder="Insira a palavra chave..."
+              round
+              clearable
+              class="search-input"
+              @keyup.enter="submitQuestion"
+            >
+              <template #suffix>
                 <n-icon :component="SearchOutline" />
-                </template>
+              </template>
             </n-input>
             <div class="faq-box">
+              <div v-for="(item, index) in results" :key="index" class="faq-item">
+                <p><strong>P:</strong> {{ item.question }}</p>
+                <p><strong>R:</strong> {{ item.answer }}</p>
+                <hr />
+              </div>
 
             </div>
             <div class="Aclean-filters">
@@ -156,7 +162,9 @@ export default {
         { label: "Funcionalidade Indisponível", value: "Funcionalidade indisponível" },
         { label: "Cadastro de Usuários", value: "Cadastro de usuários" },
         { label: "Dados Inconsistentes", value: "Dados inconsistentes" }
-      ]
+      ],
+      searchText: '',
+      results: []
     }
   },
   methods: {
@@ -205,8 +213,28 @@ export default {
       setTimeout(() => {
         this.isActive = false
       }, 500)
-    }
+    },
+    async submitQuestion() {
+      if (!this.searchText.trim()) return;
 
+      try {
+        const response = await fetch(
+          `http://localhost:8000/faq/search?question=${encodeURIComponent(this.searchText)}`
+        );
+        const data = await response.json();
+
+        // Ajuste dependendo do retorno do seu backend
+        this.results = data.results.map(item => ({
+          question: item.question,
+          answer: item.answer
+        }));
+
+        // Limpa o input
+        this.searchText = '';
+      } catch (err) {
+        console.error("Erro ao buscar FAQ:", err);
+      }
+    }
   }
 }
 </script>
