@@ -233,13 +233,11 @@ export default {
         );
         const data = await response.json();
 
-        // Ajuste dependendo do retorno do seu backend
         this.results = data.results.map(item => ({
           question: item.question,
           answer: item.answer
         }));
 
-        // Limpa o input
         this.searchText = '';
       } catch (err) {
         console.error("Erro ao buscar FAQ:", err);
