@@ -28,18 +28,18 @@ export default {
       type: [Object, Number],
       default: () => null
     },
-    resultAverageTime: {
+    resultSLAExceeded: {
       type: [Object, Number],
       default: () => null
     },
-    resultSLAExceeded: {
+    resultAverageTime: {
       type: [Object, Number],
       default: () => null
     },
     resultRecurringTickets: {
       type: [Object, Number],
       default: () => null
-    }
+    }  
   }
 }
 </script>
@@ -57,8 +57,7 @@ export default {
 
 .big-number-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 9px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   height: 99.2%;
 }
 

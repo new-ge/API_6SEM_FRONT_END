@@ -1,12 +1,11 @@
 <template>
-    <div class="chartTSV-container">
-        <div class="chart1-card">
-            <h3 class="chart1-title">Análise de Sentimento</h3>
-            <Doughnut :data="chartData" :options="chartOptions" class="chart1"/>
+    <div class="AchartTSV-container">
+        <div class="Achart1-card">
+            <h3 class="Achart1-title">Análise de Sentimento</h3>
+            <Doughnut :data="chartData" :options="chartOptions" class="Achart1"/>
         </div>
     </div>
 </template>
-
 <script setup lang="ts">
 import { ArcElement, Chart as ChartJS, Legend, Title, Tooltip } from "chart.js";
 import { computed } from "vue";
@@ -15,18 +14,17 @@ import { Doughnut } from "vue-chartjs";
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 interface Props {
-  resultPositive?: Record<string, number> | null
-  resultNegative?: Record<string, number> | null
+  resultNegative?: number | null
 }
 
 const props = defineProps<Props>();
 
 const chartData = computed(() => ({
-  labels: ["Positivo", "Negativo"],
+  labels: ["Negativo"],
   datasets: [
     {
-      data: [props.resultPositive, props.resultNegative],
-      backgroundColor: ["#9565D2", "#502A81"],
+      data: [props.resultNegative],
+      backgroundColor: ["#502A81"],
       borderWidth: 0,
     }
   ],
@@ -57,44 +55,44 @@ const chartOptions = {
 
 <style>
 
-.chartTSV-container {
+.AchartTSV-container {
     background: white;
     border: 2px solid #502A81;
     border-radius: 16px;
-    width: 19.9%;
+    width: 39.9%;
     height: 44.4%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 33.9%;
-    left: 68.1%;
+    left: 78.1%;
     transform: translate(-50%, -50%);
 }
 
-.chart1-card {
+.Achart1-card {
     padding: 1rem;
     text-align: center;
     position: absolute;
     height: 90%;
-    width: 89%;
+    width: 95%;
 }
 
-.chart1-title {
+.Achart1-title {
     color: #502A81;
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 1rem;
-    left: 9%;
-    top: -1%;
-    font-size: 160% !important;
+    left: 25%;
+    top: -3%;
+    font-size: 200% !important;
     position: absolute;
 }
 
-.chart1 {
-    max-width: 250px;
+.Achart1 {
+    max-width: 60%;
     margin: 0 auto;
     position: absolute;
     top: 17%;
-    left: 10%;
+    left: 20%;
     height: 79% !important;
 }
 

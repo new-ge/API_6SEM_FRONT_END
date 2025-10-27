@@ -1,17 +1,17 @@
-import naive from 'naive-ui';
-import { createApp } from 'vue';
-import { Line } from 'vue-chartjs';
-import App from './App.vue';
-import router from './router';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import naive from 'naive-ui'
+import { Line } from 'vue-chartjs'
+import App from './App.vue'
+import router from './router'
 
+const app = createApp(App)
+const pinia = createPinia()
 
-const app = createApp(App);
+app.use(router)
+app.use(pinia)
+app.use(naive)
 
+app.component('LineChart', Line)
 
-app.use(router);
-app.use(naive);
-
-app.component('LineChart', Line);
-
-
-app.mount('#app');
+app.mount('#app')

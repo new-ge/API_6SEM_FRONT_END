@@ -23,7 +23,7 @@ const chartData = computed(() => ({
   datasets: [
     {
       data: props.resultPrimaryThemes?.map(item => item.count) || [],
-      backgroundColor: "#5b2c6f",
+      backgroundColor: "#502A81",
       borderRadius: 8,
       barThickness: 25,
     },

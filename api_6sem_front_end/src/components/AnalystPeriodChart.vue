@@ -1,5 +1,5 @@
 <template>
-  <div class="period-container">
+  <div class="Aperiod-container">
     <div class="chart-container">
       <LineChart :data="chartData" :options="chartOptions" class="chart"/>
     </div>
@@ -53,14 +53,7 @@ const chartData: ComputedRef<ChartData<"line">> = computed(() => ({
       backgroundColor: "#502A81",
       data: Array.from({ length: 12 }, (_, i) => props.resultByMonth?.[String(i + 1).padStart(2, "0")] ?? 0),
       tension: 0.3,
-    },
-    {
-      label: "Tendência",
-      borderColor: "#9565D2",
-      backgroundColor: "#9565D2",
-      data: Array.from({ length: 12 }, (_, i) => props.resultForecast?.[String(i + 1).padStart(2, "0")] ?? 0),
-      tension: 0.3,
-    },
+    }
   ],
 }));
 
@@ -88,17 +81,17 @@ const chartOptions: ChartOptions<"line"> = reactive({
 </script>
 
 <style>
-.period-container {
-  background: white;
-  border: 2px solid #502A81;
-  border-radius: 23px;
-  width: 71.8%;
-  height: 39%;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  position: absolute;
-  top: 77%;
-  left: 62.5%;
-  transform: translate(-50%, -50%);
+.Aperiod-container {
+    background: white;
+    border: 2px solid #502A81;
+    border-radius: 23px;
+    width: 71.6%;
+    height: 39%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 77%;
+    left: 62.4%;
+    transform: translate(-50%, -50%);
 }
 
 .chart-container {
