@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth';
 
 export default {
   data() {
@@ -235,7 +235,7 @@ export default {
 
         this.results = data.results.map(item => ({
           question: item.question,
-          answer: item.answer
+          answer: item.answer.replace(/^,/, '').trim(),
         }));
 
         this.searchText = '';
