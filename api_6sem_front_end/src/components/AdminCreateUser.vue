@@ -84,11 +84,10 @@ function createUser() {
 
 .UserCreate-container {
   width: 31%;
-  height: 45%;
   position: absolute;
-  top: 34%;
-  right: 27%;
-  transform: translate(-50%, -50%);
+  top: 15%;
+  left: 5%;
+  transform: none;
 }
 
 .card {
