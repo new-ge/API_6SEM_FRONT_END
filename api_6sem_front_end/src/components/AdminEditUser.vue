@@ -2,15 +2,36 @@
   <div>
     <BackgroundMain />
   </div>
-  <div class="UserCreate-container">
-    <div class="card">
-      <h2 class="title">Criar usuário</h2>
 
-      <div class="form-group">
-        <label class="label" for="username"></label>
-        <input id="username" v-model="username" type="text" placeholder="Novo Usuário">
+  <div class="UserEdit-container">
+    <div class="card">
+      <h2 class="title">Editar usuário</h2>
+
+      <!-- Buscar usuário -->
+      <div class="form-group search-group">
+        <label class="label" for="search"></label>
+        <input
+          id="search"
+          v-model="searchQuery"
+          type="text"
+          placeholder="Digite usuário ou e-mail"
+        />
+        <span class="icon" @click="searchUser">🔍</span>
       </div>
 
+      <!-- Novo nome -->
+      <div class="form-group">
+        <label class="label" for="username"></label>
+        <input id="username" v-model="username" type="text" placeholder="Novo nome do usuário">
+      </div>
+
+      <!-- Novo e-mail -->
+      <div class="form-group">
+        <label class="label" for="email"></label>
+        <input id="email" v-model="email" type="email" placeholder="Novo e-mail" />
+      </div>
+
+      <!-- Novo nível -->
       <div class="form-group">
         <label class="label" for="level"></label>
         <select id="level" v-model="level">
@@ -21,19 +42,7 @@
         </select>
       </div>
 
-      <div class="form-group">
-        <label class="label" for="email"></label>
-        <input id="email" v-model="email" type="email" placeholder="Email"/>
-      </div>
-
-      <div class="form-group">
-        <label class="label" for="password"></label>
-        <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="Senha de primeiro acesso"/>
-        <span class="icon" @click="togglePasswordVisibility">≡</span>
-      </div>
-
-      <button class="btn-create" @click="createUser">Criar</button>
-
+      <button class="btn-create" @click="updateUser">Atualizar</button>
     </div>
   </div>
 </template>
@@ -44,45 +53,49 @@ import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 
-const username = ref('')
-const level = ref('')
-const email = ref('')
-const password = ref('')
-const showPassword = ref(false)
+const searchQuery = ref('');
+const username = ref('');
+const email = ref('');
+const level = ref('');
 
-function togglePasswordVisibility() {
-  showPassword.value = !showPassword.value
+function searchUser() {
+  if (!searchQuery.value) {
+    toast.error('Digite um usuário ou e-mail para buscar.');
+    return;
+  }
+
+  // Simulação de busca (substituir por chamada real à API)
+  console.log('Buscando usuário:', searchQuery.value);
+
+  // Exemplo de preenchimento de campos retornados
+  username.value = 'Usuário Exemplo';
+  email.value = 'exemplo@email.com';
+  level.value = 'N2';
 }
 
-function createUser() {
-  if (!username.value || !level.value || !email.value || !password.value) {
-    toast.error('Por favor, preencha todos os campos')
-    return
+function updateUser() {
+  if (!username.value || !email.value || !level.value) {
+    toast.error('Por favor, preencha todos os campos.');
+    return;
   }
 
   console.log({
     username: username.value,
-    level: level.value,
     email: email.value,
-    password: password.value
-  })
+    level: level.value
+  });
 
-  toast.success('Usuário criado com sucesso!')
-
-  username.value = ''
-  level.value = ''
-  email.value = ''
-  password.value = ''
+  toast.success('Usuário atualizado com sucesso!');
 }
 </script>
 
 <style scoped>
-.UserCreate-container {
+/* Reaproveita todo o estilo do create */
+.UserEdit-container {
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  max-width: 400px; /* limita a largura do card */
+  margin: 0 auto;   /* centraliza horizontalmente */
 }
-
 
 .card {
   background: white;
@@ -181,4 +194,10 @@ select::placeholder {
   opacity: 0.7;
 }
 
+/* Estilo específico para o input de busca */
+.search-group .icon {
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 </style>
