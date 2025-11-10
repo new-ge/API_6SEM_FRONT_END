@@ -4,6 +4,7 @@ import AnalystMainView from '../views/AnalystMainView.vue';
 import AnalystNoFAQMainView from '../views/AnalystNoFAQMainView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginScreenView from '@/views/LoginScreenView.vue';
+import AdministratorView from '../views/AdministratorView.vue';
 
 const routes = [
   {
@@ -32,17 +33,21 @@ const routes = [
     component: AnalystNoFAQMainView
   },
   {
+    path: '/adm',
+    name: 'Administrador',
+    component: AdministratorView
+  },
+  {
     path: '/login',
     name: 'login',
     component: LoginScreenView
   },
+
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 });
-
-
 
 export default router;
