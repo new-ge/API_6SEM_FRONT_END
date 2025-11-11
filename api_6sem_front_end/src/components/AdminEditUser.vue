@@ -7,7 +7,6 @@
     <div class="card">
       <h2 class="title">Editar usuário</h2>
 
-      <!-- Buscar usuário -->
       <div class="form-group search-group">
         <label class="label" for="search"></label>
         <input
@@ -19,19 +18,16 @@
         <span class="icon" @click="searchUser">🔍</span>
       </div>
 
-      <!-- Novo nome -->
       <div class="form-group">
         <label class="label" for="username"></label>
         <input id="username" v-model="username" type="text" placeholder="Novo nome do usuário">
       </div>
 
-      <!-- Novo e-mail -->
       <div class="form-group">
         <label class="label" for="email"></label>
         <input id="email" v-model="email" type="email" placeholder="Novo e-mail" />
       </div>
 
-      <!-- Novo nível -->
       <div class="form-group">
         <label class="label" for="level"></label>
         <select id="level" v-model="level">
@@ -64,10 +60,8 @@ function searchUser() {
     return;
   }
 
-  // Simulação de busca (substituir por chamada real à API)
   console.log('Buscando usuário:', searchQuery.value);
 
-  // Exemplo de preenchimento de campos retornados
   username.value = 'Usuário Exemplo';
   email.value = 'exemplo@email.com';
   level.value = 'N2';
@@ -90,11 +84,13 @@ function updateUser() {
 </script>
 
 <style scoped>
-/* Reaproveita todo o estilo do create */
+
 .UserEdit-container {
   width: 100%;
-  max-width: 400px; /* limita a largura do card */
-  margin: 0 auto;   /* centraliza horizontalmente */
+  max-width: 400px;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .card {
@@ -194,7 +190,6 @@ select::placeholder {
   opacity: 0.7;
 }
 
-/* Estilo específico para o input de busca */
 .search-group .icon {
   right: 8px;
   top: 50%;

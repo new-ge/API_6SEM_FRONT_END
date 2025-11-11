@@ -80,7 +80,9 @@ function createUser() {
 .UserCreate-container {
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 
