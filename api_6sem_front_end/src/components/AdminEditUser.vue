@@ -15,7 +15,9 @@
           type="text"
           placeholder="Digite usuário ou e-mail"
         />
-        <span class="icon" @click="searchUser">🔍</span>
+        <span class="icon" @click="searchUser">
+          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/search--v1.png" alt="search--v1"/>
+        </span>
       </div>
 
       <div class="form-group">
@@ -190,9 +192,9 @@ select::placeholder {
   opacity: 0.7;
 }
 
-.search-group .icon {
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
+.search-group .icon img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 </style>
