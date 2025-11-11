@@ -36,7 +36,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('status', val)"
                 />  
-                <span class="fake-placeholder">STATUS</span>
+                <span class="fake-placeholder">STATUS
+                  <span
+                      v-if="filtros.status && filtros.status.length > 0"
+                    >
+                      ({{ filtros.status.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -51,7 +57,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('sla', val)"
                 />  
-                <span class="fake-placeholder">SLA</span>
+                <span class="fake-placeholder">SLA
+                  <span
+                      v-if="filtros.sla && filtros.sla.length > 0"
+                    >
+                      ({{ filtros.sla.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -66,7 +78,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('priority', val)"
                 />  
-                <span class="fake-placeholder">PRIORIDADES</span>
+                <span class="fake-placeholder">PRIORIDADES
+                  <span
+                      v-if="filtros.priority && filtros.priority.length > 0"
+                    >
+                      ({{ filtros.priority.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -81,7 +99,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('sub_category', val)"
                 />  
-                <span class="fake-placeholder">SUBCATEGORIA</span>
+                <span class="fake-placeholder">SUBCATEGORIA
+                  <span
+                      v-if="filtros.sub_category && filtros.sub_category.length > 0"
+                    >
+                      ({{ filtros.sub_category.length }})
+                  </span>
+                </span>
             </div>
             <h3 class="name-filters">FAQ</h3>
             <n-input

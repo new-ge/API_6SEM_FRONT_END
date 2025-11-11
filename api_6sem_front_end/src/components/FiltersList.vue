@@ -35,7 +35,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('access_level', val)"
                 />  
-                <span class="fake-placeholder">TIME</span>
+                <span class="fake-placeholder">TIME
+                  <span
+                      v-if="filtros.access_level && filtros.access_level.length > 0"
+                    >
+                      ({{ filtros.access_level.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -50,7 +56,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('status', val)"
                 />  
-                <span class="fake-placeholder">STATUS</span>
+                <span class="fake-placeholder">STATUS
+                    <span
+                      v-if="filtros.status && filtros.status.length > 0"
+                    >
+                      ({{ filtros.status.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -65,7 +77,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('sla', val)"
                 />  
-                <span class="fake-placeholder">SLA</span>
+                <span class="fake-placeholder">SLA
+                  <span
+                      v-if="filtros.sla && filtros.sla.length > 0"
+                    >
+                      ({{ filtros.sla.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -80,7 +98,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('priority', val)"
                 />  
-                <span class="fake-placeholder">PRIORIDADES</span>
+                <span class="fake-placeholder">PRIORIDADES
+                    <span
+                      v-if="filtros.priority && filtros.priority.length > 0"
+                    >
+                      ({{ filtros.priority.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -95,7 +119,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('sub_category', val)"
                 />  
-                <span class="fake-placeholder">SUBCATEGORIA</span>
+                <span class="fake-placeholder">SUBCATEGORIA
+                  <span
+                      v-if="filtros.sub_category && filtros.sub_category.length > 0"
+                    >
+                      ({{ filtros.sub_category.length }})
+                  </span>
+                </span>
             </div>
             <div class="select-wrapper" style="position: relative;">
                 <n-select
@@ -110,7 +140,13 @@
                 value-field="value"
                 @update:value="(val) => toggleFilter('tag', val)"
                 />  
-                <span class="fake-placeholder">TAG</span>
+                <span class="fake-placeholder">TAG
+                  <span
+                      v-if="filtros.tag && filtros.tag.length > 0"
+                    >
+                      ({{ filtros.tag.length }})
+                  </span>
+                </span>
             </div>
             <div class="clean-filters">
               <n-button 
