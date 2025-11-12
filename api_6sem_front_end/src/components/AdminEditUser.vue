@@ -2,18 +2,37 @@
   <div>
     <BackgroundMain />
   </div>
-  <div class="UserCreate-container">
-    <div class="card">
-      <h2 class="title">Criar usuário</h2>
 
-      <div class="form-group">
-        <label class="label" for="name"></label>
-        <input id="name" v-model="name" type="text" placeholder="Novo Usuário">
+  <div class="UserEdit-container">
+    <div class="card">
+      <h2 class="title">Editar usuário</h2>
+
+      <div class="form-group search-group">
+        <label class="label" for="search"></label>
+        <input
+          id="search"
+          v-model="searchQuery"
+          type="text"
+          placeholder="Digite usuário ou e-mail"
+        />
+        <span class="icon" @click="searchUser">
+          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/search--v1.png" alt="search--v1"/>
+        </span>
       </div>
 
       <div class="form-group">
-        <label class="label" for="role"></label>
-        <select id="role" v-model="role">
+        <label class="label" for="username"></label>
+        <input id="username" v-model="username" type="text" placeholder="Novo nome do usuário">
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="email"></label>
+        <input id="email" v-model="email" type="email" placeholder="Novo e-mail" />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="level"></label>
+        <select id="level" v-model="level">
           <option value="" disabled>Nível</option>
           <option value="N1">Analista N1</option>
           <option value="N2">Analista N2</option>
@@ -21,19 +40,7 @@
         </select>
       </div>
 
-      <div class="form-group">
-        <label class="label" for="email"></label>
-        <input id="email" v-model="email" type="email" placeholder="Email"/>
-      </div>
-
-      <div class="form-group">
-        <label class="label" for="password"></label>
-        <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="Senha de primeiro acesso"/>
-        <span class="icon" @click="togglePasswordVisibility">≡</span>
-      </div>
-
-      <button class="btn-create" @click="createUser">Criar</button>
-
+      <button class="btn-create" @click="updateUser">Atualizar</button>
     </div>
   </div>
 </template>
@@ -41,64 +48,52 @@
 <script setup>
 import { ref } from 'vue';
 import { useToast } from 'vue-toastification';
-import { useAuthStore } from '@/stores/auth';
-import axios from 'axios';
 
 const toast = useToast();
 
-const name = ref('')
-const role = ref('')
-const email = ref('')
-const password = ref('')
-const showPassword = ref(false)
+const searchQuery = ref('');
+const username = ref('');
+const email = ref('');
+const level = ref('');
 
-function togglePasswordVisibility() {
-  showPassword.value = !showPassword.value
-}
-
-async function createUser() {
-  if (!name.value || !role.value || !email.value || !password.value) {
-    toast.error('Por favor, preencha todos os campos')
-    return
+function searchUser() {
+  if (!searchQuery.value) {
+    toast.error('Digite um usuário ou e-mail para buscar.');
+    return;
   }
 
-  const authStore = useAuthStore()
-  const token = authStore.token
-        
-  axios.post(
-    'http://localhost:8000/users/create',
-    {
-      name: name.value,
-      role: role.value,
-      email: email.value,
-      password: password.value,
-    },
-    {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-    
-  toast.success('Usuário criado com sucesso!')
+  console.log('Buscando usuário:', searchQuery.value);
 
-  name.value = ''
-  role.value = ''
-  email.value = ''
-  password.value = ''
+  username.value = 'Usuário Exemplo';
+  email.value = 'exemplo@email.com';
+  level.value = 'N2';
+}
+
+function updateUser() {
+  if (!username.value || !email.value || !level.value) {
+    toast.error('Por favor, preencha todos os campos.');
+    return;
+  }
+
+  console.log({
+    username: username.value,
+    email: email.value,
+    level: level.value
+  });
+
+  toast.success('Usuário atualizado com sucesso!');
 }
 </script>
 
 <style scoped>
-.UserCreate-container {
+
+.UserEdit-container {
   width: 100%;
   max-width: 400px;
   margin: 0;
   box-sizing: border-box;
   padding: 0 10px;
 }
-
 
 .card {
   background: white;
@@ -197,4 +192,9 @@ select::placeholder {
   opacity: 0.7;
 }
 
+.search-group .icon img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
 </style>
