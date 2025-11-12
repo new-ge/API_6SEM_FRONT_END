@@ -2,7 +2,7 @@
     <div class="admin-main-view">
       <BackgroundMain/>
       <div class="users-container">
-        <AdminCreateUser :defaultUsername="'Novo Usuário'"/>
+        <AdminCreateUser/>
         <AdminEditUser />
       </div>
     </div>

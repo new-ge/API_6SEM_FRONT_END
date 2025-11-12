@@ -7,13 +7,13 @@
       <h2 class="title">Criar usuário</h2>
 
       <div class="form-group">
-        <label class="label" for="username"></label>
-        <input id="username" v-model="username" type="text" placeholder="Novo Usuário">
+        <label class="label" for="name"></label>
+        <input id="name" v-model="name" type="text" placeholder="Novo Usuário">
       </div>
 
       <div class="form-group">
-        <label class="label" for="level"></label>
-        <select id="level" v-model="level">
+        <label class="label" for="role"></label>
+        <select id="role" v-model="role">
           <option value="" disabled>Nível</option>
           <option value="N1">Analista N1</option>
           <option value="N2">Analista N2</option>
@@ -41,11 +41,13 @@
 <script setup>
 import { ref } from 'vue';
 import { useToast } from 'vue-toastification';
+import { useAuthStore } from '@/stores/auth';
+import axios from 'axios';
 
 const toast = useToast();
 
-const username = ref('')
-const level = ref('')
+const name = ref('')
+const role = ref('')
 const email = ref('')
 const password = ref('')
 const showPassword = ref(false)
@@ -54,23 +56,35 @@ function togglePasswordVisibility() {
   showPassword.value = !showPassword.value
 }
 
-function createUser() {
-  if (!username.value || !level.value || !email.value || !password.value) {
+async function createUser() {
+  if (!name.value || !role.value || !email.value || !password.value) {
     toast.error('Por favor, preencha todos os campos')
     return
   }
 
-  console.log({
-    username: username.value,
-    level: level.value,
-    email: email.value,
-    password: password.value
-  })
-
+  const authStore = useAuthStore()
+  const token = authStore.token
+        
+  axios.post(
+    'http://localhost:8000/users/create',
+    {
+      name: name.value,
+      role: role.value,
+      email: email.value,
+      password: password.value,
+    },
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+    
   toast.success('Usuário criado com sucesso!')
 
-  username.value = ''
-  level.value = ''
+  name.value = ''
+  role.value = ''
   email.value = ''
   password.value = ''
 }
