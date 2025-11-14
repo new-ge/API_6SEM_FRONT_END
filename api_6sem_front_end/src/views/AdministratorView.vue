@@ -6,6 +6,10 @@
         <AdminEditUser />
         <AdminUserList />
       </div>
+
+      <div class="logs-container">
+        <AdminLogs/>
+      </div>
     </div>
   </template>
 
@@ -13,6 +17,7 @@
   import AdminCreateUser from '@/components/AdminCreateUser.vue';
   import AdminEditUser from '@/components/AdminEditUser.vue';
   import AdminUserList from '@/components/AdminUserList.vue';
+  import AdminLogs from '@/components/AdminLogs.vue';
   import BackgroundMain from '@/components/BackgroundMain.vue';
 
   export default{
@@ -21,6 +26,7 @@
       AdminCreateUser,
       AdminEditUser,
       AdminUserList,
+      AdminLogs,
       BackgroundMain,
     }
   };
@@ -52,6 +58,14 @@
     width: 100%;
     max-width: 400px;
   }
+
+  .logs-container {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 520px;
+}
 
 @media (max-width: 768px) {
   .users-container {
