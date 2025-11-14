@@ -1,0 +1,172 @@
+<template>
+  <div class="userlist-container">
+    <div class="card">
+
+      <h2 class="title">Usuários</h2>
+
+       <div class="form-group search-group">
+        <label class="label" for="search"></label>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Usuário"
+        />
+        <span class="icon">
+          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/search--v1.png" alt="search--v1"/>
+        </span>
+      </div>
+
+      <div class="user-list">
+        <div
+          v-for="user in filteredUsers"
+          :key="user.id"
+          class="user-item"
+        >
+          <div class="icon-circle">A</div>
+
+          <span class="user-text">
+            {{ user.id }} | {{user.name }} | {{ user.email }}
+          </span>
+
+          <input type="checkbox" class="check" checked />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue';
+
+const searchQuery = ref("");
+
+const users = ref([
+  { id: 1, name: "Nome Sobrenome", email: "user1@email.com" },
+  { id: 2, name: "Nome Sobrenome", email: "user2@email.com" },
+  { id: 3, name: "Nome Sobrenome", email: "user3@email.com" },
+  { id: 4, name: "Nome Sobrenome", email: "user4@email.com" },
+  { id: 5, name: "Nome Sobrenome", email: "user5@email.com" },
+]);
+
+const filteredUsers = computed(() => {
+  const q = searchQuery.value.toLowerCase();
+  return users.value.filter(
+    u =>
+      u.name.toLowerCase().includes(q) ||
+      u.email.toLowerCase().includes(q) ||
+      u.id.toString().includes(q)
+  );
+});
+</script>
+
+<style scoped>
+.userlist-container {
+  position: absolute;
+  top: 60px;
+  left: 450px;
+  width: 480px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #502A81;
+  border-radius: 12px;
+  padding: 20px 24px;
+  font-family: "Poppins", sans-serif;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.title {
+  color: #502A81;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 40px;
+  background-color: #F1E8FF;
+  font-size: 19px;
+  color: #502A81;
+  outline: none;
+  box-sizing: border-box;
+  height: 48px;
+}
+
+.form-group input::placeholder {
+  color: #502A81;
+  opacity: 1;
+  font-family: "Poppins", sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #502A81;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-group .icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.user-list {
+  overflow-y: auto;
+  height: calc(100% - 130px);
+  padding-right: 6px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.icon-circle {
+  background-color: rgba(80, 42, 129, 0.1);
+  color: #502A81;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-text {
+  flex: 1;
+  color: #502A81;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.check {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #502A81;
+}
+</style>

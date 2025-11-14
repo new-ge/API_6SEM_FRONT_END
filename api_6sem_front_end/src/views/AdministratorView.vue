@@ -4,6 +4,7 @@
       <div class="users-container">
         <AdminCreateUser/>
         <AdminEditUser />
+        <AdminUserList />
       </div>
     </div>
   </template>
@@ -11,6 +12,7 @@
   <script lang ="js">
   import AdminCreateUser from '@/components/AdminCreateUser.vue';
   import AdminEditUser from '@/components/AdminEditUser.vue';
+  import AdminUserList from '@/components/AdminUserList.vue';
   import BackgroundMain from '@/components/BackgroundMain.vue';
 
   export default{
@@ -18,6 +20,7 @@
     components: {
       AdminCreateUser,
       AdminEditUser,
+      AdminUserList,
       BackgroundMain,
     }
   };
