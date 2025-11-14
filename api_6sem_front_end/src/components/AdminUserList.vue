@@ -27,9 +27,12 @@
           <span class="user-text">
             {{ user.id }} | {{user.name }} | {{ user.email }}
           </span>
-
-          <input type="checkbox" class="check" checked />
+          <input type="checkbox" class="check" v-model="user.selected" />
         </div>
+      </div>
+
+      <div class="delete-container">
+        <button class="delete-btn" @click="deleteSelected">Excluir</button>
       </div>
 
     </div>
@@ -42,11 +45,11 @@ import { ref, computed } from 'vue';
 const searchQuery = ref("");
 
 const users = ref([
-  { id: 1, name: "Nome Sobrenome", email: "user1@email.com" },
-  { id: 2, name: "Nome Sobrenome", email: "user2@email.com" },
-  { id: 3, name: "Nome Sobrenome", email: "user3@email.com" },
-  { id: 4, name: "Nome Sobrenome", email: "user4@email.com" },
-  { id: 5, name: "Nome Sobrenome", email: "user5@email.com" },
+  { id: 1, name: "Nome Sobrenome", email: "user1@email.com", selected: true},
+  { id: 2, name: "Nome Sobrenome", email: "user2@email.com", selected: true},
+  { id: 3, name: "Nome Sobrenome", email: "user3@email.com", selected: true},
+  { id: 4, name: "Nome Sobrenome", email: "user4@email.com", selected: true},
+  { id: 5, name: "Nome Sobrenome", email: "user5@email.com", selected: true},
 ]);
 
 const filteredUsers = computed(() => {
@@ -58,6 +61,10 @@ const filteredUsers = computed(() => {
       u.id.toString().includes(q)
   );
 });
+
+const deleteSelected = () => {
+  users.value = users.value.filter(u => !u.selected);
+};
 </script>
 
 <style scoped>
@@ -74,7 +81,8 @@ const filteredUsers = computed(() => {
   border-radius: 12px;
   padding: 20px 24px;
   font-family: "Poppins", sans-serif;
-  height: 80vh;
+  min-height: 60vh;
+  max-height: 80vh;
   overflow: hidden;
 }
 
@@ -168,5 +176,28 @@ const filteredUsers = computed(() => {
   height: 16px;
   cursor: pointer;
   accent-color: #502A81;
+}
+
+.delete-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 40px;
+  padding: 18px 36px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 18px;
+  min-width: 160px;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #b71c1c;
 }
 </style>
