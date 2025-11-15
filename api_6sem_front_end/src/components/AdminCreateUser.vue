@@ -99,7 +99,6 @@ async function createUser() {
   padding: 0 10px;
 }
 
-
 .card {
   background: white;
   border: 1px solid #502A81;
