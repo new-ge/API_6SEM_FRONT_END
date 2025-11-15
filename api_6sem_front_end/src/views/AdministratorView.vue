@@ -32,7 +32,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 100vh;
+    height: auto;
     width: 100%;
     background: linear-gradient(to right, white, #AB93F8);
     color: #502A81;
@@ -44,11 +44,10 @@
   .users-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px;
     position: absolute;
-    left: 40px;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 2.5em;
+    top: 5.5em;
     width: 100%;
     max-width: 400px;
   }

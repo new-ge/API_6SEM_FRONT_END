@@ -50,6 +50,8 @@ const users = ref([
   { id: 3, name: "Nome Sobrenome", email: "user3@email.com", selected: true},
   { id: 4, name: "Nome Sobrenome", email: "user4@email.com", selected: true},
   { id: 5, name: "Nome Sobrenome", email: "user5@email.com", selected: true},
+  
+  { id: 6, name: "Nome Sobrenome", email: "user5@email.com", selected: true},
 ]);
 
 const filteredUsers = computed(() => {
@@ -69,10 +71,13 @@ const deleteSelected = () => {
 
 <style scoped>
 .userlist-container {
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  top: 60px;
-  left: 450px;
-  width: 480px;
+  left: 26em;
+  top: 0.95em;
+  width: 100%;
+  height: 300vh;
 }
 
 .card {
@@ -80,9 +85,10 @@ const deleteSelected = () => {
   border: 1px solid #502A81;
   border-radius: 12px;
   padding: 20px 24px;
-  font-family: "Poppins", sans-serif;
-  min-height: 60vh;
-  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 79vh;
   overflow: hidden;
 }
 
@@ -137,8 +143,9 @@ const deleteSelected = () => {
 }
 
 .user-list {
+  flex: 1;
   overflow-y: auto;
-  height: calc(100% - 130px);
+  margin-top: 10px;
   padding-right: 6px;
 }
 
