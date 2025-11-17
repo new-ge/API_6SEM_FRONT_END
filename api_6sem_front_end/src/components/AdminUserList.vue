@@ -40,32 +40,86 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
+import { useToast } from 'vue-toastification';
 
 const searchQuery = ref("");
+const toast = useToast();
+const users = ref([]);
 
-const users = ref([
-  { id: 1, name: "Nome Sobrenome", email: "user1@email.com", selected: true},
-  { id: 2, name: "Nome Sobrenome", email: "user2@email.com", selected: true},
-  { id: 3, name: "Nome Sobrenome", email: "user3@email.com", selected: true},
-  { id: 4, name: "Nome Sobrenome", email: "user4@email.com", selected: true},
-  { id: 5, name: "Nome Sobrenome", email: "user5@email.com", selected: true},
-  
-  { id: 6, name: "Nome Sobrenome", email: "user5@email.com", selected: true},
-]);
+onMounted(async () => {
+  try {
+    const authStore = useAuthStore();
+    const token = authStore.token;
+
+    const res = await axios.get(
+      "http://localhost:8000/get-all/get-all-users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    users.value = res.data.map((u) => ({
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      selected: false
+    }));
+
+  } catch (err) {
+    console.error("Erro ao buscar usuários:", err);
+  }
+});
 
 const filteredUsers = computed(() => {
   const q = searchQuery.value.toLowerCase();
-  return users.value.filter(
-    u =>
-      u.name.toLowerCase().includes(q) ||
-      u.email.toLowerCase().includes(q) ||
-      u.id.toString().includes(q)
-  );
+
+  return users.value.filter(u => {
+    const name = u.name ? u.name.toLowerCase() : "";
+    const email = u.email ? u.email.toLowerCase() : "";
+    const id = u.id?.toString() ?? "";
+
+    return (
+      name.includes(q) ||
+      email.includes(q) ||
+      id.includes(q)
+    );
+  });
 });
 
-const deleteSelected = () => {
-  users.value = users.value.filter(u => !u.selected);
+const deleteSelected = async () => {
+  const selectedIds = users.value
+    .filter(u => u.selected)
+    .map(u => u.id);
+
+  console.log(selectedIds)
+
+  if (selectedIds.length === 0) return;
+
+  try {
+    const authStore = useAuthStore();
+    const token = authStore.token;
+
+    await axios.post(
+      "http://localhost:8000/delete/delete-users",
+      selectedIds,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    users.value = users.value.filter(u => !u.selected);
+
+    toast.success("Usuários excluídos com sucesso!");
+  } catch (err) {
+    toast.error("Erro ao deletar usuários");
+  }
 };
 </script>
 
