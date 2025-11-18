@@ -1,12 +1,12 @@
 <template>
   <div class="login-screen">
     <div class="login-box">
-        <div class="login-form">
-            <img src="../icons/LuminIA.ico" class="logo">
-            <input type="text" id="usuario" placeholder="Usuário">
-            <input type="password" id="senha" placeholder="Senha">
-            <button class="btn-entrar" @click="handleLogin">Entrar</button>
-        </div>
+      <div class="login-form">
+        <img src="../icons/LuminIA.ico" class="logo">
+        <input type="email" v-model.trim="usuario" placeholder="E-mail">
+        <input type="password" v-model="senha" placeholder="Senha">
+        <button class="btn-entrar" @click="handleLogin">Entrar</button>
+      </div>
     </div>
 
     <div v-if="showPopup" class="popup-overlay">
@@ -14,7 +14,6 @@
         <h2 class="popup-title">Crie sua Senha</h2>
         <input v-model="newPassword" type="password" placeholder="Nova senha">
         <input v-model="confirmPassword" type="password" placeholder="Confirmar senha">
-
         <button @click="salvarSenha">Salvar</button>
         <button class="cancel" @click="showPopup = false">Cancelar</button>
       </div>
@@ -25,7 +24,6 @@
 <script>
 export default {
   name: "LoginScreen",
-
   data() {
     return {
       usuario: "",
@@ -35,13 +33,24 @@ export default {
       confirmPassword: ""
     }
   },
-
   methods: {
     handleLogin() {
+      const email = this.usuario?.trim() || ""
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+      if (!emailRegex.test(email)) {
+        alert("Usuário inválido! Digite um e-mail válido.")
+        return
+      }
+
       this.showPopup = true
     },
 
     salvarSenha() {
+      if (this.newPassword !== this.confirmPassword) {
+        alert("As senhas não coincidem!")
+        return
+      }
       alert("Senha salva! (modo de teste)")
       this.showPopup = false
     }
@@ -74,12 +83,12 @@ export default {
 }
 
 .login-form {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .login-form input {
