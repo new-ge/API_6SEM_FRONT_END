@@ -11,7 +11,7 @@
 
     <div v-if="showPopup" class="popup-overlay">
       <div class="popup">
-        <h2 class="popup-title">Crie sua Senha</h2>
+        <h2 class="popup-title">Vejo que está logando pela primeira vez, para entrar, é necessário criar sua própria senha!</h2>
         <input v-model="newPassword" type="password" placeholder="Nova senha">
         <input v-model="confirmPassword" type="password" placeholder="Confirmar senha">
         <button @click="salvarSenha">Salvar</button>
@@ -194,8 +194,7 @@ export default {
 }
 
 .popup-title {
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin: 4%;
   font-size: 24px;
   font-weight: bold;
   color: #502A81;
