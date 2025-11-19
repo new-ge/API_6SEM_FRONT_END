@@ -40,33 +40,48 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
-const searchQuery = ref("");
-
-const users = ref([
-  { id: 1, name: "Nome Sobrenome", email: "user1@email.com", selected: true},
-  { id: 2, name: "Nome Sobrenome", email: "user2@email.com", selected: true},
-  { id: 3, name: "Nome Sobrenome", email: "user3@email.com", selected: true},
-  { id: 4, name: "Nome Sobrenome", email: "user4@email.com", selected: true},
-  { id: 5, name: "Nome Sobrenome", email: "user5@email.com", selected: true},
-  
-  { id: 6, name: "Nome Sobrenome", email: "user5@email.com", selected: true},
-]);
-
-const filteredUsers = computed(() => {
-  const q = searchQuery.value.toLowerCase();
-  return users.value.filter(
-    u =>
-      u.name.toLowerCase().includes(q) ||
-      u.email.toLowerCase().includes(q) ||
-      u.id.toString().includes(q)
-  );
+const props = defineProps({
+  resultFindAllUsers: { 
+    type: Array, 
+    default: () => [] 
+  } 
 });
 
-const deleteSelected = () => {
-  users.value = users.value.filter(u => !u.selected);
-};
+const emit = defineEmits(["find-all-users"]); 
+const searchQuery = ref(""); 
+const localUsers = ref([]);
+
+watch( 
+  () => props.resultFindAllUsers, 
+  (newVal) => { 
+    if (!Array.isArray(newVal)) { 
+      localUsers.value = []; 
+      return; 
+    } 
+    localUsers.value = newVal.map(u => ({ ...u, selected: false })); 
+  }, 
+  { immediate: true } 
+);
+
+const filteredUsers = computed(() => { 
+  const q = searchQuery.value.toLowerCase();
+  return localUsers.value.filter(u => { 
+    const name = u.name?.toLowerCase() || ""; 
+    const email = u.email?.toLowerCase() || ""; 
+    const id = u.id?.toString() || ""; 
+    return name.includes(q) || email.includes(q) || id.includes(q); 
+  }); 
+}); 
+
+const deleteSelected = () => { 
+  const selectedIds = localUsers.value
+  .filter(u => u.selected)
+  .map(u => u.id); 
+
+  if (!selectedIds.length) return;
+}
 </script>
 
 <style scoped>

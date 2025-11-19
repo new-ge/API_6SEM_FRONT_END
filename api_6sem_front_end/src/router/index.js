@@ -5,12 +5,13 @@ import AnalystNoFAQMainView from '../views/AnalystNoFAQMainView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginScreenView from '@/views/LoginScreenView.vue';
 import AdministratorView from '../views/AdministratorView.vue';
+import DetailsUser from '@/components/DetailsUser.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Main',
-    component: HomeView
+    component: LoginScreenView
   },
   {
     path: '/gestor',
@@ -38,11 +39,10 @@ const routes = [
     component: AdministratorView
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LoginScreenView
-  },
-
+    path: '/sandbox',
+    name: 'Sandbox',
+    component: DetailsUser
+  }
 ];
 
 const router = createRouter({

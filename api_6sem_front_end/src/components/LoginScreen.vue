@@ -8,7 +8,6 @@
         <button class="btn-entrar" @click="handleLogin">Entrar</button>
       </div>
     </div>
-
     <div v-if="showPopup" class="popup-overlay">
       <div class="popup">
         <h2 class="popup-title">Vejo que está logando pela primeira vez, para entrar, é necessário criar sua própria senha!</h2>
@@ -21,41 +20,21 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "LoginScreen",
-  data() {
-    return {
-      usuario: "",
-      senha: "",
-      showPopup: false,
-      newPassword: "",
-      confirmPassword: ""
-    }
-  },
-  methods: {
-    handleLogin() {
-      const email = this.usuario?.trim() || ""
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+<script setup>
+import { ref } from 'vue';
 
-      if (!emailRegex.test(email)) {
-        alert("Usuário inválido! Digite um e-mail válido.")
-        return
-      }
+const usuario = ref("")
+const senha = ref("")
+const showPopup = ref(false)
+const newPassword = ref("")
+const confirmPassword = ref("")
 
-      this.showPopup = true
-    },
+const emit = defineEmits(["login"]);
 
-    salvarSenha() {
-      if (this.newPassword !== this.confirmPassword) {
-        alert("As senhas não coincidem!")
-        return
-      }
-      alert("Senha salva! (modo de teste)")
-      this.showPopup = false
-    }
-  }
+function handleLogin() {
+  emit("login", { username: usuario.value, password: senha.value })
 }
+
 </script>
 
 <style scoped>
