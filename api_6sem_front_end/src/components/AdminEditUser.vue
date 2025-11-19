@@ -22,17 +22,17 @@
 
       <div class="form-group">
         <label class="label" for="username"></label>
-        <input id="username" v-model="username" type="text" placeholder="Novo nome do usuário">
+        <input id="username" v-model="username" type="text" placeholder="Novo nome do usuário" :disabled="!isUserLoaded">
       </div>
 
       <div class="form-group">
         <label class="label" for="email"></label>
-        <input id="email" v-model="email" type="email" placeholder="Novo e-mail" />
+        <input id="email" v-model="email" type="email" placeholder="Novo e-mail" :disabled="!isUserLoaded" />
       </div>
 
       <div class="form-group">
         <label class="label" for="level"></label>
-        <select id="level" v-model="level">
+        <select id="level" v-model="level" :disabled="!isUserLoaded">
           <option value="" disabled>Nível</option>
           <option value="N1">Analista N1</option>
           <option value="N2">Analista N2</option>
@@ -48,9 +48,20 @@
 <script setup>
 import { ref } from 'vue';
 import { useToast } from 'vue-toastification';
+import { useAuthStore } from '@/stores/auth';
 
 const toast = useToast();
 
+const emit = defineEmits(["update-users"]); 
+
+const props = defineProps({
+  resultCreateUsers: {
+    type: Array,
+    default: () => []
+  }
+})
+
+const isUserLoaded = ref(false);
 const searchQuery = ref('');
 const username = ref('');
 const email = ref('');
@@ -67,6 +78,8 @@ function searchUser() {
   username.value = 'Usuário Exemplo';
   email.value = 'exemplo@email.com';
   level.value = 'N2';
+
+  isUserLoaded.value = true; 
 }
 
 function updateUser() {
@@ -75,10 +88,12 @@ function updateUser() {
     return;
   }
 
-  console.log({
-    username: username.value,
+  useAuthStore().token
+        
+  emit("update-users", {
+    name: username.value,
+    role: level.value,
     email: email.value,
-    level: level.value
   });
 
   toast.success('Usuário atualizado com sucesso!');
@@ -196,5 +211,9 @@ select::placeholder {
   width: 16px;
   height: 16px;
   object-fit: contain;
+}
+
+select:disabled {
+  cursor: initial;
 }
 </style>

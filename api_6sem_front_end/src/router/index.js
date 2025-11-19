@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'Main',
-    component: HomeView
+    component: LoginScreenView
   },
   {
     path: '/gestor',
@@ -36,13 +36,7 @@ const routes = [
     path: '/adm',
     name: 'Administrador',
     component: AdministratorView
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: LoginScreenView
-  },
-
+  }
 ];
 
 const router = createRouter({

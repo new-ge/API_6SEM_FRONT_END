@@ -22,6 +22,20 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
+
+const emit = defineEmits(["login"]); 
+
+const props = defineProps({
+  resultCreateUsers: {
+    type: Array,
+    default: () => []
+  }
+})
+
+
 export default {
   name: "LoginScreen",
   data() {
@@ -35,15 +49,7 @@ export default {
   },
   methods: {
     handleLogin() {
-      const email = this.usuario?.trim() || ""
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-      if (!emailRegex.test(email)) {
-        alert("Usuário inválido! Digite um e-mail válido.")
-        return
-      }
-
-      this.showPopup = true
+      this.$emit("login", { username: this.usuario, password: this.senha })
     },
 
     salvarSenha() {
