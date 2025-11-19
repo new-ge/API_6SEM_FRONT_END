@@ -49,8 +49,6 @@
 
           let data = response.data;
 
-          console.log(data)
-
           if (!Array.isArray(data) && typeof data === "object") {
             data = Object.values(data);
           }

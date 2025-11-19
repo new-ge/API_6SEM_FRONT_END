@@ -55,7 +55,7 @@ const toast = useToast();
 const emit = defineEmits(["update-users"]); 
 
 const props = defineProps({
-  resultCreateUsers: {
+  resultUpdateUsers: {
     type: Array,
     default: () => []
   }

@@ -8,7 +8,6 @@
         <button class="btn-entrar" @click="handleLogin">Entrar</button>
       </div>
     </div>
-
     <div v-if="showPopup" class="popup-overlay">
       <div class="popup">
         <h2 class="popup-title">Vejo que está logando pela primeira vez, para entrar, é necessário criar sua própria senha!</h2>
@@ -21,47 +20,21 @@
   </div>
 </template>
 
-<script>
-import { useToast } from 'vue-toastification';
+<script setup>
+import { ref } from 'vue';
 
-const toast = useToast();
+const usuario = ref("")
+const senha = ref("")
+const showPopup = ref(false)
+const newPassword = ref("")
+const confirmPassword = ref("")
 
-const emit = defineEmits(["login"]); 
+const emit = defineEmits(["login"]);
 
-const props = defineProps({
-  resultCreateUsers: {
-    type: Array,
-    default: () => []
-  }
-})
-
-
-export default {
-  name: "LoginScreen",
-  data() {
-    return {
-      usuario: "",
-      senha: "",
-      showPopup: false,
-      newPassword: "",
-      confirmPassword: ""
-    }
-  },
-  methods: {
-    handleLogin() {
-      this.$emit("login", { username: this.usuario, password: this.senha })
-    },
-
-    salvarSenha() {
-      if (this.newPassword !== this.confirmPassword) {
-        alert("As senhas não coincidem!")
-        return
-      }
-      alert("Senha salva! (modo de teste)")
-      this.showPopup = false
-    }
-  }
+function handleLogin() {
+  emit("login", { username: usuario.value, password: senha.value })
 }
+
 </script>
 
 <style scoped>
