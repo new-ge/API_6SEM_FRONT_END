@@ -1,9 +1,11 @@
   <template>
     <div class="admin-main-view">
       <BackgroundMain/>
-      <div class="users-container">
+      <div class="create-edit-container">
         <AdminCreateUser :resultCreateUsers="resultCreateUsers" @create-users="handleCreateUsers" />
         <AdminEditUser :resultUpdateUsers="resultUpdateUsers" @update-users="handleUpdateUsers" />
+      </div>
+      <div class="users-container">
         <AdminUserList :resultFindAllUsers="resultFindAllUsers" @find-all-users="handleFindAllUsers" />
       </div>
 
@@ -31,8 +33,8 @@
       AdminLogs,
       BackgroundMain,
     },
-    data() { 
-      return { 
+    data() {
+      return {
         resultFindAllUsers: [],
         resultCreateUsers: [],
         resultUpdateUsers: []
@@ -103,20 +105,34 @@
   .users-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     position: absolute;
-    left: 2.5em;
-    top: 5.5em;
-    width: 100%;
-    max-width: 400px;
+    left: 2.5vw;
+    top: 5.5vw;
+    width: 200vw;
+  }
+
+  .create-edit-container {
+        display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: absolute;
+    left: 2.5vw;
+    top: 5.5vw;
+    width: 200vw;
+  }
+
+  .create-edit-container > * {
+    width: 100vw;
+    height: fit-content;
   }
 
   .logs-container {
   position: absolute;
-  right: 40px;
-  top: 50%;
+  right: 1.5vw;
+  top: 12.8vw;
   transform: translateY(-50%);
-  width: 520px;
+  width: 28vw;
 }
 
 @media (max-width: 768px) {

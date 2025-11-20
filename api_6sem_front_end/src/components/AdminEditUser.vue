@@ -52,7 +52,7 @@ import { useAuthStore } from '@/stores/auth';
 
 const toast = useToast();
 
-const emit = defineEmits(["update-users"]); 
+const emit = defineEmits(["update-users"]);
 
 const props = defineProps({
   resultUpdateUsers: {
@@ -79,7 +79,7 @@ function searchUser() {
   email.value = 'exemplo@email.com';
   level.value = 'N2';
 
-  isUserLoaded.value = true; 
+  isUserLoaded.value = true;
 }
 
 function updateUser() {
@@ -89,7 +89,7 @@ function updateUser() {
   }
 
   useAuthStore().token
-        
+
   emit("update-users", {
     name: username.value,
     role: level.value,
@@ -103,7 +103,7 @@ function updateUser() {
 <style scoped>
 
 .UserEdit-container {
-  width: 100%;
+  width: 26vw;
   max-width: 400px;
   margin: 0;
   box-sizing: border-box;

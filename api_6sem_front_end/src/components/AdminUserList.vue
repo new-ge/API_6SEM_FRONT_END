@@ -43,42 +43,42 @@
 import { ref, computed, watch } from 'vue';
 
 const props = defineProps({
-  resultFindAllUsers: { 
-    type: Array, 
-    default: () => [] 
-  } 
+  resultFindAllUsers: {
+    type: Array,
+    default: () => []
+  }
 });
 
-const emit = defineEmits(["find-all-users"]); 
-const searchQuery = ref(""); 
+const emit = defineEmits(["find-all-users"]);
+const searchQuery = ref("");
 const localUsers = ref([]);
 
-watch( 
-  () => props.resultFindAllUsers, 
-  (newVal) => { 
-    if (!Array.isArray(newVal)) { 
-      localUsers.value = []; 
-      return; 
-    } 
-    localUsers.value = newVal.map(u => ({ ...u, selected: false })); 
-  }, 
-  { immediate: true } 
+watch(
+  () => props.resultFindAllUsers,
+  (newVal) => {
+    if (!Array.isArray(newVal)) {
+      localUsers.value = [];
+      return;
+    }
+    localUsers.value = newVal.map(u => ({ ...u, selected: false }));
+  },
+  { immediate: true }
 );
 
-const filteredUsers = computed(() => { 
+const filteredUsers = computed(() => {
   const q = searchQuery.value.toLowerCase();
-  return localUsers.value.filter(u => { 
-    const name = u.name?.toLowerCase() || ""; 
-    const email = u.email?.toLowerCase() || ""; 
-    const id = u.id?.toString() || ""; 
-    return name.includes(q) || email.includes(q) || id.includes(q); 
-  }); 
-}); 
+  return localUsers.value.filter(u => {
+    const name = u.name?.toLowerCase() || "";
+    const email = u.email?.toLowerCase() || "";
+    const id = u.id?.toString() || "";
+    return name.includes(q) || email.includes(q) || id.includes(q);
+  });
+});
 
-const deleteSelected = () => { 
+const deleteSelected = () => {
   const selectedIds = localUsers.value
   .filter(u => u.selected)
-  .map(u => u.id); 
+  .map(u => u.id);
 
   if (!selectedIds.length) return;
 }
@@ -89,10 +89,10 @@ const deleteSelected = () => {
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 26em;
-  top: 0.95em;
-  width: 100%;
-  height: 300vh;
+  left: 28vw;
+  top: 0vh;
+  width: 25.5vw;
+  height: 85vh;
 }
 
 .card {
@@ -102,7 +102,7 @@ const deleteSelected = () => {
   padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 25.5vw;
   height: 79vh;
   overflow: hidden;
 }

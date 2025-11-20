@@ -43,10 +43,9 @@ const logs = ref([
 
 <style scoped>
 .logs-container {
-  position: absolute;
-  top: 60px;
-  right: 40px;
-  width: 620px;
+  top: 60vw;
+  right: 40vw;
+  width: 10vw;
 }
 
 .card {

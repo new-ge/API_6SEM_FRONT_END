@@ -68,14 +68,14 @@ async function createUser() {
   }
 
   useAuthStore().token
-        
+
   emit("create-users", {
     name: name.value,
     role: role.value,
     email: email.value,
     password: password.value,
   });
-    
+
   toast.success('Usuário criado com sucesso!')
 
   name.value = ''
@@ -87,7 +87,7 @@ async function createUser() {
 
 <style scoped>
 .UserCreate-container {
-  width: 100%;
+  width: 26vw;
   max-width: 400px;
   margin: 0;
   box-sizing: border-box;
