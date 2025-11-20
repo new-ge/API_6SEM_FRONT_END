@@ -1,7 +1,4 @@
 <template>
-  <div>
-    <BackgroundMain />
-  </div>
   <div class="UserCreate-container">
     <div class="card">
       <h2 class="title">Criar usuário</h2>
@@ -42,9 +39,17 @@
 import { ref } from 'vue';
 import { useToast } from 'vue-toastification';
 import { useAuthStore } from '@/stores/auth';
-import axios from 'axios';
+
+const props = defineProps({
+  resultCreateUsers: {
+    type: Array,
+    default: () => []
+  }
+})
 
 const toast = useToast();
+
+const emit = defineEmits(["create-users"]);
 
 const name = ref('')
 const role = ref('')
@@ -62,24 +67,14 @@ async function createUser() {
     return
   }
 
-  const authStore = useAuthStore()
-  const token = authStore.token
+  useAuthStore().token
         
-  axios.post(
-    'http://localhost:8000/users/create',
-    {
-      name: name.value,
-      role: role.value,
-      email: email.value,
-      password: password.value,
-    },
-    {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  emit("create-users", {
+    name: name.value,
+    role: role.value,
+    email: email.value,
+    password: password.value,
+  });
     
   toast.success('Usuário criado com sucesso!')
 
@@ -98,7 +93,6 @@ async function createUser() {
   box-sizing: border-box;
   padding: 0 10px;
 }
-
 
 .card {
   background: white;
