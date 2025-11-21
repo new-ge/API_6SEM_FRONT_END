@@ -1,8 +1,4 @@
 <template>
-  <div>
-    <BackgroundMain />
-  </div>
-
   <div class="UserEdit-container">
     <div class="card">
       <h2 class="title">Editar usuário</h2>
@@ -103,20 +99,31 @@ function updateUser() {
 <style scoped>
 
 .UserEdit-container {
-  width: 100%;
-  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 26vw;
+  height: 38vh;
+  left: 5.5vh;
+  top: 42vh;
   margin: 0;
   box-sizing: border-box;
   padding: 0 10px;
 }
 
 .card {
+  width: 26vw;  
+  height: 38vh;
+  left: 5.5vh;
   background: white;
   border: 1px solid #502A81;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   padding: 19px 24px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  bottom: 8vw;
   font-family: 'Poppins', sans-serif;
 }
 

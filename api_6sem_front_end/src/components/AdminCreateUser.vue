@@ -87,14 +87,21 @@ async function createUser() {
 
 <style scoped>
 .UserCreate-container {
-  width: 100%;
-  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 26vw;
+  height: 38vh;
   margin: 0;
   box-sizing: border-box;
   padding: 0 10px;
+  left: 5.5vh;
 }
 
 .card {
+  width: 26vw;
+  left: 7vh;
+  height: 38vh;
   background: white;
   border: 1px solid #502A81;
   border-radius: 12px;
@@ -102,6 +109,9 @@ async function createUser() {
   padding: 19px 24px;
   text-align: center;
   font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .title {

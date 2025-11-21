@@ -1,28 +1,38 @@
-  <template>
+<template>
+  <div class="admin-wrapper">
+    <BackgroundMain />
     <div class="admin-main-view">
-      <BackgroundMain/>
-      <div class="users-container">
+      <div class="create-edit-container">
         <AdminCreateUser :resultCreateUsers="resultCreateUsers" @create-users="handleCreateUsers" />
         <AdminEditUser :resultUpdateUsers="resultUpdateUsers" @update-users="handleUpdateUsers" />
+      </div>
+      <div class="users-container">
         <AdminUserList :resultFindAllUsers="resultFindAllUsers" @find-all-users="handleFindAllUsers" />
       </div>
+      <div class="logs-container">
+        <AdminLogs/>
+      </div>
     </div>
-  </template>
 
-  <script lang ="js">
-  import AdminCreateUser from '@/components/AdminCreateUser.vue';
-  import AdminEditUser from '@/components/AdminEditUser.vue';
-  import AdminUserList from '@/components/AdminUserList.vue';
-  import BackgroundMain from '@/components/BackgroundMain.vue';
-  import { useAuthStore } from '@/stores/auth';
-  import axios from 'axios';
+  </div>
+</template>
 
-  export default {
+<script lang ="js">
+import AdminCreateUser from '@/components/AdminCreateUser.vue';
+import AdminEditUser from '@/components/AdminEditUser.vue';
+import AdminLogs from '@/components/AdminLogs.vue';
+import AdminUserList from '@/components/AdminUserList.vue';
+import BackgroundMain from '@/components/BackgroundMain.vue';
+import { useAuthStore } from '@/stores/auth';
+import axios from 'axios';
+
+export default {
     name: "AdministratorView",
     components: {
       AdminCreateUser,
       AdminEditUser,
       AdminUserList,
+      AdminLogs,
       BackgroundMain,
     },
     data() { 
@@ -78,32 +88,43 @@
 
   };
 
-  </script>
+</script>
 
-  <style scoped>
-  .admin-main-view {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    height: auto;
-    width: 100%;
-    background: linear-gradient(to right, white, #AB93F8);
-    color: #502A81;
-    font-family: 'Poppins', sans-serif;
-    position: relative;
-    overflow-y: auto;
-  }
+<style scoped>
 
-  .users-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: absolute;
-    left: 2.5em;
-    top: 5.5em;
-    width: 100%;
-    max-width: 400px;
-  }
+.admin-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.admin-wrapper > *:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.admin-main-view {
+  position: relative;
+  display: grid;
+  top: 13vh;
+}
+
+.users-container,
+.logs-container {
+  display: flex;
+  flex-direction: column;
+  width: 32vw;
+}
+
+.create-edit-container {
+  display: flex;
+  flex-direction: column;
+}
 
 @media (max-width: 768px) {
   .users-container {
@@ -115,4 +136,4 @@
   }
 }
 
-  </style>
+</style>

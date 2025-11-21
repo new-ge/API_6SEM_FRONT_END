@@ -89,10 +89,13 @@ const deleteSelected = () => {
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 26em;
-  top: 0.95em;
-  width: 100%;
-  height: 300vh;
+  left: 34vw;
+  top: 0vh;
+  width: 27vw;
+  height: 80vh;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .card {
@@ -102,8 +105,9 @@ const deleteSelected = () => {
   padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 79vh;
+  width: 27vw;
+  height: 80vh;
+
   overflow: hidden;
 }
 
