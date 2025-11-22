@@ -4,13 +4,13 @@
     <div class="admin-main-view">
       <div class="create-edit-container">
         <AdminCreateUser :resultCreateUsers="resultCreateUsers" @create-users="handleCreateUsers" />
-        <AdminEditUser :resultUpdateUsers="resultUpdateUsers" @update-users="handleUpdateUsers" />
+        <AdminEditUser :resultUpdateUsers="resultUpdateUsers" @update-users="handleUpdateUsers" :resultFindUser="resultFindUser" @search-user="handleFindUser"/>
       </div>
       <div class="users-container">
-        <AdminUserList :resultFindAllUsers="resultFindAllUsers" @find-all-users="handleFindAllUsers" />
+        <AdminUserList :resultFindAllUsers="resultFindAllUsers" :resultDeleteUsers="resultDeleteUsers" @delete-users="handleDeleteUsers"/>
       </div>
       <div class="logs-container">
-        <AdminLogs/>
+        <AdminLogs :resultLogs="resultLogs" />
       </div>
     </div>
 
@@ -25,6 +25,9 @@ import AdminUserList from '@/components/AdminUserList.vue';
 import BackgroundMain from '@/components/BackgroundMain.vue';
 import { useAuthStore } from '@/stores/auth';
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 export default {
     name: "AdministratorView",
@@ -39,7 +42,10 @@ export default {
       return { 
         resultFindAllUsers: [],
         resultCreateUsers: [],
-        resultUpdateUsers: []
+        resultUpdateUsers: [],
+        resultFindUser: null,
+        resultDeleteUsers: [],
+        resultLogs: []
       }
     },
     methods: {
@@ -48,8 +54,8 @@ export default {
           const token = useAuthStore().token;
 
           const response = await axios({
-            method: method,
-            url: url,
+            method,
+            url,
             data: body,
             headers: {
               Authorization: `Bearer ${token}`,
@@ -59,31 +65,71 @@ export default {
 
           let data = response.data;
 
-          if (!Array.isArray(data) && typeof data === "object") {
-            data = Object.values(data);
+          if (data === null || data === undefined) {
+            return { success: false, error: "Nenhum dado retornado pelo servidor." };
           }
 
-          return data;
+          if (data.error) {
+            return { success: false, error: data.error };
+          }
+
+          if (Array.isArray(data)) {
+            return { success: true, data };
+          }
+
+          return { success: true, ...data };
 
         } catch (error) {
           console.error(`Erro ao fazer ${method} em ${url}:`, error);
-          throw error;
+          return { success: false, error: "Erro ao conectar com o servidor" };
         }
       },
 
       async handleFindAllUsers() {
-        this.resultFindAllUsers = await this.fetchData("get", "http://localhost:8000/get-all/get-all-users");
+        const res = await this.fetchData("get", "http://localhost:8000/users/get-all-users");
+        this.resultFindAllUsers = [...res.data];
       },
       async handleCreateUsers(body) {
         this.resultCreateUsers = await this.fetchData("post", "http://localhost:8000/users/create", body);
+        await this.handleLogs();
+        await this.handleFindAllUsers();
+      },
+      async handleFindUser(body) {
+        const query = body.includes("@")
+          ? `?email=${body}`
+          : `?name=${body}`;
+
+        this.resultFindUser = await this.fetchData(
+          "get",
+          `http://localhost:8000/users/find${query}`
+        );
+
+        if (!this.resultFindUser.success) {
+          toast.error("O usuário não foi encontrado!");
+          return;
+        }
       },
       async handleUpdateUsers(body) {
         this.resultUpdateUsers = await this.fetchData("put", "http://localhost:8000/users/edit", body);
+
+        await this.handleLogs();
+        await this.handleFindAllUsers();
+      },
+      async handleDeleteUsers(body) {
+        this.resultDeleteUsers = await this.fetchData("post", "http://localhost:8000/users/delete-users", body);
+
+        await this.handleFindAllUsers();
+        await this.handleLogs();
+      },
+      async handleLogs() {
+        const res = await this.fetchData("get", "http://localhost:8000/history/get-all-logs");
+        this.resultLogs = res.data;
       },
     },
 
     async mounted() {
       await this.handleFindAllUsers();
+      await this.handleLogs();
     }
 
   };
@@ -105,7 +151,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
 }
 
 .admin-main-view {

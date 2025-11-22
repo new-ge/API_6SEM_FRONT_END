@@ -8,13 +8,12 @@
         <button class="btn-entrar" @click="handleLogin">Entrar</button>
       </div>
     </div>
-    <div v-if="showPopup" class="popup-overlay">
+    <div v-if="props.showPopup" class="popup-overlay">
       <div class="popup">
         <h2 class="popup-title">Vejo que está logando pela primeira vez, para entrar, é necessário criar sua própria senha!</h2>
         <input v-model="newPassword" type="password" placeholder="Nova senha">
         <input v-model="confirmPassword" type="password" placeholder="Confirmar senha">
-        <button @click="salvarSenha">Salvar</button>
-        <button class="cancel" @click="showPopup = false">Cancelar</button>
+        <button @click="handleUpdateUser">Salvar</button>
       </div>
     </div>
   </div>
@@ -25,14 +24,25 @@ import { ref } from 'vue';
 
 const usuario = ref("")
 const senha = ref("")
-const showPopup = ref(false)
 const newPassword = ref("")
 const confirmPassword = ref("")
 
-const emit = defineEmits(["login"]);
+const props = defineProps({
+  showPopup: Boolean
+})
+
+const emit = defineEmits(["login", "save"]);
 
 function handleLogin() {
   emit("login", { username: usuario.value, password: senha.value })
+}
+
+function handleUpdateUser() {
+  if (newPassword.value == confirmPassword.value) {
+    emit("save", { username: usuario.value, new_password: confirmPassword.value })
+  } else {
+    toast.error("As senhas não coincidem!")
+  }
 }
 
 </script>
@@ -162,14 +172,6 @@ function handleLogin() {
 
 .popup button:hover {
   background-color: #5941c3;
-}
-
-.popup .cancel {
-  background-color: #aaa !important;
-}
-
-.popup .cancel:hover {
-  background-color: #888 !important;
 }
 
 .popup-title {

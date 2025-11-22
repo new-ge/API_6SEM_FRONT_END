@@ -27,12 +27,13 @@
       </div>
 
       <div class="form-group">
-        <label class="label" for="level"></label>
-        <select id="level" v-model="level" :disabled="!isUserLoaded">
+        <label class="label" for="role"></label>
+        <select id="role" v-model="role" :disabled="!isUserLoaded">
           <option value="" disabled>Nível</option>
           <option value="N1">Analista N1</option>
           <option value="N2">Analista N2</option>
           <option value="N3">Analista N3</option>
+          <option value="Gestor">Gestor</option>
         </select>
       </div>
 
@@ -42,18 +43,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { useToast } from 'vue-toastification';
 import { useAuthStore } from '@/stores/auth';
+import { ref, watch } from 'vue';
 
 const toast = useToast();
 
-const emit = defineEmits(["update-users"]); 
+const emit = defineEmits(["update-users", "search-user"]); 
 
 const props = defineProps({
   resultUpdateUsers: {
-    type: Array,
-    default: () => []
+    type: Object,
+    default: () => ({})
+  },
+  resultFindUser: { 
+    type: Object, 
+    default: () => ({}) 
   }
 })
 
@@ -61,7 +66,7 @@ const isUserLoaded = ref(false);
 const searchQuery = ref('');
 const username = ref('');
 const email = ref('');
-const level = ref('');
+const role = ref('');
 
 function searchUser() {
   if (!searchQuery.value) {
@@ -69,30 +74,48 @@ function searchUser() {
     return;
   }
 
-  console.log('Buscando usuário:', searchQuery.value);
-
-  username.value = 'Usuário Exemplo';
-  email.value = 'exemplo@email.com';
-  level.value = 'N2';
-
-  isUserLoaded.value = true; 
+  useAuthStore().token
+        
+  emit("search-user", searchQuery.value);
 }
 
+watch(() => props.resultFindUser, (newValue) => {
+  if (!newValue) return;
+
+  if (newValue.role === "Administrador") {
+    toast.error("Não é possível editar um Administrador");
+    return;
+  }
+  username.value = newValue.username;
+  email.value = newValue.email;
+  role.value = newValue.role;
+  isUserLoaded.value = true;
+});
+
 function updateUser() {
-  if (!username.value || !email.value || !level.value) {
+  if (!username.value || !email.value || !role.value) {
     toast.error('Por favor, preencha todos os campos.');
     return;
   }
 
   useAuthStore().token
-        
+
   emit("update-users", {
-    name: username.value,
-    role: level.value,
-    email: email.value,
+    identifier: searchQuery.value, 
+    update: {
+      name: username.value,
+      email: email.value,
+      role: role.value
+    }
   });
 
   toast.success('Usuário atualizado com sucesso!');
+  
+  isUserLoaded.value = false
+  username.value = ''
+  email.value = ''
+  role.value = ''
+  searchQuery.value = '';
 }
 </script>
 

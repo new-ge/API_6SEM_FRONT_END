@@ -16,10 +16,10 @@
           :key="log.id"
           class="table-row"
         >
-          <div class="col">{{ log.datetime }}</div>
+          <div class="col">{{ log.performed_at }}</div>
           <div class="col">{{ log.action }}</div>
-          <div class="col">{{ log.actor }}</div>
-          <div class="col">{{ log.user }}</div>
+          <div class="col">{{ log.modified_by }}</div>
+          <div class="col">{{ log.modified_user }}</div>
         </div>
       </div>
 
@@ -28,17 +28,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
-const logs = ref([
-  {
-    id: 1,
-    datetime: "01/10/2024 14:22",
-    action: "Criou usuário",
-    actor: "Adm N3",
-    user: "Marcos"
+const logs = ref([]);
+
+const props = defineProps({
+  resultLogs: { 
+    type: Array, 
+    default: () => [] 
   }
-]);
+})
+
+watch(
+  () => props.resultLogs,
+  (newVal) => {
+    logs.value = newVal ?? [];
+  },
+  { immediate: true }
+);
+
 </script>
 
 <style scoped>
@@ -52,6 +60,7 @@ const logs = ref([
   margin: 0;
   box-sizing: border-box;
   padding: 0 10px;
+   z-index: 10;
 }
 
 .card {

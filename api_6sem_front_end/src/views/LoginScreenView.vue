@@ -1,6 +1,11 @@
 <template>
   <div>
-    <LoginScreen @login="handleLogin" />
+    <LoginScreen  
+      @login="handleLogin"
+      @close-popup="showPopup = false"
+      :show-popup="showPopup"
+      @save="handleUpdateUser"
+    />
     <DetailsUser 
         :userName="nameUser"
         :userEmail="emailUser"
@@ -27,23 +32,29 @@ const toast = useToast()
 const nameUser = ref("")
 const emailUser = ref("")
 const roleUser = ref("")
+const showPopup = ref(false)
 
 async function handleLogin({ username, password }) {
   try {
     const response = await axios.post("http://localhost:8000/login/validate-login", { username, password })
 
-    if (!response.data.token) {
+    if (response.data.success === false) {
       toast.error("Usuário ou senha incorretos!")
+      return
+    }
+
+    if (response.data.firstaccess === true) {
+      showPopup.value = true
       return
     }
 
     auth.setToken(response.data.token)
 
     userStore.setUser({
-        name: response.data.name,
-        email: response.data.username,
-        role: response.data.role
-    });
+      name: response.data.name,
+      email: response.data.username,
+      role: response.data.role
+    })
 
     switch (response.data.role) {
         case 'N1': router.push('/analystn1'); break
@@ -58,4 +69,15 @@ async function handleLogin({ username, password }) {
     toast.error("Erro ao tentar logar!")
   }
 }
+
+async function handleUpdateUser({ username, new_password }) {
+  try {
+    await axios.put("http://localhost:8000/login/complete-first-access/"+username, { new_password })
+    showPopup.value = false
+  } catch (error) {
+    console.error("Erro no login:", error)
+    toast.error("Erro ao tentar logar!")
+  }
+}
+
 </script>

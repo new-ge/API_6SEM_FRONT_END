@@ -46,25 +46,28 @@ const props = defineProps({
   resultFindAllUsers: { 
     type: Array, 
     default: () => [] 
-  } 
+  },
+  resultDeleteUsers: { 
+    type: Array, 
+    default: () => [] 
+  },
 });
 
-const emit = defineEmits(["find-all-users"]); 
+const emit = defineEmits(["find-all-users", "delete-users"]); 
 const searchQuery = ref(""); 
 const localUsers = ref([]);
 
-watch( 
-  () => props.resultFindAllUsers, 
-  (newVal) => { 
-    if (!Array.isArray(newVal)) { 
-      localUsers.value = []; 
-      return; 
-    } 
-    localUsers.value = newVal.map(u => ({ ...u, selected: false })); 
-  }, 
-  { immediate: true } 
+watch(
+  () => props.resultFindAllUsers,
+  (newVal) => {
+    if (!Array.isArray(newVal)) {
+      localUsers.value = [];
+      return;
+    }
+    localUsers.value = newVal.map(u => ({ ...u, selected: false }));
+  },
+  { immediate: true, deep: true }
 );
-
 const filteredUsers = computed(() => { 
   const q = searchQuery.value.toLowerCase();
   return localUsers.value.filter(u => { 
@@ -81,6 +84,8 @@ const deleteSelected = () => {
   .map(u => u.id); 
 
   if (!selectedIds.length) return;
+
+  emit("delete-users", selectedIds)
 }
 </script>
 
@@ -107,7 +112,7 @@ const deleteSelected = () => {
   flex-direction: column;
   width: 27vw;
   height: 80vh;
-
+  display: flex;
   overflow: hidden;
 }
 
