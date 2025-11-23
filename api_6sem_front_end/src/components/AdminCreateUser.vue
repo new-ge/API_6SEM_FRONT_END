@@ -15,6 +15,7 @@
           <option value="N1">Analista N1</option>
           <option value="N2">Analista N2</option>
           <option value="N3">Analista N3</option>
+          <option value="Gestor">Gestor</option>
         </select>
       </div>
 

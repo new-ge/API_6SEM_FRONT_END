@@ -22,7 +22,7 @@
           :key="user.id"
           class="user-item"
         >
-          <div class="icon-circle">A</div>
+          <div class="icon-circle">  {{ getInitials(user.name) }} </div>
 
           <span class="user-text">
             {{ user.id }} | {{user.name }} | {{ user.email }}
@@ -56,6 +56,38 @@ const props = defineProps({
 const emit = defineEmits(["find-all-users", "delete-users"]); 
 const searchQuery = ref(""); 
 const localUsers = ref([]);
+
+const titlesToIgnore = [
+  "sr", "sra", "sr.", "sra.", "srta", "srta.",
+  "dr", "dra", "dr.", "dra.", "drta", "drta.",
+  "prof", "profa", "prof.", "profa.",
+  "mr", "mrs", "ms", "miss"
+]
+
+const getInitials = (name = "") => {
+  if (!name) return "";
+
+  const ignoredParts = [
+    ...titlesToIgnore,
+    "da", "de", "do", "das", "dos"
+  ];
+
+  const parts = name
+    .toLowerCase()
+    .split(" ")
+    .filter(p => p && !ignoredParts.includes(p));
+
+  if (parts.length === 0) return "";
+  
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase();
+  }
+
+  const first = parts[0][0].toUpperCase();
+  const last = parts[parts.length - 1][0].toUpperCase();
+
+  return first + last;
+};
 
 watch(
   () => props.resultFindAllUsers,

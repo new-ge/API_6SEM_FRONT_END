@@ -16,7 +16,7 @@
           :key="log.id"
           class="table-row"
         >
-          <div class="col">{{ log.performed_at }}</div>
+          <div class="col">{{ formatDate(log.performed_at) }}</div>
           <div class="col">{{ log.action }}</div>
           <div class="col">{{ log.modified_by }}</div>
           <div class="col">{{ log.modified_user }}</div>
@@ -46,6 +46,22 @@ watch(
   },
   { immediate: true }
 );
+
+function formatDate(dateString) {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+
+  const dia = String(date.getDate()).padStart(2, '0');
+  const mes = String(date.getMonth() + 1).padStart(2, '0');
+  const ano = date.getFullYear();
+
+  const horas = String(date.getHours()).padStart(2, '0');
+  const minutos = String(date.getMinutes()).padStart(2, '0');
+  const segundos = String(date.getSeconds()).padStart(2, '0');
+
+  return `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
+}
 
 </script>
 
