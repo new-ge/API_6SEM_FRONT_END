@@ -57,18 +57,14 @@ const emit = defineEmits(["find-all-users", "delete-users"]);
 const searchQuery = ref(""); 
 const localUsers = ref([]);
 
-const titlesToIgnore = [
-  "sr", "sra", "sr.", "sra.", "srta", "srta.",
-  "dr", "dra", "dr.", "dra.", "drta", "drta.",
-  "prof", "profa", "prof.", "profa.",
-  "mr", "mrs", "ms", "miss"
-]
-
 const getInitials = (name = "") => {
   if (!name) return "";
 
   const ignoredParts = [
-    ...titlesToIgnore,
+    "sr", "sra", "sr.", "sra.", "srta", "srta.",
+    "dr", "dra", "dr.", "dra.", "drta", "drta.",
+    "prof", "profa", "prof.", "profa.",
+    "mr", "mrs", "ms", "miss",
     "da", "de", "do", "das", "dos"
   ];
 

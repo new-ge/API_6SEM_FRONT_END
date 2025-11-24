@@ -9,7 +9,7 @@
           id="search"
           v-model="searchQuery"
           type="text"
-          placeholder="Digite usuário ou e-mail"
+          placeholder="Digite o e-mail"
         />
         <span class="icon" @click="searchUser">
           <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/search--v1.png" alt="search--v1"/>
@@ -70,7 +70,7 @@ const role = ref('');
 
 function searchUser() {
   if (!searchQuery.value) {
-    toast.error('Digite um usuário ou e-mail para buscar.');
+    toast.error('Digite um e-mail para buscar.');
     return;
   }
 
@@ -82,10 +82,17 @@ function searchUser() {
 watch(() => props.resultFindUser, (newValue) => {
   if (!newValue) return;
 
+  if (newValue.success === false) {
+    isUserLoaded.value = false;
+    return;
+  } 
+
   if (newValue.role === "Administrador") {
-    toast.error("Não é possível editar um Administrador");
+    toast.error("Não é possível editar um Administrador!");
+    isUserLoaded.value = false;
     return;
   }
+
   username.value = newValue.username;
   email.value = newValue.email;
   role.value = newValue.role;
@@ -97,7 +104,7 @@ function updateUser() {
     toast.error('Por favor, preencha todos os campos.');
     return;
   }
-
+  
   useAuthStore().token
 
   emit("update-users", {

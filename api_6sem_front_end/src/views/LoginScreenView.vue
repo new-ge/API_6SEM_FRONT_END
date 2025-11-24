@@ -6,11 +6,6 @@
       :show-popup="showPopup"
       @save="handleUpdateUser"
     />
-    <DetailsUser 
-        :userName="nameUser"
-        :userEmail="emailUser"
-        :userRole="roleUser"
-    />
   </div>
 </template>
 
@@ -21,17 +16,12 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useUserStore } from '@/stores/userStore'
 import { useToast } from 'vue-toastification'
-import DetailsUser from '@/components/DetailsUser.vue'
 import { ref } from 'vue'
 
 const userStore = useUserStore();
 const router = useRouter()
 const auth = useAuthStore()
 const toast = useToast()
-
-const nameUser = ref("")
-const emailUser = ref("")
-const roleUser = ref("")
 const showPopup = ref(false)
 
 async function handleLogin({ username, password }) {
@@ -51,6 +41,7 @@ async function handleLogin({ username, password }) {
     auth.setToken(response.data.token)
 
     userStore.setUser({
+      agent_id: response.data.agent_id,
       name: response.data.name,
       email: response.data.username,
       role: response.data.role

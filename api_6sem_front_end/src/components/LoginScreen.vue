@@ -40,6 +40,9 @@ function handleLogin() {
 function handleUpdateUser() {
   if (newPassword.value == confirmPassword.value) {
     emit("save", { username: usuario.value, new_password: confirmPassword.value })
+
+    usuario.value = ""
+    senha.value = ""
   } else {
     toast.error("As senhas não coincidem!")
   }
