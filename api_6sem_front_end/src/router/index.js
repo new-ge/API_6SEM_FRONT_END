@@ -2,10 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainView from '../views/MainView.vue';
 import AnalystMainView from '../views/AnalystMainView.vue';
 import AnalystNoFAQMainView from '../views/AnalystNoFAQMainView.vue';
-import HomeView from '../views/HomeView.vue';
 import LoginScreenView from '@/views/LoginScreenView.vue';
 import AdministratorView from '../views/AdministratorView.vue';
-import DetailsUser from '@/components/DetailsUser.vue';
 
 const routes = [
   {
@@ -37,11 +35,6 @@ const routes = [
     path: '/adm',
     name: 'Administrador',
     component: AdministratorView
-  },
-  {
-    path: '/sandbox',
-    name: 'Sandbox',
-    component: DetailsUser
   }
 ];
 

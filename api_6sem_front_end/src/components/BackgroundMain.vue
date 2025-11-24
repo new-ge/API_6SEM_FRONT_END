@@ -100,6 +100,7 @@ html, body, #app {
   min-height: 80px;
   position: relative;
   box-shadow: 0 1px 10px rgba(255, 255, 255, 0.6);
+  z-index: 9999;
 }
 
 .close-btn {
@@ -123,6 +124,7 @@ html, body, #app {
   color: #502A81;
   font-size: 16px;
   font-weight: bold;
+  z-index: 10;
 }
 
 .avatar-popup-button{
@@ -137,5 +139,6 @@ html, body, #app {
   font-weight: bold;
   transition: background-color 0.2s;
   margin-left: 30%;
+  z-index: 10;
 }
 </style>

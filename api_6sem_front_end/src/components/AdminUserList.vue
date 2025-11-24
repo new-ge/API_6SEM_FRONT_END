@@ -22,7 +22,7 @@
           :key="user.id"
           class="user-item"
         >
-          <div class="icon-circle">A</div>
+          <div class="icon-circle">  {{ getInitials(user.name) }} </div>
 
           <span class="user-text">
             {{ user.id }} | {{user.name }} | {{ user.email }}
@@ -46,25 +46,56 @@ const props = defineProps({
   resultFindAllUsers: { 
     type: Array, 
     default: () => [] 
-  } 
+  },
+  resultDeleteUsers: { 
+    type: Array, 
+    default: () => [] 
+  },
 });
 
-const emit = defineEmits(["find-all-users"]); 
+const emit = defineEmits(["find-all-users", "delete-users"]); 
 const searchQuery = ref(""); 
 const localUsers = ref([]);
 
-watch( 
-  () => props.resultFindAllUsers, 
-  (newVal) => { 
-    if (!Array.isArray(newVal)) { 
-      localUsers.value = []; 
-      return; 
-    } 
-    localUsers.value = newVal.map(u => ({ ...u, selected: false })); 
-  }, 
-  { immediate: true } 
-);
+const getInitials = (name = "") => {
+  if (!name) return "";
 
+  const ignoredParts = [
+    "sr", "sra", "sr.", "sra.", "srta", "srta.",
+    "dr", "dra", "dr.", "dra.", "drta", "drta.",
+    "prof", "profa", "prof.", "profa.",
+    "mr", "mrs", "ms", "miss",
+    "da", "de", "do", "das", "dos"
+  ];
+
+  const parts = name
+    .toLowerCase()
+    .split(" ")
+    .filter(p => p && !ignoredParts.includes(p));
+
+  if (parts.length === 0) return "";
+  
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase();
+  }
+
+  const first = parts[0][0].toUpperCase();
+  const last = parts[parts.length - 1][0].toUpperCase();
+
+  return first + last;
+};
+
+watch(
+  () => props.resultFindAllUsers,
+  (newVal) => {
+    if (!Array.isArray(newVal)) {
+      localUsers.value = [];
+      return;
+    }
+    localUsers.value = newVal.map(u => ({ ...u, selected: false }));
+  },
+  { immediate: true, deep: true }
+);
 const filteredUsers = computed(() => { 
   const q = searchQuery.value.toLowerCase();
   return localUsers.value.filter(u => { 
@@ -81,6 +112,8 @@ const deleteSelected = () => {
   .map(u => u.id); 
 
   if (!selectedIds.length) return;
+
+  emit("delete-users", selectedIds)
 }
 </script>
 
@@ -89,10 +122,13 @@ const deleteSelected = () => {
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 26em;
-  top: 0.95em;
-  width: 100%;
-  height: 300vh;
+  left: 34vw;
+  top: 0vh;
+  width: 27vw;
+  height: 80vh;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .card {
@@ -102,8 +138,9 @@ const deleteSelected = () => {
   padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 79vh;
+  width: 27vw;
+  height: 80vh;
+  display: flex;
   overflow: hidden;
 }
 

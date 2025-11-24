@@ -100,6 +100,7 @@ html, body, #app {
   min-height: 80px;
   position: relative;
   box-shadow: 0 1px 10px rgba(255, 255, 255, 0.6);
+  z-index: 9999;
 }
 
 .close-btn {
